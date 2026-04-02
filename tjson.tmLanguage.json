@@ -1,0 +1,147 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "TJSON",
+  "scopeName": "source.tjson",
+  "fileTypes": ["tjson"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#indent-glyph-open-standalone" },
+    { "include": "#indent-glyph-close" },
+    { "include": "#fold-continuation" },
+    { "include": "#table-row" },
+    { "include": "#multiline-triple" },
+    { "include": "#multiline-bold" },
+    { "include": "#multiline-italic" },
+    { "include": "#key-value-glyph" },
+    { "include": "#key-value" },
+    { "include": "#bare-value" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.double-slash.tjson",
+      "match": "^\\s*//.*$"
+    },
+    "indent-glyph-open-standalone": {
+      "comment": "/<  on its own line (Separate/Marked marker style)",
+      "match": "^\\s* /[<]\\s*$",
+      "name": "keyword.operator.indent-glyph.open.tjson"
+    },
+    "indent-glyph-close": {
+      "comment": "/>  closing indent-offset glyph on its own line",
+      "match": "^\\s* /[>]\\s*$",
+      "name": "keyword.operator.indent-glyph.close.tjson"
+    },
+    "key-value-glyph": {
+      "comment": "key: /< — key line with trailing indent-offset open glyph",
+      "match": "^(\\s*)([^\\s\"'`{\\[|/][^:]*?)(:)( /[<])\\s*$",
+      "captures": {
+        "2": { "name": "variable.other.key.tjson" },
+        "3": { "name": "punctuation.separator.key-value.tjson" },
+        "4": { "name": "keyword.operator.indent-glyph.open.tjson" }
+      }
+    },
+    "fold-continuation": {
+      "comment": "/  fold continuation marker at start of line",
+      "match": "^\\s*/\\s",
+      "name": "keyword.operator.fold.tjson"
+    },
+    "table-row": {
+      "comment": "pipe-delimited table row — highlight pipes and cell content",
+      "match": "^(\\s*)(\\|.+\\|)\\s*$",
+      "captures": {
+        "2": {
+          "patterns": [
+            { "match": "\\|", "name": "punctuation.separator.table.tjson" },
+            { "include": "#number" },
+            { "include": "#boolean-null" },
+            { "include": "#quoted-string" }
+          ]
+        }
+      }
+    },
+    "multiline-triple": {
+      "comment": "triple-backtick transparent multiline string",
+      "name": "string.quoted.triple.tjson",
+      "begin": "```",
+      "end": "```",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.tjson" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.string.end.tjson" } }
+    },
+    "multiline-bold": {
+      "comment": "double-backtick bold multiline string",
+      "name": "string.quoted.double-backtick.tjson",
+      "begin": "``",
+      "end": "``",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.tjson" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.string.end.tjson" } }
+    },
+    "multiline-italic": {
+      "comment": "single-backtick italic multiline string",
+      "name": "string.quoted.backtick.tjson",
+      "begin": "`",
+      "end": "`",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.tjson" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.string.end.tjson" } }
+    },
+    "key-value": {
+      "comment": "bare key followed by colon, then optional value",
+      "match": "^(\\s*)([^\\s\"'`{\\[|/][^:]*?)(:)(  .*|\\s+(.+))?$",
+      "captures": {
+        "2": { "name": "variable.other.key.tjson" },
+        "3": { "name": "punctuation.separator.key-value.tjson" },
+        "5": {
+          "patterns": [
+            { "include": "#quoted-string" },
+            { "include": "#number" },
+            { "include": "#boolean-null" },
+            { "include": "#empty-container" },
+            { "include": "#bare-string-value" }
+          ]
+        }
+      }
+    },
+    "bare-value": {
+      "comment": "standalone value line (array element, etc.)",
+      "match": "^(\\s+)(.+)$",
+      "captures": {
+        "2": {
+          "patterns": [
+            { "include": "#quoted-string" },
+            { "include": "#number" },
+            { "include": "#boolean-null" },
+            { "include": "#empty-container" },
+            { "include": "#bare-string-value" }
+          ]
+        }
+      }
+    },
+    "empty-container": {
+      "comment": "empty array [] or empty object {}",
+      "match": "\\[\\]|\\{\\}",
+      "name": "constant.language.empty.tjson"
+    },
+    "bare-string-value": {
+      "comment": "unquoted string value — anything that isn't a number, boolean, or null",
+      "match": "[^\\s\"'`\\[\\{][^\\s]*",
+      "name": "string.unquoted.tjson"
+    },
+    "quoted-string": {
+      "name": "string.quoted.double.tjson",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.tjson" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.string.end.tjson" } },
+      "patterns": [
+        { "name": "constant.character.escape.tjson", "match": "\\\\." }
+      ]
+    },
+    "number": {
+      "name": "constant.numeric.tjson",
+      "match": "-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?"
+    },
+    "boolean-null": {
+      "name": "constant.language.tjson",
+      "match": "\\b(true|false|null)\\b"
+    }
+  }
+}

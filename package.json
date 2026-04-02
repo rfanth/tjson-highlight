@@ -1,0 +1,27 @@
+{
+  "name": "tjson-highlight",
+  "displayName": "TJSON",
+  "description": "Syntax highlighting for TJSON (Text JSON)",
+  "version": "0.0.1",
+  "author": "R.F. Anthracite <rfa@rfanth.com>",
+  "homepage": "https://textjson.org",
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "tjson",
+        "aliases": ["TJSON", "tjson"],
+        "extensions": [".tjson"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tjson",
+        "scopeName": "source.tjson",
+        "path": "./tjson.tmLanguage.json"
+      }
+    ]
+  }
+}
