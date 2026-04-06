@@ -1,0 +1,7 @@
+# Local/scratch
+/local/
+/.local/
+
+# VS Code extension packaging
+*.vsix
+node_modules/
