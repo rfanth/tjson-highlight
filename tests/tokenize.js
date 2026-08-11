@@ -66,6 +66,10 @@ function isUnscopedWhitespace(text, scopes) {
 }
 
 async function tokenizeFile(filePath) {
+    return tokenizeText(fs.readFileSync(filePath, 'utf8'));
+}
+
+async function tokenizeText(text) {
     const registry = createRegistry();
     const grammar = await registry.loadGrammar(ROOT_SCOPE);
 
@@ -73,7 +77,6 @@ async function tokenizeFile(filePath) {
         throw new Error(`Failed to load grammar for ${ROOT_SCOPE}`);
     }
 
-    const text = fs.readFileSync(filePath, 'utf8');
     const lines = text.split(/\r?\n/);
     const out = [];
     let ruleStack = textmate.INITIAL;
@@ -102,7 +105,7 @@ async function tokenizeFile(filePath) {
     return out.join('\n') + '\n';
 }
 
-module.exports = { tokenizeFile };
+module.exports = { tokenizeFile, tokenizeText };
 
 if (require.main === module) {
     const target = process.argv[2];

@@ -21,13 +21,25 @@
 //      learned one opener and not the other, which no single-fixture golden
 //      would show.
 
+//   4. Rejections (rejections.json). Lines the specification forbids. Every
+//      fixture is valid by design -- they come out of the generator -- so
+//      nothing else here can catch the failure mode where the grammar paints
+//      illegal input as though it were correct. That is not theoretical: a
+//      comma-packed bare string array rendered as a clean three-element array
+//      for as long as the rules for it stayed behind after v0.5.0 removed the
+//      construct. Each entry is checked twice, and the first check is of the
+//      test's own premise: the bundled parser must actually reject the line, so
+//      an entry that becomes legal in a later release fails loudly instead of
+//      quietly asserting nothing.
+
 const fs = require('fs');
 const path = require('path');
-const { tokenizeFile } = require('./tokenize');
+const { tokenizeFile, tokenizeText } = require('./tokenize');
 
 const FIXTURES_DIR = path.join(__dirname, 'fixtures');
 const GOLDEN_DIR = path.join(__dirname, 'golden');
 const EXPECTATIONS_PATH = path.join(__dirname, 'expectations.json');
+const REJECTIONS_PATH = path.join(__dirname, 'rejections.json');
 
 const UPDATE = process.argv.includes('--update');
 
@@ -142,6 +154,77 @@ function checkMarkedTwins(fixtures, dumps) {
     return failures;
 }
 
+// Illegal input must not be painted as though it were correct. The parser in
+// vendor/ is the authority on what is illegal, so it is consulted rather than
+// trusted to a hand-kept list -- see the note at the top of this file.
+async function checkRejections() {
+    const cases = JSON.parse(fs.readFileSync(REJECTIONS_PATH, 'utf8'));
+    let failures = 0;
+
+    let tjson;
+    try {
+        tjson = await import('../vendor/index.js');
+    } catch (error) {
+        console.log('');
+        console.log(`REJECTIONS  could not load the parser in vendor/: ${error}`);
+        console.log('            these checks verify their own premise against it, so they');
+        console.log('            are reported as failures rather than skipped.');
+        return cases.length;
+    }
+
+    for (const check of cases) {
+        // Premise: the parser really does refuse this line.
+        let parsed = false;
+        try {
+            tjson.parse(check.line + '\n');
+            parsed = true;
+        } catch {
+            // Expected.
+        }
+
+        if (parsed) {
+            console.log('');
+            console.log(`REJECTION STALE  ${JSON.stringify(check.line)}`);
+            console.log(`      ${check.note}`);
+            console.log('      the parser accepts this now, so the entry asserts nothing');
+            failures += 1;
+            continue;
+        }
+
+        // The grammar must not hand it a bare-string scope.
+        const dump = await tokenizeText(check.line + '\n');
+        const offenders = [];
+
+        for (const tokens of parseDump(dump).values()) {
+            for (const token of tokens) {
+                if (
+                    token.text === check.text &&
+                    // The dump drops the '.tjson' suffix, as expectations.json does.
+                    token.scopes.split(' ').includes('string.unquoted.bare')
+                ) {
+                    offenders.push(token);
+                }
+            }
+        }
+
+        if (offenders.length > 0) {
+            console.log('');
+            console.log(`REJECTION  ${JSON.stringify(check.line)}`);
+            console.log(`      ${check.note}`);
+            console.log(
+                `      but ${JSON.stringify(check.text)} is scoped "${offenders[0].scopes}"`
+            );
+            failures += 1;
+        }
+    }
+
+    console.log('');
+    console.log(
+        `rejections: ${cases.length - failures}/${cases.length} illegal line(s) refused a bare-string scope`
+    );
+    return failures;
+}
+
 // parseDump keys tokens by line; the twin check wants one flat ordered stream.
 function flatten(byLine) {
     const out = [];
@@ -253,8 +336,9 @@ async function main() {
     }
 
     const twinFailures = checkMarkedTwins(fixtures, dumps);
+    const rejectionFailures = await checkRejections();
 
-    if (failures.length > 0 || goldenFailures > 0 || twinFailures > 0) {
+    if (failures.length > 0 || goldenFailures > 0 || twinFailures > 0 || rejectionFailures > 0) {
         process.exitCode = 1;
     }
 }

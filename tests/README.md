@@ -21,8 +21,9 @@ node tokenize.js fixtures/tables.tjson    # inspect one file
 | `fixtures/*.tjson` | The TJSON actually fed to the grammar |
 | `golden/*.txt` | Full token dumps, committed, diffed on every run |
 | `expectations.json` | Hand-written claims about what specific tokens must mean |
+| `rejections.json` | Illegal lines that must NOT be highlighted as valid |
 
-## Two layers, on purpose
+## Layers, on purpose
 
 **Goldens** catch drift. Any change anywhere in the grammar shows up as a diff,
 including in places nobody wrote an assertion for. They record what the grammar
@@ -33,6 +34,19 @@ of fixture F, the token whose text is T must carry scope S." This matters
 because a golden blessed while a bug was present looks clean forever;
 an expectation keeps failing until the bug is actually fixed. Failing
 expectations here are a live bug list, not test breakage.
+
+**Twins** check that a `-marked` fixture tokenizes identically to its unmarked
+counterpart, so a rule that learned one opener and not the other is caught.
+
+**Rejections** cover what no fixture can. Every fixture is valid by
+construction, so nothing above can catch the grammar painting *illegal* input as
+though it were correct — and that is the failure mode that actually happened
+here twice: a comma-packed bare string array, and bare strings ending in a
+comma or a pipe, both rendering as clean valid strings while the parser refused
+them. Each entry is checked twice, and the first check is of the test's own
+premise: the parser in `vendor/` must genuinely reject the line, so an entry
+that becomes legal in some later release fails loudly rather than quietly
+asserting nothing.
 
 ## Fixtures are generated, not imagined
 

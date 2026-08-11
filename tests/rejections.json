@@ -1,0 +1,47 @@
+[
+  {
+    "line": "  k: abc,",
+    "text": "abc,",
+    "note": "a bare string cannot end with a comma"
+  },
+  {
+    "line": "  k: ,abc",
+    "text": ",abc",
+    "note": "a bare string cannot begin with a comma"
+  },
+  {
+    "line": "  k: abc|",
+    "text": "abc|",
+    "note": "a bare string cannot end with a pipe"
+  },
+  {
+    "line": "  k: abc\"",
+    "text": "abc\"",
+    "note": "a bare string cannot end with a quotelike character"
+  },
+  {
+    "line": "  k: abc'",
+    "text": "abc'",
+    "note": "an apostrophe is quotelike, so it cannot end one either"
+  },
+  {
+    "line": "  k: abc`",
+    "text": "abc`",
+    "note": "a backtick is quotelike, and would also read as a multiline opener"
+  },
+  {
+    "line": "  | ,abc  |",
+    "text": ",abc",
+    "note": "a table cell holds a bare string and the same first-character rule applies in it"
+  },
+  {
+    "line": "  | abc,  |",
+    "text": "abc,",
+    "note": "and the same last-character rule applies in it"
+  },
+  {
+    "line": "  tags:   a,  b",
+    "text": "a,",
+    "note": "no bare element may sit in a comma-packed array as of spec v0.5.0"
+  }
+]
