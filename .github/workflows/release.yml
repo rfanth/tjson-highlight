@@ -49,45 +49,45 @@ jobs:
     # `convert` and `magick` does not exist, so the script's own check would
     # fail the build. Debian 13 carries imagemagick 7.1.1.
     #
-    # The suite is pinned rather than tracking `debian:stable`, because the icon
-    # is rasterised by whatever ImageMagick and SVG renderer the image provides,
-    # and a released icon should change only when someone decides it should.
-    # Debian does not move package majors inside a stable suite, so this floats
-    # over point releases and security updates while `magick` stays 7.x, whereas
-    # `stable` would step to the next Debian on its release day and take the
-    # renderer with it. Bump this deliberately, and look at the icon when doing so.
+    # The suite is pinned rather than tracking `debian:stable`, which would step
+    # to the next Debian on its release day. Debian does not move package majors
+    # inside a stable suite, so this floats over point releases while `magick`
+    # stays 7.x. Bump it deliberately.
     container: debian:13
 
     steps:
       # A bare container has none of this. git is for actions/checkout, which
       # otherwise falls back to a tarball download; xz-utils is for
       # actions/setup-node, whose Node distributions are .tar.xz.
+      #
+      # libmagickcore-*-extra carries the svg coder module, and it is a recommends
+      # rather than a depends -- so with --no-install-recommends, ImageMagick ends
+      # up with no SVG support at all. It does not say so: it falls through to the
+      # rsvg-convert delegate that delegates.xml declares and Debian does not
+      # install, and the render dies on a missing temp file. Naming the package
+      # keeps that from depending on whether recommends were pulled.
       - name: Install build tools
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            git ca-certificates curl xz-utils imagemagick python3
+            git ca-certificates curl xz-utils python3 \
+            imagemagick libmagickcore-7.q16-10-extra
 
-      # ImageMagick rasterises SVG through librsvg when rsvg-convert is present
-      # and through its own renderer when it is not, and the two do not agree --
-      # notably the internal one drops strokes, which is why regen-icons.sh
-      # checks that the marker colour survived at all. Either renderer can
-      # produce a correct icon; what must not happen is the choice changing
-      # without anyone deciding it should, since both paths exit 0 and the
-      # difference shows up only in the pixels. librsvg is not a dependency of
-      # the imagemagick package, so its absence is the expected state -- which
-      # is a reason to assert it, not to assume it.
-      - name: Assert the SVG renderer is unchanged
+      # Which renderer draws the icon is a property of the release, so it is
+      # checked rather than assumed. The icon is drawn for the internal XML
+      # renderer; librsvg would be a different rasteriser reached a different way.
+      - name: Check the SVG renderer
         run: |
-          if command -v rsvg-convert >/dev/null; then
-            echo "rsvg-convert is present, so ImageMagick will rasterise" >&2
-            echo "icon.svg through librsvg instead of its internal renderer." >&2
-            echo "That changes build/icon.png. Decide which renderer this" >&2
-            echo "project uses and make every build use that one." >&2
+          svg="$(magick -list format | grep -E '^ *SVG\*? ')"
+          echo "${svg}"
+          if [[ "${svg}" != *XML* ]]; then
+            echo "ImageMagick is not using its internal XML renderer for SVG." >&2
+            echo "build/icon.png would not match the icon as designed." >&2
             exit 1
           fi
+        shell: bash
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Guards against a future mistake rather than against an attacker: someone
       # with write access can always delete this step. What it stops is the quiet
@@ -129,7 +129,7 @@ jobs:
           echo "no publishing commands in .github/workflows/"
         shell: bash
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -200,9 +200,17 @@ jobs:
 
       # Re-runnable: a release created by an earlier run of the same tag is
       # updated rather than being a hard error.
+      #
+      # GH_REPO because this job never checks the repository out -- it only needs
+      # the .vsix the build job made. gh works out which repository it is talking
+      # to from a git remote, so without it there is nothing here to work it out
+      # from, and gh fails with "not a git repository". Naming the repository is
+      # the fix; checking out a whole tree just to leave a .git lying around for
+      # gh to read would not be.
       - name: Attach the .vsix to the release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           tag="${GITHUB_REF_NAME}"
           vsix="$(ls dist/*.vsix)"

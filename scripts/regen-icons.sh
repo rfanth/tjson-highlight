@@ -52,7 +52,7 @@ python3 -c "import xml.dom.minidom,sys; xml.dom.minidom.parse(sys.argv[1])" "${S
 # any machine, and a published icon can be checked against the SVG it claims to
 # come from. ImageMagick's own exclusion does all of it; nothing here edits the
 # PNG afterwards.
-STRIP=(-define png:exclude-chunk=date,tIME,tEXt,iTXt,zTXt)
+STRIP=(-define "png:exclude-chunk=date,tIME,tEXt,iTXt,zTXt")
 
 magick -background none "${SRC}" "${STRIP[@]}" -resize 128x128 "${OUT}/icon.png"
 for size in 32 180 256 512; do

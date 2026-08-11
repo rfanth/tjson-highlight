@@ -8,6 +8,7 @@ vendor/*.d.ts
 # relative path, so excluding it ships a vendor/ that cannot load. It looks like
 # build output and is not.
 editors/**
+.github/**
 .gitignore
 .vscodeignore
 icon.svg
