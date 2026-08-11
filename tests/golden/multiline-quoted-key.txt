@@ -1,0 +1,31 @@
+   1 |   "other key: really": ``
+     | 0-2      "  "                               meta.object.entry.multiline punctuation.whitespace.indent
+     | 2-3      "\""                               meta.object.entry.multiline punctuation.definition.string.begin
+     | 3-20     "other key: really"                meta.object.entry.multiline entity.other.attribute-name.quoted
+     | 20-21    "\""                               meta.object.entry.multiline punctuation.definition.string.end
+     | 21-22    ":"                                meta.object.entry.multiline punctuation.separator.key-value
+     | 22-23    " "                                meta.object.entry.multiline punctuation.definition.string.begin
+     | 23-25    "``"                               meta.object.entry.multiline punctuation.definition.string.begin
+   2 | | Line one
+     | 0-2      "| "                               meta.object.entry.multiline punctuation.definition.string.multiline-margin
+     | 2-10     "Line one"                         meta.object.entry.multiline markup.raw.block
+   3 | | Line two
+     | 0-2      "| "                               meta.object.entry.multiline punctuation.definition.string.multiline-margin
+     | 2-10     "Line two"                         meta.object.entry.multiline markup.raw.block
+   4 | | 
+     | 0-2      "| "                               meta.object.entry.multiline punctuation.definition.string.multiline-margin
+   5 |    ``
+     | 0-2      "  "                               meta.object.entry.multiline
+     | 2-3      " "                                meta.object.entry.multiline punctuation.definition.string.end
+     | 3-5      "``"                               meta.object.entry.multiline punctuation.definition.string.end
+   6 |   after: sanity    num:42
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "after"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+     | 8-9      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 9-15     "sanity"                           meta.object.entry meta.bare-string string.unquoted.bare
+     | 15-19    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 19-22    "num"                              meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 22-23    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 23-25    "42"                               meta.object.entry meta.object.entry.inline constant.numeric
+   7 | 

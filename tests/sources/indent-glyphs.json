@@ -1,0 +1,26 @@
+{
+  "deep": {
+    "a": {
+      "b": {
+        "c": {
+          "d": {
+            "e": {
+              "f": {
+                "g": {
+                  "h": {
+                    "i": {
+                      "j": {
+                        "k": "deep value here that is long"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "after": "sanity"
+}

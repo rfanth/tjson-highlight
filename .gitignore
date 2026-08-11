@@ -5,3 +5,7 @@
 # VS Code extension packaging
 *.vsix
 node_modules/
+
+# Build output. icon.svg at the root is the source; scripts/regen-icons.sh
+# renders it into here, and vsce runs that automatically before packaging.
+/build/

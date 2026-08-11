@@ -1,0 +1,51 @@
+// MULTILINE STRING scaffolds.
+//
+// A multiline string is the one construct in TJSON you cannot type in a single
+// motion: the closing fence belongs on its own line, at exactly one legal
+// column, and the parser rejects the document until both fences exist. So it is
+// the one construct worth a snippet.
+//
+// WHY THE CLOSING FENCE LANDS RIGHT WITHOUT ANY BOOKKEEPING
+//
+// Two facts do it between them. The closing fence sits at the construct's
+// structural indent + 1 -- a constant, at every depth, not a function of
+// nesting. And VS Code prepends the current line's leading whitespace to every
+// snippet line after the first. So one literal space in front of the closing
+// fence is correct whether the key is at indent 2, 4, or 20, and the snippet
+// never has to know which.
+//
+// WHY THERE IS NO ``` SCAFFOLD HERE
+//
+// That same prepending is why the transparent form cannot be a snippet. Its
+// body is raw -- indentation in front of a body line IS part of the string --
+// so VS Code indenting the body to match the key would silently prepend those
+// spaces to the content. The other two forms are immune: the `` form's `| `
+// margin is stripped wherever it sits, and the ` form's content indent is
+// defined as n+2 and stripped at exactly that width. Scaffolding ``` needs a
+// plain edit from the extension, which does no indentation normalisation.
+//
+// Both bodies open with two content lines rather than one, so what lands is
+// already a legal document -- the specification requires a multiline string to
+// hold at least one real linefeed, and one body line has none.
+{
+	"Multiline string (bold)": {
+		"prefix": ["multiline", "``"],
+		"body": [
+			"``",
+			"| $1",
+			"| $2",
+			" ``$0"
+		],
+		"description": "Bold multiline string. The '| ' margin makes every body line visibly part of the string and keeps leading spaces in the content unambiguous."
+	},
+	"Multiline string (minimal)": {
+		"prefix": ["multiline-minimal", "`"],
+		"body": [
+			"`",
+			"  $1",
+			"  $2",
+			" `$0"
+		],
+		"description": "Minimal multiline string. Body sits at n+2 with no margin -- the quietest of the three forms to read."
+	}
+}

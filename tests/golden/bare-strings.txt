@@ -1,0 +1,34 @@
+   1 |   note: a value that mentions // mid-string    pipe: a | b
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-6      "note"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+     | 7-8      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 8-43     "a value that mentions // mid-string" meta.object.entry meta.bare-string string.unquoted.bare
+     | 43-47    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 47-51    "pipe"                             meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 51-52    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 52-53    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 53-58    "a | b"                            meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+   2 |   trailing slash: ends with slash /
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-16     "trailing slash"                   meta.object.entry entity.other.attribute-name.bare
+     | 16-17    ":"                                meta.object.entry punctuation.separator.key-value
+     | 17-18    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 18-35    "ends with slash /"                meta.object.entry meta.bare-string string.unquoted.bare
+   3 |   url: http://example.com/path    tick: has ` tick    comma sep: one, two, three
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-5      "url"                              meta.object.entry entity.other.attribute-name.bare
+     | 5-6      ":"                                meta.object.entry punctuation.separator.key-value
+     | 6-7      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 7-30     "http://example.com/path"          meta.object.entry meta.bare-string string.unquoted.bare
+     | 30-34    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 34-38    "tick"                             meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 38-39    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 39-40    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 40-50    "has ` tick"                       meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+     | 50-54    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 54-63    "comma sep"                        meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 63-64    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 64-65    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 65-80    "one, two, three"                  meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+   4 | 

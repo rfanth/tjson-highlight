@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="TJSON">
+  <title>TJSON</title>
+  <!--
+    A key, a colon and the separator space that opens its value form the crossbar;
+    two fold markers hang beneath as the stem, each holding the gap that `/ ` requires
+    before its continuation. Only one space is lit: the one after the colon, which is
+    the bare string's opening quote and therefore carries meaning. The gaps after the
+    fold markers are left empty on purpose — they are marker syntax, not data, and
+    drawing them the same way would claim they mean the same thing. The T is what the
+    structure happens to look like, not a letter placed here.
+
+    The fold slashes are filled polygons with circles for the caps rather than
+    stroked paths. They are the same shape, but a stroke has to be interpreted by
+    the renderer, and rasterisers without librsvg drop it silently — the slashes
+    vanished from the PNG while every filled shape survived. A filled outline
+    renders identically everywhere.
+  -->
+  <rect width="128" height="128" rx="26" fill="#0f1117"/>
+
+  <!-- key : ␣ value -->
+  <rect x="16" y="24" width="34" height="14" rx="3.5" fill="#6fa8ff"/>
+  <circle cx="60" cy="27.5" r="4.5" fill="#e6e9f0"/>
+  <circle cx="60" cy="34.5" r="4.5" fill="#e6e9f0"/>
+  <rect x="68" y="24" width="7" height="14" rx="2" fill="#4dd8e6" opacity="0.5"/>
+  <rect x="79" y="24" width="33" height="14" rx="3.5" fill="#7fd98c"/>
+
+  <!-- / ␣ continuation -->
+  <polygon points="54.75,78.77 68.75,54.77 59.25,49.23 45.25,73.23" fill="#4dd8e6"/>
+  <circle cx="50" cy="76" r="5.5" fill="#4dd8e6"/>
+  <circle cx="64" cy="52" r="5.5" fill="#4dd8e6"/>
+  <rect x="81" y="58" width="31" height="13" rx="3.5" fill="#7fd98c"/>
+
+  <!-- / ␣ continuation -->
+  <polygon points="54.75,114.77 68.75,90.77 59.25,85.23 45.25,109.23" fill="#4dd8e6"/>
+  <circle cx="50" cy="112" r="5.5" fill="#4dd8e6"/>
+  <circle cx="64" cy="88" r="5.5" fill="#4dd8e6"/>
+  <rect x="81" y="94" width="18" height="13" rx="3.5" fill="#7fd98c"/>
+</svg>

@@ -1,0 +1,38 @@
+   1 | // connection settings
+     | 0-22     "// connection settings"           comment.line.double-slash
+   2 |   host: localhost
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-6      "host"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+     | 7-8      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 8-17     "localhost"                        meta.object.entry meta.bare-string string.unquoted.bare
+   3 |   port:5432
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-6      "port"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+     | 7-11     "5432"                             meta.object.entry constant.numeric
+   4 |   // set to 0 for no limit
+     | 0-26     "  // set to 0 for no limit"       comment.line.double-slash
+   5 |   timeout:30
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-9      "timeout"                          meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+     | 10-12    "30"                               meta.object.entry constant.numeric
+   6 |   nested:
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "nested"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+   7 |     // indented comment inside an object
+     | 0-40     "    // indented comment inside an object" comment.line.double-slash
+   8 |     inner:1
+     | 0-4      "    "                             meta.object.entry punctuation.whitespace.indent
+     | 4-9      "inner"                            meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+     | 10-11    "1"                                meta.object.entry constant.numeric
+   9 |     note: a value that mentions // mid-string
+     | 0-4      "    "                             meta.object.entry punctuation.whitespace.indent
+     | 4-8      "note"                             meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 10-45    "a value that mentions // mid-string" meta.object.entry meta.bare-string string.unquoted.bare
+  10 | 

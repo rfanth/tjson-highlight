@@ -1,0 +1,17 @@
+   1 |   longtext: This is a very long value that will certainly need to be folded
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-10     "longtext"                         meta.object.entry entity.other.attribute-name.bare
+     | 10-11    ":"                                meta.object.entry punctuation.separator.key-value
+     | 11-12    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 12-75    "This is a very long value that will certainly need to be folded" meta.object.entry meta.bare-string string.unquoted.bare
+   2 |   /  because it exceeds the wrap width by a good margin indeed yes
+     | 0-2      "  "                               meta.fold.continuation punctuation.whitespace.indent
+     | 2-4      "/ "                               meta.fold.continuation punctuation.definition.fold-marker
+     | 4-5      " "                                meta.fold.continuation punctuation.definition.string.begin.bare
+     | 5-66     "because it exceeds the wrap width by a good margin indeed yes" meta.fold.continuation string.unquoted.fold-continuation
+   3 |   trailing:7
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-10     "trailing"                         meta.object.entry entity.other.attribute-name.bare
+     | 10-11    ":"                                meta.object.entry punctuation.separator.key-value
+     | 11-12    "7"                                meta.object.entry constant.numeric
+   4 | 

@@ -1,0 +1,3 @@
+  longtext: This is a very long value that will certainly need to be folded
+  /  because it exceeds the wrap width by a good margin indeed yes
+  trailing:7

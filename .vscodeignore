@@ -1,0 +1,15 @@
+# What not to put in the .vsix. The extension is the grammar, the language
+# configuration and the manifest; everything else is for working on it.
+tests/**
+local/**
+scripts/**
+vendor/*.d.ts
+# NOT vendor/snippets/ — the parser's glue imports value_transport.js from it by
+# relative path, so excluding it ships a vendor/ that cannot load. It looks like
+# build output and is not.
+editors/**
+.gitignore
+.vscodeignore
+icon.svg
+build/**
+!build/icon.png

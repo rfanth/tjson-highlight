@@ -1,18 +1,59 @@
 {
   "name": "tjson-highlight",
   "displayName": "TJSON",
-  "description": "Syntax highlighting for TJSON (Text JSON)",
+  "description": "TJSON (Text JSON): syntax highlighting, error checking, and JSON conversion",
+  "icon": "build/icon.png",
   "version": "0.0.1",
   "author": "R.F. Anthracite <rfa@rfanth.com>",
-  "homepage": "https://textjson.org",
-  "engines": { "vscode": "^1.75.0" },
-  "categories": ["Programming Languages"],
+  "publisher": "rfanth",
+  "license": "BSD-3-Clause",
+  "homepage": "https://textjson.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rfanth/tjson-highlight.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rfanth/tjson-highlight/issues"
+  },
+  "keywords": [
+    "tjson",
+    "textjson",
+    "syntax",
+    "highlighting",
+    "json",
+    "data format",
+    "converter",
+    "formatter"
+  ],
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Linters"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onLanguage:json"
+  ],
+  "scripts": {
+    "vscode:prepublish": "./scripts/regen-icons.sh"
+  },
   "contributes": {
     "languages": [
       {
         "id": "tjson",
-        "aliases": ["TJSON", "tjson"],
-        "extensions": [".tjson"],
+        "aliases": [
+          "TJSON",
+          "TextJSON",
+          "tjson",
+          "textjson"
+        ],
+        "extensions": [
+          ".tjson",
+          ".textjson"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -22,6 +63,399 @@
         "scopeName": "source.tjson",
         "path": "./tjson.tmLanguage.json"
       }
-    ]
+    ],
+    "snippets": [
+      {
+        "language": "tjson",
+        "path": "./snippets/tjson.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[tjson]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.useTabStops": false,
+        "editor.trimAutoWhitespace": false,
+        "files.trimTrailingWhitespace": false
+      }
+    },
+    "configuration": {
+      "title": "TJSON",
+      "properties": {
+        "tjson.render.canonical": {
+          "default": null,
+          "markdownDescription": "Start from a preset canonical configuration (one pair per line, no packing, no tables).\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.wrapWidth": {
+          "default": null,
+          "markdownDescription": "Wrap width in columns. 0 means unlimited. Values between 1 and 19 are clamped to 20.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.forceMarkers": {
+          "default": null,
+          "markdownDescription": "Force explicit `[` / `{` indent markers on arrays and objects, even for single-step indents that would normally be implicit.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.bareStrings": {
+          "default": null,
+          "markdownDescription": "How a string value announces itself: `\"quoted\"` always quotes; `\"bare\"` uses the unquoted form where the spec permits, its opening quote being the space in front of it; `\"marked\"` writes that space as `_` so it can be seen. Default: `\"bare\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "quoted",
+            "bare",
+            "marked",
+            "prefer",
+            "none"
+          ]
+        },
+        "tjson.render.bareKeys": {
+          "default": null,
+          "markdownDescription": "Whether to use bare (unquoted) object keys. Default: `\"prefer\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "prefer",
+            "none"
+          ]
+        },
+        "tjson.render.inlineObjects": {
+          "default": null,
+          "markdownDescription": "Allow packing multiple key-value pairs onto one line. Default: `true`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.inlineArrays": {
+          "default": null,
+          "markdownDescription": "Allow packing multiple array items onto one line. Default: `true`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.multilineStrings": {
+          "default": null,
+          "markdownDescription": "Allow multiline string blocks for strings containing newlines. Default: `true`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.multilineStyle": {
+          "default": null,
+          "markdownDescription": "Multiline block style. Default: `\"bold\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "floating",
+            "bold",
+            "boldFloating",
+            "boldLight",
+            "transparent",
+            "light",
+            "foldingQuotes"
+          ]
+        },
+        "tjson.render.multilineMinLines": {
+          "default": null,
+          "markdownDescription": "Minimum number of lines before a multiline block is used. Default: `1`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.multilineMaxLines": {
+          "default": null,
+          "markdownDescription": "@experimental Maximum number of lines in a minimal (`) multiline block before falling back to a bold style multiline block (``), applies with multilineStyle: \"floating\" only. The idea is that we want to reserve a minimal style multiline for short multilines only for \"floating\". \"light\" has a similar look with no max line fallback. Default: `10`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.tables": {
+          "default": null,
+          "markdownDescription": "Enable table rendering for uniform arrays-of-objects. Default: `true`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.tableFold": {
+          "default": null,
+          "markdownDescription": "@experimental Allow folding long table rows across continuation lines. (Not currently implemented. It is probably best to avoid this option for now as it may change.) Default: `false`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tjson.render.tableUnindentStyle": {
+          "default": null,
+          "markdownDescription": "Whether to push wide tables toward the left margin. Independent of `indentGlyphStyle`. Default: `\"auto\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "left",
+            "auto",
+            "floating",
+            "none"
+          ]
+        },
+        "tjson.render.tableMinRows": {
+          "default": null,
+          "markdownDescription": "Minimum rows required to render a table. Default: `3`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.tableMinColumns": {
+          "default": null,
+          "markdownDescription": "Minimum columns required to render a table. Default: `3`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.tableMinSimilarity": {
+          "default": null,
+          "markdownDescription": "Minimum fraction [0–1] of rows sharing a column before it's included. Default: `0.8`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.tableColumnMaxWidth": {
+          "default": null,
+          "markdownDescription": "If any column's content width (including the leading space on bare string values) exceeds this value, the table is abandoned and falls back to block layout. `0` means no limit. Default: `40`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.stringArrayStyle": {
+          "default": null,
+          "markdownDescription": "How to pack short-string arrays onto one line. Default: `\"preferComma\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "spaces",
+            "preferSpaces",
+            "comma",
+            "preferComma",
+            "none"
+          ]
+        },
+        "tjson.render.fold": {
+          "default": null,
+          "markdownDescription": "Set all fold styles at once. More specific fold options override this if also set.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "fixed",
+            "none"
+          ]
+        },
+        "tjson.render.numberFoldStyle": {
+          "default": null,
+          "markdownDescription": "How to fold long numbers across lines. Default: `\"auto\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "fixed",
+            "none"
+          ]
+        },
+        "tjson.render.stringBareFoldStyle": {
+          "default": null,
+          "markdownDescription": "How to fold bare strings. Default: `\"auto\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "fixed",
+            "none"
+          ]
+        },
+        "tjson.render.stringQuotedFoldStyle": {
+          "default": null,
+          "markdownDescription": "How to fold quoted strings. Default: `\"auto\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "fixed",
+            "none"
+          ]
+        },
+        "tjson.render.stringMultilineFoldStyle": {
+          "default": null,
+          "markdownDescription": "How to fold multiline string continuation lines. Default: `\"none\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "fixed",
+            "none"
+          ]
+        },
+        "tjson.render.indentGlyphStyle": {
+          "default": null,
+          "markdownDescription": "Whether to wrap deeply-nested objects and arrays in `/<` `/>` glyphs to reduce visual depth. Independent of `tableUnindentStyle`. Default: `\"auto\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "fixed",
+            "none"
+          ]
+        },
+        "tjson.render.indentGlyphMarkerStyle": {
+          "default": null,
+          "markdownDescription": "Where to place the opening `/<` glyph. Default: `\"compact\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "compact",
+            "separate"
+          ]
+        },
+        "tjson.render.kvPackMultiple": {
+          "default": null,
+          "markdownDescription": "@experimental Spacing multiplier between packed key-value pairs. Valid values: 1–4 (clamped); actual spaces = value × 2. Default: `2` (4 spaces). May be changed or removed in a future version.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tjson.render.eol": {
+          "default": null,
+          "markdownDescription": "Line ending used between output lines. `\"lf\"` (default) keeps output canonical and byte-identical across platforms; `\"crlf\"` is for a consumer that genuinely requires CRLF. Being on Windows is not itself a reason, as most Windows tooling handles LF, and TJSON survives whole-file LF↔CRLF conversion, so a consumer can usually convert on its own. Default: `\"lf\"`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "lf",
+            "crlf"
+          ]
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "tjson.preview.toTjson",
+        "title": "Preview as TJSON",
+        "category": "TJSON"
+      },
+      {
+        "command": "tjson.preview.toJson",
+        "title": "Preview as JSON",
+        "category": "TJSON"
+      },
+      {
+        "command": "tjson.preview.reformat",
+        "title": "Preview Reformatted with My Render Settings",
+        "category": "TJSON"
+      },
+      {
+        "command": "tjson.openPreviewAsFile",
+        "title": "Open Preview as an Editable File",
+        "category": "TJSON"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "tjson.preview.toTjson",
+          "when": "resourceLangId == json && resourceScheme != tjson-preview",
+          "group": "navigation"
+        },
+        {
+          "command": "tjson.preview.toJson",
+          "when": "resourceLangId == tjson && resourceScheme != tjson-preview",
+          "group": "navigation"
+        },
+        {
+          "command": "tjson.preview.reformat",
+          "when": "resourceLangId == tjson && resourceScheme != tjson-preview",
+          "group": "navigation"
+        },
+        {
+          "command": "tjson.openPreviewAsFile",
+          "when": "resourceScheme == tjson-preview",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "tjson.preview.toTjson",
+          "when": "resourceLangId == json"
+        },
+        {
+          "command": "tjson.preview.toJson",
+          "when": "resourceLangId == tjson && resourceScheme != tjson-preview"
+        },
+        {
+          "command": "tjson.preview.reformat",
+          "when": "resourceLangId == tjson && resourceScheme != tjson-preview"
+        },
+        {
+          "command": "tjson.openPreviewAsFile",
+          "when": "resourceScheme == tjson-preview"
+        }
+      ]
+    }
   }
 }

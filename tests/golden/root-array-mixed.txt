@@ -1,0 +1,15 @@
+   1 |    str
+     | 0-2      "  "                               meta.bare-string punctuation.whitespace.indent
+     | 2-3      " "                                meta.bare-string punctuation.definition.string.begin.bare
+     | 3-6      "str"                              meta.bare-string string.unquoted.bare
+   2 |   1
+     | 0-2      "  "                               meta.array.inline punctuation.whitespace.indent
+     | 2-3      "1"                                meta.array.inline constant.numeric
+   3 |    str2
+     | 0-2      "  "                               meta.bare-string punctuation.whitespace.indent
+     | 2-3      " "                                meta.bare-string punctuation.definition.string.begin.bare
+     | 3-7      "str2"                             meta.bare-string string.unquoted.bare
+   4 |   true
+     | 0-2      "  "                               meta.array.inline punctuation.whitespace.indent
+     | 2-6      "true"                             meta.array.inline constant.language.boolean
+   5 | 

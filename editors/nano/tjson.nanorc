@@ -13,7 +13,7 @@
 ##                 then add to ~/.nanorc or ~/.config/nano/nanorc:
 ##                   include "~/.config/nano/tjson.nanorc"
 
-syntax "tjson" "\.tjson$"
+syntax "tjson" "\.(tjson|textjson)$"
 
 ## ── Numbers ───────────────────────────────────────────────────────────────────
 ## grammar: constant.numeric.tjson
@@ -38,10 +38,21 @@ color brightmagenta "false"
 color magenta "null"
 
 ## ── Bare string array elements ────────────────────────────────────────────────
-## grammar: ^((?:  )*)((?:\[ )*) (.+)$  →  string.unquoted.bare.tjson
-## Even indent + "[ " markers + mandatory space separator + content
-## The leading space distinguishes bare strings from numeric/boolean scalars above
-color green "^(  )*(\[\ )* .+$"
+## grammar: ^((?:  )*)((?:\[ )*)[ _](.+)$  →  string.unquoted.bare.tjson
+## Even indent + "[ " markers + mandatory opener + content
+## The opener distinguishes bare strings from numeric/boolean scalars above. It is
+## a space by default, or "_" when a generator was asked to make it visible
+## (tjson --bare-strings marked); the two are interchangeable and may be mixed.
+## Not the space before an indent glyph — "_/<" is not a glyph, so line 77 keeps
+## its literal space.
+##
+## The "[^ ]" is load-bearing. Written as "[ _].+$" the indent itself can supply
+## the opener: "(  )*" backtracks to zero pairs, the first space of "  1" is taken
+## for the opening quote and the whole line goes green -- and because this rule is
+## after the number, boolean and null rules, green won. Requiring a non-space
+## after the opener forces the opener to the odd column a bare string really sits
+## at, which no even-indented scalar can reach.
+color green "^(  )*(\[\ )*[ _][^ ].*$"
 
 ## ── Fold-continuation lines ───────────────────────────────────────────────────
 ## grammar: ^((?:  )*)(/ )(.*)$

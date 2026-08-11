@@ -1,0 +1,26 @@
+{
+  "flags": [
+    true,
+    false,
+    null,
+    true
+  ],
+  "mixed": [
+    1,
+    "two",
+    true,
+    null
+  ],
+  "tags": [
+    "rust",
+    "wasm",
+    "json"
+  ],
+  "nums": [
+    1,
+    2.5,
+    -30000000000.0,
+    0,
+    -0.5
+  ]
+}

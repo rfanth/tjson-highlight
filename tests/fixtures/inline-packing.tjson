@@ -1,0 +1,10 @@
+  "are extra quotes \"\" necessary?":null    why? because: yes    a+b=c:1
+  at@sign:2
+  "has:colon":20    "has|pipe":21    hash#tag:3    star*:4    semi;colon:5
+  less<than:6
+  tilde~:7    comment-looking value:"//not a comment"
+  slashy:"/ still not a fold"
+  pipey: a | b    backtick value: has ` tick    unicode key 何でも: 🎉 emoji value
+  1Express . (any'(thing)): 何でも/🎉
+  empties:
+    arr:[]    obj:{}

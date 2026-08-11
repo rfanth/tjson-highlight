@@ -1,0 +1,19 @@
+   1 |   a:1        b: two        c:true        d:null
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-3      "a"                                meta.object.entry entity.other.attribute-name.bare
+     | 3-4      ":"                                meta.object.entry punctuation.separator.key-value
+     | 4-5      "1"                                meta.object.entry constant.numeric
+     | 5-13     "        "                         meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 13-14    "b"                                meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 14-15    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 15-16    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 16-19    "two"                              meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+     | 19-27    "        "                         meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 27-28    "c"                                meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 28-29    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 29-33    "true"                             meta.object.entry meta.object.entry.inline constant.language.boolean
+     | 33-41    "        "                         meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 41-42    "d"                                meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 42-43    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 43-47    "null"                             meta.object.entry meta.object.entry.inline constant.language.null
+   2 | 

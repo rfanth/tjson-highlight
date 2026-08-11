@@ -1,6 +1,6 @@
-# Text JSON (TJSON) Syntax Highlighting for VS Code / VSCodium
+# Text JSON (TJSON) for VS Code / VSCodium
 
-Adds syntax highlighting for `.tjson` files.
+Syntax highlighting, error checking, and JSON ↔ TJSON conversion for `.tjson` files.
 
 [https://github.com/rfanth/tjson-highlight](https://github.com/rfanth/tjson-highlight)
 
@@ -24,6 +24,44 @@ Copy this folder to your extensions directory:
 
 Then reload the window: `Ctrl+Shift+P` → `Developer: Reload Window`.
 Disabling and reenabling this extension also seems to have a similar effect if you don't want to reload everything.
+
+### Converting between JSON and TJSON
+
+Three commands, on the editor title bar and in the command palette:
+
+| command | on | gives |
+| --- | --- | --- |
+| **Preview as TJSON** | a `.json` file | that JSON rendered as TJSON |
+| **Preview as JSON** | a `.tjson` file | the data as plain JSON |
+| **Preview Reformatted with My Render Settings** | a `.tjson` file | the same document re-rendered your way |
+
+A preview opens beside the source, is read-only, and re-renders as you edit the
+original. It is a real editor pane rather than a webview, so it is highlighted by
+this extension's own grammar in your own theme, and it is checked by this
+extension's own error reporting — if a preview ever shows a squiggle, the
+renderer produced something the parser will not accept.
+
+**Open Preview as an Editable File** turns the pane you are looking at into an
+ordinary untitled document you can edit and save.
+
+Reformatting goes through JSON, and JSON has no comments, so comments do not
+survive it. The command warns first when the file actually has any.
+
+### Render settings
+
+Every option the renderer takes is available as `tjson.render.*` — wrap width,
+multiline style, whether to use tables and the thresholds for them, string and
+key quoting, fold styles, and the rest.
+
+**Anything you do not set is left alone.** Unset settings are not sent to the
+renderer at all, so the library's own default applies — including after an
+upgrade that changes one. This extension never writes a default into your
+settings, and never passes one on your behalf, which is why every setting shows
+`null` until you pick something.
+
+The settings are generated from the bundled library's own type definitions, so
+their names, their dropdown values and their documentation always describe the
+parser actually shipped rather than the one that shipped when this was written.
 
 ### Customizing Colors
 
@@ -66,6 +104,14 @@ theme is untouched everywhere else.
         "scope": "string.unquoted.bare.tjson",
         "settings": { "foreground": "#a6e3a1" }
       },
+      // The single space that opens a bare string — a one-sided quote.
+      // It is the entire type marker: `k:true` is the boolean, `k: true`
+      // is the string "true". Dim by default like any other delimiter;
+      // see "Making the bare string marker more visible" below to light it up.
+      {
+        "scope": "punctuation.definition.string.begin.bare.tjson",
+        "settings": { "foreground": "#6c7086" }
+      },
       {
         "scope": "string.unquoted.fold-continuation.tjson",
         "settings": { "foreground": "#a6e3a1" }
@@ -88,10 +134,6 @@ theme is untouched everywhere else.
       // ── Booleans & null ───────────────────────────────────────────────
       {
         "scope": "constant.language.boolean.tjson",
-        "settings": { "foreground": "#cba6f7" }
-      },
-      {
-        "scope": "constant.language.tjson",
         "settings": { "foreground": "#cba6f7" }
       },
       {
@@ -165,9 +207,28 @@ theme is untouched everywhere else.
         "settings": { "foreground": "#6c7086" }
       },
 
+      // ── Separators ────────────────────────────────────────────────────
+      // The gap between inline-packed pairs.
+      {
+        "scope": "punctuation.separator.inline.tjson",
+        "settings": { "foreground": "#6c7086" }
+      },
+      // Between elements of a packed array.
+      {
+        "scope": "punctuation.separator.array.tjson",
+        "settings": { "foreground": "#6c7086" }
+      },
+      // Commas inside MINIMAL JSON. Named for what is known: whether one
+      // separates array elements or object pairs depends on the enclosing
+      // bracket, which the grammar rule cannot see from where it matches.
+      {
+        "scope": "punctuation.separator.embedded.tjson",
+        "settings": { "foreground": "#6c7086" }
+      },
+
       // ── Table pipes ───────────────────────────────────────────────────
       {
-        "scope": "keyword.operator.table.pipe.tjson",
+        "scope": "punctuation.separator.table.tjson",
         "settings": { "foreground": "#6c7086" }
       }
 
@@ -180,9 +241,65 @@ theme is untouched everywhere else.
 > palette (a dark Catppuccin Mocha-inspired scheme). Swap any hex value to
 > taste — all rules are scoped to `.tjson` so nothing else changes.
 
+### Making the bare string marker more visible
+
+In TJSON, location is king.  It shows you where something is in the data, and
+what type it is.  There are indent markers and bare space markers that you can
+print or not, but the space tells you the meaning, not the thing that may or
+may not be printed there.  If you don't understand this, it reads fine as text,
+but if you do, you can see the type information too without being overwhelmed
+by visual noise.  The space is never invisible, you can always see the gap, and
+that's the point.  That being said, sometimes making the space more obvious is
+useful.
+
+In TJSON an extra leading space distinguishes between a bare string and other
+values — `active:true` is the boolean, `active: true` is the string `"true"`.
+That distinction is load-bearing and easy to spot with the naked eye once you
+know what to look for.  However, sometimes it's nice to see the space as a
+character, either to help you understand what the spaces mean, or because you
+are doing something that makes types extra important and justifies the
+visual noise.  Because space comes first, when we put something in the space
+to mark it, we simply replace the space, we never actually move any text.
+
+This can be done on the screen by using the highlighter, or in the text by
+using the format itself.
+
+#### Using the highlighter
+
+If you would rather not change the document, but still want to make the marker
+jump off the page, the grammar scopes the opener as
+`punctuation.definition.string.begin.bare.tjson`, so you can make it show up in
+your editor alone. Give it a background instead of a foreground:
+
+```jsonc
+{
+  "scope": "punctuation.definition.string.begin.bare.tjson",
+  "settings": { "background": "#a6e3a133" }
+}
+```
+
+Every bare string in the file now begins with a faint tinted column, and a
+value that looks like `true` but isn't reads as a string at a glance. This is
+off by default because it is a preference, not a correction — the highlighting
+is right either way.  It can help you see the indent however, and you might
+want to give it a shot.
+
+Note there is deliberately no matching `...string.end.bare` scope. A bare
+string ends with two spaces or an eol.  In an underpadded table, it can end
+with a `|`, but this is not something a generator will ever do on its own —
+the spec forbids a pipe inside a bare string in a table precisely so that an
+underpadded table still parses deterministically.
+
+#### Using the generator
+
+If you control the generator, `tjson --bare-strings marked` writes that opening
+space as `_` — `active:_true` — which puts the distinction in the file itself
+for every reader, editor or not. The two openers are interchangeable, occupy
+the same column, and can be mixed freely; the grammar treats them identically.
+
 ## Install - nano
 
-### Note: The nano highlighter isnt nearly as good as the VSCode/VSCodium one
+### Note: The nano highlighter isn't nearly as good as the VSCode/VSCodium one
 
 The textmate grammar file can cover just about anything TJSON can spit out, but
 nano's highlighting rules are not that sophisticated, so it is quite possible
@@ -211,5 +328,49 @@ sudo cp editors/nano/tjson.nanorc /usr/share/nano/tjson.nanorc
 ```
 
 System-wide files in `/usr/share/nano/` are loaded automatically — no `include` line needed.
+
+## How to use the highlighter on your own web page
+
+The grammar is an ordinary TextMate grammar, so the engine VS Code runs it with
+also runs in a browser. You need no TJSON-specific library: `tjson.tmLanguage.json`
+from this repo, plus `vscode-textmate` and `vscode-oniguruma`.
+
+**[docs/web-highlighting.md](docs/web-highlighting.md)** has the scope-to-CSS
+mapping, the palette textjson.com uses, and where to run the tokenizer.
+
+Most pages are showing something they already hold as JSON, and for those the
+TJSON view is one call — with the reader downloading none of the machinery:
+
+```js
+const html = await renderJson(JSON.stringify(data));   // -> highlighted spans
+```
+
+The two forms carry the same data and convert both ways, so whichever one is
+your source of truth, the other is always one conversion away. Rendering on
+demand also means your render settings live in one place and every page picks
+them up at once.
+
+Where the TJSON *is* the artifact — an example in documentation, a snippet in a
+spec — [`scripts/render-html.mjs`](scripts/render-html.mjs) highlights the text
+itself just as well:
+
+```sh
+node scripts/render-html.mjs sample.tjson --fragment > sample.html
+```
+
+Either way a highlighted block is around 750 bytes gzipped, against roughly 181K
+for the tokenizer, grammar and regex engine needed to produce the same pixels in
+the browser — which is the whole page-load budget on a phone.
+
+If the reader is *typing* TJSON, the engine has to be client-side. The guide
+shows how to load it lazily, behind a dynamic import triggered by an
+IntersectionObserver, so a page pays only when something is about to be coloured
+and never during load. Parse-error reporting in the browser works the same way,
+and is a separate download only pages with an editor need.
+
+The mapping lives in [docs/scope-classes.json](docs/scope-classes.json) rather
+than in prose so it can be checked: `tests/scopes.js` asserts that every scope
+the grammar emits resolves to a class and that no rule in it is dead. Copy it
+as-is.
 
 ---

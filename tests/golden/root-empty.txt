@@ -1,0 +1,4 @@
+   1 | {}
+     | 0-1      "{"                                punctuation.definition.dictionary.begin
+     | 1-2      "}"                                punctuation.definition.dictionary.end
+   2 | 

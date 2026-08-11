@@ -1,0 +1,6 @@
+  team:
+    |name    |age  |role    |active  |pet    |
+    |_Alice  |30   |_admin  |true    |null   |
+    |_Bob    |25   |_user   |false   |_dog   |
+    |_Carol  |35   |_user   |true    |_cat   |
+    |_Dave   |41   |_ops    |false   |_fish  |

@@ -1,0 +1,82 @@
+   1 |   "are extra quotes \"\" necessary?":null    why? because: yes    a+b=c:1
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-3      "\""                               meta.object.entry punctuation.definition.string.begin
+     | 3-35     "are extra quotes \\\"\\\" necessary?" meta.object.entry entity.other.attribute-name.quoted
+     | 35-36    "\""                               meta.object.entry punctuation.definition.string.end
+     | 36-37    ":"                                meta.object.entry punctuation.separator.key-value
+     | 37-41    "null"                             meta.object.entry constant.language.null
+     | 41-58    "    why? because:"                meta.object.entry
+     | 58-59    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 59-62    "yes"                              meta.object.entry meta.bare-string string.unquoted.bare
+     | 62-72    "    a+b=c:"                       meta.object.entry
+     | 72-73    "1"                                meta.object.entry constant.numeric
+   2 |   at@sign:2
+     | 0-12     "  at@sign:2"                      -
+   3 |   "has:colon":20    "has|pipe":21    hash#tag:3    star*:4    semi;colon:5
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-3      "\""                               meta.object.entry punctuation.definition.string.begin
+     | 3-12     "has:colon"                        meta.object.entry entity.other.attribute-name.quoted
+     | 12-13    "\""                               meta.object.entry punctuation.definition.string.end
+     | 13-14    ":"                                meta.object.entry punctuation.separator.key-value
+     | 14-16    "20"                               meta.object.entry constant.numeric
+     | 16-20    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 20-21    "\""                               meta.object.entry meta.object.entry.inline punctuation.definition.string.begin
+     | 21-29    "has|pipe"                         meta.object.entry meta.object.entry.inline entity.other.attribute-name.quoted
+     | 29-30    "\""                               meta.object.entry meta.object.entry.inline punctuation.definition.string.end
+     | 30-31    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 31-33    "21"                               meta.object.entry meta.object.entry.inline constant.numeric
+     | 33-46    "    hash#tag:"                    meta.object.entry
+     | 46-47    "3"                                meta.object.entry constant.numeric
+     | 47-57    "    star*:"                       meta.object.entry
+     | 57-58    "4"                                meta.object.entry constant.numeric
+     | 58-73    "    semi;colon:"                  meta.object.entry
+     | 73-74    "5"                                meta.object.entry constant.numeric
+   4 |   less<than:6
+     | 0-14     "  less<than:6"                    -
+   5 |   tilde~:7    comment-looking value:"//not a comment"
+     | 0-54     "  tilde~:7    comment-looking value:\"//not a comment\"" -
+   6 |   slashy:"/ still not a fold"
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "slashy"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     "\""                               meta.object.entry punctuation.definition.string.begin
+     | 10-28    "/ still not a fold"               meta.object.entry string.quoted.double
+     | 28-29    "\""                               meta.object.entry punctuation.definition.string.end
+   7 |   pipey: a | b    backtick value: has ` tick    unicode key 何でも: 🎉 emoji value
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "pipey"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+     | 8-9      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 9-14     "a | b"                            meta.object.entry meta.bare-string string.unquoted.bare
+     | 14-18    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 18-32    "backtick value"                   meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 32-33    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 33-34    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 34-44    "has ` tick"                       meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+     | 44-48    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 48-63    "unicode key 何でも"                  meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 63-64    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 64-65    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 65-79    "🎉 emoji value"                   meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+   8 |   1Express . (any'(thing)): 何でも/🎉
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-26     "1Express . (any'(thing))"         meta.object.entry entity.other.attribute-name.bare
+     | 26-27    ":"                                meta.object.entry punctuation.separator.key-value
+     | 27-28    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 28-34    "何でも/🎉"                           meta.object.entry meta.bare-string string.unquoted.bare
+   9 |   empties:
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-9      "empties"                          meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+  10 |     arr:[]    obj:{}
+     | 0-4      "    "                             meta.object.entry punctuation.whitespace.indent
+     | 4-7      "arr"                              meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+     | 8-9      "["                                meta.object.entry punctuation.definition.array.begin
+     | 9-10     "]"                                meta.object.entry punctuation.definition.array.end
+     | 10-14    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 14-17    "obj"                              meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 17-18    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 18-19    "{"                                meta.object.entry meta.object.entry.inline punctuation.definition.dictionary.begin
+     | 19-20    "}"                                meta.object.entry meta.object.entry.inline punctuation.definition.dictionary.end
+  11 | 

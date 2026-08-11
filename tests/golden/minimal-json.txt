@@ -1,0 +1,251 @@
+   1 |   scalars:[1,-2.5,1e3,0,true,false,null]
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-9      "scalars"                          meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+     | 10-11    "["                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 11-12    "1"                                meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 12-13    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 13-17    "-2.5"                             meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 17-18    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 18-21    "1e3"                              meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 21-22    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 22-23    "0"                                meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 23-24    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 24-28    "true"                             meta.object.entry meta.embedded.minimal-json constant.language.boolean
+     | 28-29    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 29-34    "false"                            meta.object.entry meta.embedded.minimal-json constant.language.boolean
+     | 34-35    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 35-39    "null"                             meta.object.entry meta.embedded.minimal-json constant.language.null
+     | 39-40    "]"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+   2 |   nested:[[1,2],{"a":[true,null]}]
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "nested"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     "["                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 10-11    "["                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 11-12    "1"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json constant.numeric
+     | 12-13    ","                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.separator.embedded
+     | 13-14    "2"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json constant.numeric
+     | 14-15    "]"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 15-16    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 16-17    "{"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 17-18    "\""                               meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.definition.string.begin
+     | 18-19    "a"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 19-20    "\""                               meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.definition.string.end
+     | 20-21    ":"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.separator.key-value
+     | 21-22    "["                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 22-26    "true"                             meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json meta.embedded.minimal-json constant.language.boolean
+     | 26-27    ","                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json meta.embedded.minimal-json punctuation.separator.embedded
+     | 27-31    "null"                             meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json meta.embedded.minimal-json constant.language.null
+     | 31-32    "]"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 32-33    "}"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 33-34    "]"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+   3 |   object:{"a":1,"b":"two"}
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "object"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     "{"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 10-11    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 11-12    "a"                                meta.object.entry meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 12-13    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 13-14    ":"                                meta.object.entry meta.embedded.minimal-json punctuation.separator.key-value
+     | 14-15    "1"                                meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 15-16    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 16-17    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 17-18    "b"                                meta.object.entry meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 18-19    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 19-20    ":"                                meta.object.entry meta.embedded.minimal-json punctuation.separator.key-value
+     | 20-21    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 21-24    "two"                              meta.object.entry meta.embedded.minimal-json string.quoted.double
+     | 24-25    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 25-26    "}"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+   4 |   strings:["a, b","c\"d","[not]","10:30:00","\u00e9"]
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-9      "strings"                          meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+     | 10-11    "["                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 11-12    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 12-16    "a, b"                             meta.object.entry meta.embedded.minimal-json string.quoted.double
+     | 16-17    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 17-18    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 18-19    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 19-20    "c"                                meta.object.entry meta.embedded.minimal-json string.quoted.double
+     | 20-22    "\\\""                             meta.object.entry meta.embedded.minimal-json string.quoted.double constant.character.escape
+     | 22-23    "d"                                meta.object.entry meta.embedded.minimal-json string.quoted.double
+     | 23-24    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 24-25    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 25-26    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 26-31    "[not]"                            meta.object.entry meta.embedded.minimal-json string.quoted.double
+     | 31-32    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 32-33    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 33-34    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 34-42    "10:30:00"                         meta.object.entry meta.embedded.minimal-json string.quoted.double
+     | 42-43    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 43-44    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 44-45    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 45-51    "\\u00e9"                          meta.object.entry meta.embedded.minimal-json string.quoted.double constant.character.escape
+     | 51-52    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 52-53    "]"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+   5 |   empties:{"list":[],"map":{}}
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-9      "empties"                          meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+     | 10-11    "{"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 11-12    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 12-16    "list"                             meta.object.entry meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 16-17    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 17-18    ":"                                meta.object.entry meta.embedded.minimal-json punctuation.separator.key-value
+     | 18-19    "["                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 19-20    "]"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 20-21    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 21-22    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 22-25    "map"                              meta.object.entry meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 25-26    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 26-27    ":"                                meta.object.entry meta.embedded.minimal-json punctuation.separator.key-value
+     | 27-28    "{"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 28-29    "}"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 29-30    "}"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+   6 |   "quoted key":{"k":[1]}
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-3      "\""                               meta.object.entry punctuation.definition.string.begin
+     | 3-13     "quoted key"                       meta.object.entry entity.other.attribute-name.quoted
+     | 13-14    "\""                               meta.object.entry punctuation.definition.string.end
+     | 14-15    ":"                                meta.object.entry punctuation.separator.key-value
+     | 15-16    "{"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 16-17    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.begin
+     | 17-18    "k"                                meta.object.entry meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 18-19    "\""                               meta.object.entry meta.embedded.minimal-json punctuation.definition.string.end
+     | 19-20    ":"                                meta.object.entry meta.embedded.minimal-json punctuation.separator.key-value
+     | 20-21    "["                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 21-22    "1"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json constant.numeric
+     | 22-23    "]"                                meta.object.entry meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 23-24    "}"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+   7 |   packed:[1,2]    after:1
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "packed"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     "["                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 10-11    "1"                                meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 11-12    ","                                meta.object.entry meta.embedded.minimal-json punctuation.separator.embedded
+     | 12-13    "2"                                meta.object.entry meta.embedded.minimal-json constant.numeric
+     | 13-14    "]"                                meta.object.entry meta.embedded.minimal-json punctuation.section.embedded
+     | 14-18    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 18-23    "after"                            meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 23-24    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 24-25    "1"                                meta.object.entry meta.object.entry.inline constant.numeric
+   8 |   not json: [1,2]
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-10     "not json"                         meta.object.entry entity.other.attribute-name.bare
+     | 10-11    ":"                                meta.object.entry punctuation.separator.key-value
+     | 11-12    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 12-17    "[1,2]"                            meta.object.entry meta.bare-string string.unquoted.bare
+   9 |   bare with brackets: a [b] c
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-20     "bare with brackets"               meta.object.entry entity.other.attribute-name.bare
+     | 20-21    ":"                                meta.object.entry punctuation.separator.key-value
+     | 21-22    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 22-29    "a [b] c"                          meta.object.entry meta.bare-string string.unquoted.bare
+  10 |   elements:
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-10     "elements"                         meta.object.entry entity.other.attribute-name.bare
+     | 10-11    ":"                                meta.object.entry punctuation.separator.key-value
+  11 |     [1,2]
+     | 0-4      "    "                             punctuation.whitespace.indent
+     | 4-5      "["                                meta.embedded.minimal-json punctuation.section.embedded
+     | 5-6      "1"                                meta.embedded.minimal-json constant.numeric
+     | 6-7      ","                                meta.embedded.minimal-json punctuation.separator.embedded
+     | 7-8      "2"                                meta.embedded.minimal-json constant.numeric
+     | 8-9      "]"                                meta.embedded.minimal-json punctuation.section.embedded
+  12 |     {"a":1}
+     | 0-4      "    "                             punctuation.whitespace.indent
+     | 4-5      "{"                                meta.embedded.minimal-json punctuation.section.embedded
+     | 5-6      "\""                               meta.embedded.minimal-json punctuation.definition.string.begin
+     | 6-7      "a"                                meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 7-8      "\""                               meta.embedded.minimal-json punctuation.definition.string.end
+     | 8-9      ":"                                meta.embedded.minimal-json punctuation.separator.key-value
+     | 9-10     "1"                                meta.embedded.minimal-json constant.numeric
+     | 10-11    "}"                                meta.embedded.minimal-json punctuation.section.embedded
+  13 |   table:
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "table"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+  14 |     |name  |tags      |n    |
+     | 0-4      "    "                             meta.table.row punctuation.whitespace.indent
+     | 4-5      "|"                                meta.table.row punctuation.separator.table
+     | 5-9      "name"                             meta.table.row entity.other.attribute-name.bare
+     | 9-11     "  "                               meta.table.row
+     | 11-12    "|"                                meta.table.row punctuation.separator.table
+     | 12-16    "tags"                             meta.table.row entity.other.attribute-name.bare
+     | 16-22    "      "                           meta.table.row
+     | 22-23    "|"                                meta.table.row punctuation.separator.table
+     | 23-24    "n"                                meta.table.row entity.other.attribute-name.bare
+     | 24-28    "    "                             meta.table.row
+     | 28-29    "|"                                meta.table.row punctuation.separator.table
+  15 |     | Bob  |[1,2]     |29   |
+     | 0-4      "    "                             meta.table.row punctuation.whitespace.indent
+     | 4-5      "|"                                meta.table.row punctuation.separator.table
+     | 5-6      " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
+     | 6-9      "Bob"                              meta.table.row meta.bare-string string.unquoted.bare
+     | 9-11     "  "                               meta.table.row
+     | 11-12    "|"                                meta.table.row punctuation.separator.table
+     | 12-13    "["                                meta.table.row meta.embedded.minimal-json punctuation.section.embedded
+     | 13-14    "1"                                meta.table.row meta.embedded.minimal-json constant.numeric
+     | 14-15    ","                                meta.table.row meta.embedded.minimal-json punctuation.separator.embedded
+     | 15-16    "2"                                meta.table.row meta.embedded.minimal-json constant.numeric
+     | 16-17    "]"                                meta.table.row meta.embedded.minimal-json punctuation.section.embedded
+     | 17-22    "     "                            meta.table.row
+     | 22-23    "|"                                meta.table.row punctuation.separator.table
+     | 23-25    "29"                               meta.table.row constant.numeric
+     | 25-28    "   "                              meta.table.row
+     | 28-29    "|"                                meta.table.row punctuation.separator.table
+  16 |     | Carol|["a, b"]  |31   |
+     | 0-4      "    "                             meta.table.row punctuation.whitespace.indent
+     | 4-5      "|"                                meta.table.row punctuation.separator.table
+     | 5-6      " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
+     | 6-11     "Carol"                            meta.table.row meta.bare-string string.unquoted.bare
+     | 11-12    "|"                                meta.table.row punctuation.separator.table
+     | 12-13    "["                                meta.table.row meta.embedded.minimal-json punctuation.section.embedded
+     | 13-14    "\""                               meta.table.row meta.embedded.minimal-json punctuation.definition.string.begin
+     | 14-18    "a, b"                             meta.table.row meta.embedded.minimal-json string.quoted.double
+     | 18-19    "\""                               meta.table.row meta.embedded.minimal-json punctuation.definition.string.end
+     | 19-20    "]"                                meta.table.row meta.embedded.minimal-json punctuation.section.embedded
+     | 20-22    "  "                               meta.table.row
+     | 22-23    "|"                                meta.table.row punctuation.separator.table
+     | 23-25    "31"                               meta.table.row constant.numeric
+     | 25-28    "   "                              meta.table.row
+     | 28-29    "|"                                meta.table.row punctuation.separator.table
+  17 |     | Dave | [1,2]    |51   |
+     | 0-4      "    "                             meta.table.row punctuation.whitespace.indent
+     | 4-5      "|"                                meta.table.row punctuation.separator.table
+     | 5-6      " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
+     | 6-10     "Dave"                             meta.table.row meta.bare-string string.unquoted.bare
+     | 10-11    " "                                meta.table.row
+     | 11-12    "|"                                meta.table.row punctuation.separator.table
+     | 12-13    " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
+     | 13-18    "[1,2]"                            meta.table.row meta.bare-string string.unquoted.bare
+     | 18-22    "    "                             meta.table.row
+     | 22-23    "|"                                meta.table.row punctuation.separator.table
+     | 23-25    "51"                               meta.table.row constant.numeric
+     | 25-28    "   "                              meta.table.row
+     | 28-29    "|"                                meta.table.row punctuation.separator.table
+  18 |     | Eve  |{"k":[]}  |7    |
+     | 0-4      "    "                             meta.table.row punctuation.whitespace.indent
+     | 4-5      "|"                                meta.table.row punctuation.separator.table
+     | 5-6      " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
+     | 6-9      "Eve"                              meta.table.row meta.bare-string string.unquoted.bare
+     | 9-11     "  "                               meta.table.row
+     | 11-12    "|"                                meta.table.row punctuation.separator.table
+     | 12-13    "{"                                meta.table.row meta.embedded.minimal-json punctuation.section.embedded
+     | 13-14    "\""                               meta.table.row meta.embedded.minimal-json punctuation.definition.string.begin
+     | 14-15    "k"                                meta.table.row meta.embedded.minimal-json entity.other.attribute-name.quoted
+     | 15-16    "\""                               meta.table.row meta.embedded.minimal-json punctuation.definition.string.end
+     | 16-17    ":"                                meta.table.row meta.embedded.minimal-json punctuation.separator.key-value
+     | 17-18    "["                                meta.table.row meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 18-19    "]"                                meta.table.row meta.embedded.minimal-json meta.embedded.minimal-json punctuation.section.embedded
+     | 19-20    "}"                                meta.table.row meta.embedded.minimal-json punctuation.section.embedded
+     | 20-22    "  "                               meta.table.row
+     | 22-23    "|"                                meta.table.row punctuation.separator.table
+     | 23-24    "7"                                meta.table.row constant.numeric
+     | 24-28    "    "                             meta.table.row
+     | 28-29    "|"                                meta.table.row punctuation.separator.table
+  19 | 

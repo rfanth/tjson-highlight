@@ -1,0 +1,104 @@
+{
+	// `//` alone on its line is the only comment form TJSON has; there is no
+	// trailing-comment and no block form. This is what makes Ctrl+/ work.
+	"comments": {
+		"lineComment": "//"
+	},
+
+	// Declared so that jump-to-bracket and the cursor-adjacent match highlight
+	// work inside MINIMAL JSON (`k:[1,2]`) and the empty containers `[]` and
+	// `{}` -- the only places TJSON has a genuine pair.
+	"brackets": [
+		["{", "}"],
+		["[", "]"]
+	],
+
+	// ...but colorization is switched off. `[ ` and `{ ` at the start of a line
+	// are markers with no closing counterpart, so bracket pair colorization
+	// would paint every marker as an unmatched bracket. Matching without
+	// colouring is the useful half.
+	"colorizedBracketPairs": [],
+
+	// Nothing auto-closes. A backtick opens a MULTILINE STRING whose closer belongs
+	// on its own line, so pairing it produces ``, a different multiline style rather
+	// than a closed pair. Brackets are worse: `[ ` and `{ ` at the start of a line
+	// are nesting markers with no closing counterpart, and that is the commonest
+	// reason to type one -- so auto-closing inserts a `]` that has to be deleted
+	// every time. It is only correct for `k:[]` and `k:[1,2]`, and VS Code cannot
+	// condition auto-closing on position. Quotes go too, for consistency: a quoted
+	// key or string is typed as often as not by wrapping an existing word, which
+	// surroundingPairs below handles without ever inserting anything unasked.
+	"autoClosingPairs": [],
+
+	"surroundingPairs": [
+		["\"", "\""],
+		["[", "]"],
+		["{", "}"]
+	],
+
+	// Word navigation and double click. Close to the BARE KEY set from the
+	// specification, minus the space: a key may contain single spaces, but
+	// including one here would make Ctrl+arrow leap over whole multi-word keys
+	// and whole bare string values, which costs more than selecting a complete
+	// key by double click gains.
+	"wordPattern": {
+		"pattern": "(-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)|([\\p{L}\\p{N}][\\p{L}\\p{N}_()/'.!%&;@$#*=?^~<>+-]*)",
+		"flags": "u"
+	},
+
+	// A key alone on its line opens a container, so the next line indents by
+	// one level. This is only correct because the extension pins
+	// editor.tabSize to 2 for TJSON; at the editor default of 4 it would
+	// indent by 4 in a 2-space format -- worse than having no rule at all and
+	// letting the previous line's indentation carry, which is what VS Code
+	// does when a language configures nothing.
+	//
+	// The first character is written as "not one of the things that cannot
+	// start a key" rather than as \p{L}\p{N}, because these patterns are
+	// applied without the unicode flag -- an explicit class would exclude
+	// every key beginning with a non-ASCII letter. Quoted keys open containers
+	// too, and are matched as an alternative.
+	//
+	// Indentation only ever decreases at an explicit `/>` glyph: TJSON closes
+	// containers by outdenting, with no closing token to key on.
+	//
+	// Comments are exempt from re-indentation entirely. The specification lets
+	// a comment sit at any indentation and says it does not affect the indent
+	// level, so the editor has no business moving one.
+	"indentationRules": {
+		"increaseIndentPattern": "^(  )*(\\[ )*(\\{ )?([^\\s:{}\\[\\]|/\"'`,][^:]*|\"(?:[^\"\\\\]|\\\\.)*\"):\\s*$",
+		"decreaseIndentPattern": "^(  )* />\\s*$",
+		"unIndentedLinePattern": "^\\s*//"
+	},
+
+	// The one shape `indentationRules` cannot express: a key whose value is
+	// pushed to the next line by an opening indent glyph, so the colon is not
+	// the last thing on the line. The plain `key:` case is left to
+	// `increaseIndentPattern` -- two rules covering one case is how they come
+	// to disagree.
+	"onEnterRules": [
+		{
+			"beforeText": {
+				"pattern": "^(  )*(\\[ )*(\\{ )?([\\p{L}\\p{N}][\\p{L}\\p{N}_()/'.!%&, ;@$#*=?^~<>+-]*|\"(?:[^\"\\\\]|\\\\.)*\"): /<\\s*$",
+				"flags": "u"
+			},
+			"action": { "indentAction": "indent" }
+		}
+	],
+
+	// TJSON is an indentation format, so folding follows indentation the way it
+	// does in Python or YAML: every container folds at its key. Without
+	// offSide only the indent glyphs below would fold, and those are rare, so
+	// folding would appear not to work at all.
+	//
+	// The glyph markers are kept as well, because an indent glyph moves the
+	// indentation without a key opening a block, which indentation alone
+	// cannot see.
+	"folding": {
+		"offSide": true,
+		"markers": {
+			"start": "^(  )* /<\\s*$",
+			"end": "^(  )* />\\s*$"
+		}
+	}
+}

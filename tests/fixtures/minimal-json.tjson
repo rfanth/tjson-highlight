@@ -1,0 +1,18 @@
+  scalars:[1,-2.5,1e3,0,true,false,null]
+  nested:[[1,2],{"a":[true,null]}]
+  object:{"a":1,"b":"two"}
+  strings:["a, b","c\"d","[not]","10:30:00","\u00e9"]
+  empties:{"list":[],"map":{}}
+  "quoted key":{"k":[1]}
+  packed:[1,2]    after:1
+  not json: [1,2]
+  bare with brackets: a [b] c
+  elements:
+    [1,2]
+    {"a":1}
+  table:
+    |name  |tags      |n    |
+    | Bob  |[1,2]     |29   |
+    | Carol|["a, b"]  |31   |
+    | Dave | [1,2]    |51   |
+    | Eve  |{"k":[]}  |7    |

@@ -1,0 +1,4 @@
+   1 |  just a string
+     | 0-1      " "                                meta.bare-string punctuation.definition.string.begin.bare
+     | 1-14     "just a string"                    meta.bare-string string.unquoted.bare
+   2 | 

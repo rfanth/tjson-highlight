@@ -1,0 +1,64 @@
+   1 |   flags:  true, false, null, true
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "flags"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+     | 8-10     "  "                               meta.object.entry meta.array.inline
+     | 10-14    "true"                             meta.object.entry meta.array.inline constant.language.boolean
+     | 14-15    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 15-16    " "                                meta.object.entry meta.array.inline
+     | 16-21    "false"                            meta.object.entry meta.array.inline constant.language.boolean
+     | 21-22    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 22-23    " "                                meta.object.entry meta.array.inline
+     | 23-27    "null"                             meta.object.entry meta.array.inline constant.language.null
+     | 27-28    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 28-29    " "                                meta.object.entry meta.array.inline
+     | 29-33    "true"                             meta.object.entry meta.array.inline constant.language.boolean
+   2 |   mixed:
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "mixed"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+   3 |     1
+     | 0-4      "    "                             meta.array.inline punctuation.whitespace.indent
+     | 4-5      "1"                                meta.array.inline constant.numeric
+   4 |      two
+     | 0-4      "    "                             meta.bare-string punctuation.whitespace.indent
+     | 4-5      " "                                meta.bare-string punctuation.definition.string.begin.bare
+     | 5-8      "two"                              meta.bare-string string.unquoted.bare
+   5 |     true, null
+     | 0-4      "    "                             meta.array.inline punctuation.whitespace.indent
+     | 4-8      "true"                             meta.array.inline constant.language.boolean
+     | 8-9      ","                                meta.array.inline punctuation.separator.array
+     | 9-10     " "                                meta.array.inline
+     | 10-14    "null"                             meta.array.inline constant.language.null
+   6 |   tags:   rust   wasm   json
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-6      "tags"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+     | 7-9      "  "                               meta.object.entry meta.array.inline
+     | 9-10     " "                                meta.object.entry meta.array.inline punctuation.definition.string.begin.bare
+     | 10-14    "rust"                             meta.object.entry meta.array.inline string.unquoted.bare
+     | 14-16    "  "                               meta.object.entry meta.array.inline meta.bare-string punctuation.separator.array
+     | 16-17    " "                                meta.object.entry meta.array.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 17-21    "wasm"                             meta.object.entry meta.array.inline meta.bare-string string.unquoted.bare
+     | 21-23    "  "                               meta.object.entry meta.array.inline meta.bare-string punctuation.separator.array
+     | 23-24    " "                                meta.object.entry meta.array.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 24-28    "json"                             meta.object.entry meta.array.inline meta.bare-string string.unquoted.bare
+   7 |   nums:  1, 2.5, -30000000000.0, 0, -0.5
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-6      "nums"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+     | 7-9      "  "                               meta.object.entry meta.array.inline
+     | 9-10     "1"                                meta.object.entry meta.array.inline constant.numeric
+     | 10-11    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 11-12    " "                                meta.object.entry meta.array.inline
+     | 12-15    "2.5"                              meta.object.entry meta.array.inline constant.numeric
+     | 15-16    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 16-17    " "                                meta.object.entry meta.array.inline
+     | 17-31    "-30000000000.0"                   meta.object.entry meta.array.inline constant.numeric
+     | 31-32    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 32-33    " "                                meta.object.entry meta.array.inline
+     | 33-34    "0"                                meta.object.entry meta.array.inline constant.numeric
+     | 34-35    ","                                meta.object.entry meta.array.inline punctuation.separator.array
+     | 35-36    " "                                meta.object.entry meta.array.inline
+     | 36-40    "-0.5"                             meta.object.entry meta.array.inline constant.numeric
+   8 | 

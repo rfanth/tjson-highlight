@@ -1,0 +1,11 @@
+   1 |    a   b   c
+     | 0-2      "  "                               meta.array.inline punctuation.whitespace.indent
+     | 2-3      " "                                meta.array.inline punctuation.definition.string.begin.bare
+     | 3-4      "a"                                meta.array.inline string.unquoted.bare
+     | 4-6      "  "                               meta.array.inline meta.bare-string punctuation.separator.array
+     | 6-7      " "                                meta.array.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 7-8      "b"                                meta.array.inline meta.bare-string string.unquoted.bare
+     | 8-10     "  "                               meta.array.inline meta.bare-string punctuation.separator.array
+     | 10-11    " "                                meta.array.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 11-12    "c"                                meta.array.inline meta.bare-string string.unquoted.bare
+   2 | 

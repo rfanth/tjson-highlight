@@ -1,0 +1,19 @@
+{
+  "name": "tjson-highlight-tests",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Grammar tests for the TJSON TextMate grammar",
+  "scripts": {
+    "test": "node run.js && node extension.js && node scopes.js && node convert.js",
+    "update": "node run.js --update",
+    "regen": "./regen.sh",
+    "test:grammar": "node run.js",
+    "test:extension": "node extension.js",
+    "test:scopes": "node scopes.js",
+    "test:convert": "node convert.js"
+  },
+  "dependencies": {
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.0.0"
+  }
+}

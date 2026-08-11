@@ -1,0 +1,4 @@
+  doc:"Line one\n
+  / // looks like a comment\n
+  / ``\n
+  / fence inside\n"
