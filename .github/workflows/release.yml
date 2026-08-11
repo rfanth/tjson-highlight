@@ -1,0 +1,215 @@
+# Build the .vsix on a tag and attach it to that tag's GitHub Release, so the
+# extension can be installed without going through a marketplace:
+#
+#   code --install-extension tjson-highlight-<version>.vsix
+#   codium --install-extension tjson-highlight-<version>.vsix
+#
+# One .vsix serves both editors; only the stores differ, and VSCodium cannot
+# reach the Microsoft one, so a plain download link is the portable channel.
+#
+# Two jobs, because the two halves want different machines. The build has to
+# happen where ImageMagick 7 is (see below), which is a Debian container. The
+# upload wants the gh CLI, which is preinstalled on the runner and absent from
+# that container. Passing the .vsix between them as a workflow artifact is
+# cheaper than installing the missing tool on either side.
+
+name: release
+
+# Deny by default, and hand each job only what it cannot work without. The build
+# job reads the repository and nothing else; only the release job may write, and
+# only to repository contents, which is what creating a release requires.
+#
+# Note what this deliberately does not include: any credential for a marketplace.
+# Publishing to one needs a token that can only arrive as a repository secret,
+# which a workflow cannot mint or derive -- so while no such secret exists, no
+# run of this file can publish anywhere but this repository's own releases. The
+# token here is GitHub's own and means nothing to a marketplace. It also cannot
+# edit anything under .github/workflows/, which needs a `workflows` scope that is
+# not granted, so a run cannot add a publishing step to itself.
+permissions: {}
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # So a tag that already exists can be released without re-pushing it: run
+  # this manually and pick the tag as the ref.
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Reading the repository is all this job does with the token.
+    permissions:
+      contents: read
+
+    # Not the runner image itself. scripts/regen-icons.sh requires `magick`,
+    # which is ImageMagick 7; Ubuntu ships ImageMagick 6, where the command is
+    # `convert` and `magick` does not exist, so the script's own check would
+    # fail the build. Debian 13 carries imagemagick 7.1.1.
+    #
+    # The suite is pinned rather than tracking `debian:stable`, because the icon
+    # is rasterised by whatever ImageMagick and SVG renderer the image provides,
+    # and a released icon should change only when someone decides it should.
+    # Debian does not move package majors inside a stable suite, so this floats
+    # over point releases and security updates while `magick` stays 7.x, whereas
+    # `stable` would step to the next Debian on its release day and take the
+    # renderer with it. Bump this deliberately, and look at the icon when doing so.
+    container: debian:13
+
+    steps:
+      # A bare container has none of this. git is for actions/checkout, which
+      # otherwise falls back to a tarball download; xz-utils is for
+      # actions/setup-node, whose Node distributions are .tar.xz.
+      - name: Install build tools
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git ca-certificates curl xz-utils imagemagick python3
+
+      # ImageMagick rasterises SVG through librsvg when rsvg-convert is present
+      # and through its own renderer when it is not, and the two do not agree --
+      # notably the internal one drops strokes, which is why regen-icons.sh
+      # checks that the marker colour survived at all. Either renderer can
+      # produce a correct icon; what must not happen is the choice changing
+      # without anyone deciding it should, since both paths exit 0 and the
+      # difference shows up only in the pixels. librsvg is not a dependency of
+      # the imagemagick package, so its absence is the expected state -- which
+      # is a reason to assert it, not to assume it.
+      - name: Assert the SVG renderer is unchanged
+        run: |
+          if command -v rsvg-convert >/dev/null; then
+            echo "rsvg-convert is present, so ImageMagick will rasterise" >&2
+            echo "icon.svg through librsvg instead of its internal renderer." >&2
+            echo "That changes build/icon.png. Decide which renderer this" >&2
+            echo "project uses and make every build use that one." >&2
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      # Guards against a future mistake rather than against an attacker: someone
+      # with write access can always delete this step. What it stops is the quiet
+      # version -- a credential added "just to try it", or a publishing step
+      # pasted in by someone (or something) editing this file later.
+      #
+      # A secret that does not exist expands to the empty string, so naming these
+      # here is safe and costs nothing while none of them are set. If one ever is,
+      # this fails before the packaging step rather than after. Values are only
+      # ever tested for emptiness, never printed.
+      - name: Refuse to run with publishing credentials present
+        env:
+          vsce_pat: ${{ secrets.VSCE_PAT }}
+          ovsx_pat: ${{ secrets.OVSX_PAT }}
+          ovsx_token: ${{ secrets.OVSX_TOKEN }}
+          azure_pat: ${{ secrets.AZURE_PAT }}
+        run: |
+          for name in vsce_pat ovsx_pat ovsx_token azure_pat; do
+            if [[ -n "${!name}" ]]; then
+              echo "A marketplace credential (${name}) is set on this repository." >&2
+              echo "This workflow releases to GitHub and nothing else, so nothing" >&2
+              echo "here needs one. Remove the secret, or if publishing from CI is" >&2
+              echo "genuinely wanted, change this file deliberately and knowingly." >&2
+              exit 1
+            fi
+          done
+          echo "no marketplace credentials in scope"
+        shell: bash
+
+      # The bracket in publis[h] keeps this pattern from matching its own line.
+      - name: Refuse to run if a publishing command was added
+        run: |
+          if grep -rnE '(vsce|ovsx)[[:space:]]+publis[h]' .github/workflows/; then
+            echo "" >&2
+            echo "The lines above publish to a marketplace. This workflow is meant" >&2
+            echo "to build a .vsix and attach it to a GitHub release, nothing more." >&2
+            exit 1
+          fi
+          echo "no publishing commands in .github/workflows/"
+        shell: bash
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # A tag that disagrees with the manifest produces a release whose asset is
+      # named for a different version than the tag it hangs on. Catch it here,
+      # before anything is published.
+      - name: Check the tag against package.json
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          manifest="v$(node -p "require('./package.json').version")"
+          echo "tag      ${tag}"
+          echo "manifest ${manifest}"
+          if [[ "${tag}" != "${manifest}" ]]; then
+            echo "FAIL: tag ${tag} does not match package.json ${manifest}." >&2
+            exit 1
+          fi
+        shell: bash
+
+      # The grammar goldens, the scope expectations, the rejection corpus and
+      # the conversion tests. A release that fails these should not exist.
+      - name: Test
+        run: |
+          npm ci
+          npm test
+        working-directory: tests
+
+      # vsce runs the vscode:prepublish hook, so the icons are rendered from
+      # icon.svg here rather than trusted from anywhere.
+      - name: Package
+        #
+        # Constrained rather than floating on latest, because packaging is the
+        # one step that fetches and executes third-party code at build time and
+        # its output is the file people install.
+        #
+        # A range rather than an exact version, because an exact one rots quietly:
+        # vsce accepts an unknown contribution point and an unknown manifest field
+        # without an error or even a warning, so a version too old to understand
+        # something new would say nothing about it. `^3` keeps minors and patches
+        # arriving, and makes a major -- where packaging semantics could actually
+        # change -- something someone has to type here on purpose.
+        run: npx --yes @vscode/vsce@^3 package
+
+      - name: Name the package
+        id: vsix
+        run: echo "path=$(ls ./*.vsix)" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: ${{ steps.vsix.outputs.path }}
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    # The default token is read-only; creating a release and uploading to it
+    # needs write access to repository contents.
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: vsix
+          path: dist
+
+      # Re-runnable: a release created by an earlier run of the same tag is
+      # updated rather than being a hard error.
+      - name: Attach the .vsix to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          vsix="$(ls dist/*.vsix)"
+          if gh release view "${tag}" >/dev/null 2>&1; then
+            gh release upload "${tag}" "${vsix}" --clobber
+          else
+            gh release create "${tag}" "${vsix}" --title "${tag}" --generate-notes
+          fi
+          echo "attached ${vsix} to ${tag}"
+        shell: bash
