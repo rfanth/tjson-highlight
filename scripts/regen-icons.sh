@@ -41,9 +41,22 @@ command -v magick >/dev/null || { echo "needs ImageMagick (magick)" >&2; exit 1;
 python3 -c "import xml.dom.minidom,sys; xml.dom.minidom.parse(sys.argv[1])" "${SRC}" \
   || { echo "icon.svg is not well-formed XML (a '--' inside a comment will do it)" >&2; exit 1; }
 
-magick -background none "${SRC}" -resize 128x128 "${OUT}/icon.png"
+# A raster should carry what its pixels are and how to read them, and nothing
+# else. Left out: tIME and ImageMagick's date: text, which record when the build
+# ran rather than anything about the image, and the text chunks, which is where
+# the SVG's own comments end up -- rasterising an icon should not publish the
+# source notes written beside it. What survives is IHDR, cHRM, bKGD and IDAT.
+#
+# The renders become a function of icon.svg alone as a result: nothing clock-fed
+# is left in them, so the same source produces the same bytes on any day and on
+# any machine, and a published icon can be checked against the SVG it claims to
+# come from. ImageMagick's own exclusion does all of it; nothing here edits the
+# PNG afterwards.
+STRIP=(-define png:exclude-chunk=date,tIME,tEXt,iTXt,zTXt)
+
+magick -background none "${SRC}" "${STRIP[@]}" -resize 128x128 "${OUT}/icon.png"
 for size in 32 180 256 512; do
-  magick -background none "${SRC}" -resize "${size}x${size}" "${OUT}/icon-${size}.png"
+  magick -background none "${SRC}" "${STRIP[@]}" -resize "${size}x${size}" "${OUT}/icon-${size}.png"
 done
 
 # ImageMagick has no librsvg delegate here, so it renders fills and drops strokes
