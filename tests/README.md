@@ -39,7 +39,11 @@ expectations here are a live bug list, not test breakage.
 Everything except `comments.tjson` and `minimal-json.tjson` comes out of the
 `tjson` CLI, so the grammar is tested against output a generator really emits.
 `regen.sh` records the flags each fixture needs; rerun it after a `tjson-rs`
-upgrade and diff the goldens to see what moved.
+upgrade and diff the goldens to see what moved. It refuses to run unless the CLI
+is the same release as the parser in `vendor/`, since a mismatch writes fixtures
+in a format the extension itself rejects — which is exactly how a comma-packed
+bare string array, forbidden since v0.5.0 of the specification, sat here being
+highlighted as valid.
 
 Those two are handwritten because the generator emits neither construct —
 comments and MINIMAL JSON are legal input only. Both were checked against the

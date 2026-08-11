@@ -21,6 +21,29 @@ fi
 
 echo "regen: using $("$TJSON" --version)"
 
+# The CLI that writes the fixtures and the parser the extension ships must be the
+# same release, or the fixtures encode a format the extension itself rejects.
+# That is not hypothetical: a stale 0.7.0 on PATH generated a comma-packed bare
+# string array, which v0.5.0 of the specification forbids, and the grammar went on
+# highlighting it as valid for as long as nobody reparsed it. vendor/SOURCE.txt is
+# the single source of truth for which release is shipped.
+VENDOR_SOURCE="../vendor/SOURCE.txt"
+EXPECTED="$(sed -n 's/^ *version *//p' "$VENDOR_SOURCE" | head -1)"
+ACTUAL="$("$TJSON" --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)"
+
+if [ -z "$EXPECTED" ]; then
+    echo "regen: could not read the shipped version from $VENDOR_SOURCE" >&2
+    exit 1
+fi
+
+if [ "$ACTUAL" != "$EXPECTED" ]; then
+    echo "regen: version mismatch -- refusing to write fixtures." >&2
+    echo "  CLI       $ACTUAL  ($(command -v "$TJSON"))" >&2
+    echo "  shipped   $EXPECTED  (per $VENDOR_SOURCE)" >&2
+    echo "  Install the matching CLI, or set TJSON=/path/to/tjson." >&2
+    exit 1
+fi
+
 # name<TAB>extra CLI flags
 generate() {
     local name="$1"
@@ -44,6 +67,16 @@ generate_as() {
 generate inline-packing
 generate tables
 generate inline-arrays
+
+# Values that are the string spelling of a basic type, so the leading space is
+# the only thing telling ' true' from true. The string array here is Type 3,
+# because a bare string may contain commas and so cannot be comma packed at all.
+generate keyword-lookalikes
+
+# The unmarked half of the bare-strings twin pair. Generated for the same reason
+# its --bare-strings marked counterpart below is: the twins test compares the two
+# token for token, so if only one of them is regenerated they can drift apart.
+generate bare-strings
 
 # Type 3 (double-space separated) packed string arrays, the default shape for
 # string arrays since 0.8.0. 'commas' is the case the format exists for: a

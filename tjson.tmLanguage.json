@@ -355,31 +355,6 @@
 					]
 				},
 				{
-					"comment": "Type 2 packed array of bare strings at line level: the first element is followed by ',  '. SUPERSEDED -- spec v0.5.0 removed bare strings from comma-packed arrays entirely, so this shape no longer parses and the bundled parser reports it. The rule is kept deliberately, so a document written against an older spec still renders instead of falling through unscoped; the diagnostics are what tell the reader it is wrong. The lookahead sits after the element rather than scanning the whole line, so a Type 3 line that happens to contain ',  ' inside a later element does not get read as Type 2.",
-					"begin": "^((?:  )*)((?:\\[ )*)([ _])([^\\p{Quotation_Mark}`/|, _](?:(?!, |  )[^\\n])*?)(?=,  )",
-					"end": "$",
-					"name": "meta.array.inline.tjson",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.whitespace.indent.tjson"
-						},
-						"2": {
-							"name": "keyword.operator.array-marker.tjson"
-						},
-						"3": {
-							"name": "punctuation.definition.string.begin.bare.tjson"
-						},
-						"4": {
-							"name": "string.unquoted.bare.tjson"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#array-elements"
-						}
-					]
-				},
-				{
 					"comment": "Type 3 packed array of bare strings at line level: the first element is followed by '  '. A lone bare string can never contain two consecutive spaces, so a '  ' after the first element can only be a separator, which makes this line an array with no further evidence needed. Commas inside the elements are content here.",
 					"begin": "^((?:  )*)((?:\\[ )*)([ _])([^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?)(?=  )",
 					"end": "$",
@@ -506,26 +481,7 @@
 					]
 				},
 				{
-					"comment": "Inline array, gap 3, Type 2 packed bare strings: k:   a,  b. SUPERSEDED for the same reason as the line-level Type 2 rule above -- spec v0.5.0 admits no bare element in a comma-packed array at all. A bare string may contain commas, and commonly does; that is exactly why it cannot be comma packed, because a comma in the content would be indistinguishable from a separator, to the parser and to the reader alike. Such an element belongs in a Type 3 array, where two spaces separate and commas are ordinary content. The rule is kept only so a line written against an older spec still renders; the ',  ' must follow the first element directly.",
-					"begin": "(?<=:)(  )([ _])([^\\p{Quotation_Mark}`/|, _](?:(?!, |  )[^\\n])*?)(?=,  )",
-					"end": "$",
-					"name": "meta.array.inline.tjson",
-					"beginCaptures": {
-						"2": {
-							"name": "punctuation.definition.string.begin.bare.tjson"
-						},
-						"3": {
-							"name": "string.unquoted.bare.tjson"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#array-elements"
-						}
-					]
-				},
-				{
-					"comment": "Inline array, gap 3, Type 3 packed bare strings: k:   a   b, and the single-element k:   a. Must come after the Type 2 rule above, which is the only thing that distinguishes them. A Type 3 element may contain commas, so the element ends only at '  ' or end of line -- that is what makes 'k:   a, b   c' the two elements 'a, b' and 'c' rather than three.",
+					"comment": "Inline array, gap 3, Type 3 packed bare strings: k:   a   b, and the single-element k:   a. Gap 3 means the first element is a bare string, and a bare string can only be Type 3 packed, so this is the only form the gap admits -- there is no Type 2 counterpart to tell it apart from. A Type 3 element may contain commas, so the element ends only at '  ' or end of line -- that is what makes 'k:   a, b   c' the two elements 'a, b' and 'c' rather than three.",
 					"begin": "(?<=:)(  )([ _])([^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?(?=  | *$))",
 					"end": "$",
 					"name": "meta.array.inline.tjson",
@@ -859,7 +815,7 @@
 			]
 		},
 		"array-elements": {
-			"comment": "Elements after the first in an inline array. Two packed forms reach here. In Type 2 the separator is ', ' and every element is a scalar or a quoted string. The ',  ' case, where a bare element adds its one-sided opening quote on top so that ', true' is the boolean and ',  true' is the string \"true\", is SUPERSEDED: spec v0.5.0 admits no bare element in a comma-packed array, because a bare string may contain commas and a content comma would be indistinguishable from a separator. Those patterns are kept so an older document still renders. In Type 3 the separator is '  ' and every element is a string, so a bare one shows three spaces before it — two of separator and one of its own quote. The comma patterns come first, so at a ',' Type 2 always wins; the Type 3 patterns only see a gap that no comma introduced, which is exactly the spec's rule for telling the forms apart. Type 3 elements may contain commas, since a comma is not a separator in that form, so their content stops only at '  ' or end of line.",
+			"comment": "Elements after the first in an inline array. Two packed forms reach here. In Type 2 the separator is ', ' and every element is a scalar or a quoted string. There is no bare element: a bare string may contain commas, and a content comma could not be told from a separator, so spec v0.5.0 admits none in a comma-packed array at all. A bare element belongs in Type 3. In Type 3 the separator is '  ' and every element is a string, so a bare one shows three spaces before it — two of separator and one of its own quote. The comma patterns come first, so at a ',' Type 2 always wins; the Type 3 patterns only see a gap that no comma introduced, which is exactly the spec's rule for telling the forms apart. Type 3 elements may contain commas, since a comma is not a separator in that form, so their content stops only at '  ' or end of line.",
 			"patterns": [
 				{
 					"comment": "Scalar element — separator only, no quote space",
@@ -874,22 +830,6 @@
 									"include": "#scalar-atoms"
 								}
 							]
-						}
-					}
-				},
-				{
-					"comment": "Bare string element — separator plus the one-sided opening quote",
-					"match": "(,)( )([ _])([^\\p{Quotation_Mark}`/|, _](?:(?!, |  )[^\\n])*?(?=, |  | *$))",
-					"name": "meta.bare-string.tjson",
-					"captures": {
-						"1": {
-							"name": "punctuation.separator.array.tjson"
-						},
-						"3": {
-							"name": "punctuation.definition.string.begin.bare.tjson"
-						},
-						"4": {
-							"name": "string.unquoted.bare.tjson"
 						}
 					}
 				},
