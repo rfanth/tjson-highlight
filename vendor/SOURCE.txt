@@ -1,11 +1,11 @@
 Pulled by scripts/pull-wasm.mjs from the published npm package.
 
   package  @rfanth/tjson
-  version  0.9.0
+  version  0.10.1
   asked    latest
   target   web (wasm inlined in index.js, no asset lookup at runtime)
-  pulled   2026-08-16 18:01:48Z
+  pulled   2026-08-16 23:53:17Z
 
 Do not edit by hand. Rerun the script after a release.
 A diagnostic this parser reports must be reproducible with:
-  npx --yes @rfanth/tjson@0.9.0
+  npx --yes @rfanth/tjson@0.10.1
