@@ -244,22 +244,22 @@ theme is untouched everywhere else.
 ### Making the bare string marker more visible
 
 In TJSON, location is king.  It shows you where something is in the data, and
-what type it is.  There are indent markers and bare space markers that you can
+what type it is.  There are indent markers and bare string markers that you can
 print or not, but the space tells you the meaning, not the thing that may or
 may not be printed there.  If you don't understand this, it reads fine as text,
 but if you do, you can see the type information too without being overwhelmed
-by visual noise.  The space is never invisible, you can always see the gap, and
-that's the point.  That being said, sometimes making the space more obvious is
-useful.
+by visual noise.  In TJSON, The space is never invisible, you can always see the
+gap from the character that follows it, and that's the point.  That being said,
+sometimes making the space more obvious is useful.
 
 In TJSON an extra leading space distinguishes between a bare string and other
 values — `active:true` is the boolean, `active: true` is the string `"true"`.
-That distinction is load-bearing and easy to spot with the naked eye once you
-know what to look for.  However, sometimes it's nice to see the space as a
-character, either to help you understand what the spaces mean, or because you
-are doing something that makes types extra important and justifies the
-visual noise.  Because space comes first, when we put something in the space
-to mark it, we simply replace the space, we never actually move any text.
+That distinction is easy to spot with the naked eye once you know what to look
+for.  However, sometimes it's nice to see the space as a character, either to
+help you understand what the spaces mean, or because you are doing something
+that makes types extra important and justifies the extra visual noise.  Because
+location comes first, when we put something in the space to mark it, we simply
+replace the space, we never actually move any text.
 
 This can be done on the screen by using the highlighter, or in the text by
 using the format itself.

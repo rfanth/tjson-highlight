@@ -1,794 +1,815 @@
 [
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 1,
-    "text": "are extra quotes \\\"\\\" necessary?",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "first quoted key on a line is a key"
-  },
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 3,
-    "text": "has:colon",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "an inline-packed quoted key is still a key, not a string value"
-  },
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 3,
-    "text": "has|pipe",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "second inline-packed quoted key -- a pipe inside a quoted key is content"
-  },
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 1,
-    "text": "are extra quotes \\\"\\\" necessary?",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "a key that must stay quoted: it contains quote characters"
-  },
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 7,
-    "text": "unicode key \u4f55\u3067\u3082",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "non-ASCII bare key"
-  },
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 8,
-    "text": "1Express . (any'(thing))",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "bare key with punctuation, from the textjson.com examples"
-  },
-  {
-    "fixture": "inline-packing.tjson",
-    "line": 10,
-    "text": "[",
-    "scope": "punctuation.definition.array.begin",
-    "note": "empty array as an inline value"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 1,
-    "text": "true",
-    "scope": "constant.language.boolean",
-    "note": "boolean inside an inline array is a boolean"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 1,
-    "text": "null",
-    "scope": "constant.language.null",
-    "note": "null inside an inline array is null"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 3,
-    "text": "1",
-    "scope": "constant.numeric",
-    "note": "scalar run of a mixed array, on its own line after run splitting"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 4,
-    "text": "two",
-    "scope": "string.unquoted.bare",
-    "note": "string run of a mixed array, on its own line, keeping its one-sided quote"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 7,
-    "text": "2.5",
-    "scope": "constant.numeric",
-    "note": "decimal in an inline number array"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 7,
-    "text": "-0.5",
-    "scope": "constant.numeric",
-    "note": "negative decimal, last element of an inline number array"
-  },
-  {
-    "fixture": "root-array-numbers.tjson",
-    "line": 1,
-    "text": "1",
-    "scope": "constant.numeric",
-    "note": "first element of a root-level inline number array"
-  },
-  {
-    "fixture": "root-array-numbers.tjson",
-    "line": 1,
-    "text": "2",
-    "scope": "constant.numeric",
-    "note": "later elements of a root-level inline array must also be scoped"
-  },
-  {
-    "fixture": "multiline-quoted-key.tjson",
-    "line": 1,
-    "text": "``",
-    "scope": "punctuation.definition.string.begin",
-    "note": "a quoted key can open a multiline string just like a bare key"
-  },
-  {
-    "fixture": "multiline-quoted-key.tjson",
-    "line": 2,
-    "text": "Line one",
-    "scope": "markup.raw.block",
-    "note": "body of a multiline string under a quoted key is raw text"
-  },
-  {
-    "fixture": "multiline-quoted-key.tjson",
-    "line": 6,
-    "text": "42",
-    "scope": "constant.numeric",
-    "note": "the line after the block must recover to normal parsing"
-  },
-  {
-    "fixture": "multiline-bold.tjson",
-    "line": 4,
-    "text": "// looks like a comment",
-    "scope": "markup.raw.block",
-    "note": "comment syntax inside a multiline body is raw text, not a comment"
-  },
-  {
-    "fixture": "multiline-bold.tjson",
-    "line": 5,
-    "text": "``",
-    "scope": "markup.raw.block",
-    "note": "a fence inside a pipe-margin multiline body is raw text"
-  },
-  {
-    "fixture": "multiline-transparent.tjson",
-    "line": 3,
-    "text": "// looks like a comment",
-    "scope": "markup.raw.block",
-    "note": "transparent body is verbatim; a leading // is not a comment"
-  },
-  {
-    "fixture": "multiline-transparent.tjson",
-    "line": 5,
-    "text": "/usr/bin/env",
-    "scope": "markup.raw.block",
-    "note": "transparent body is verbatim; a leading / is not a fold marker"
-  },
-  {
-    "fixture": "comments.tjson",
-    "line": 1,
-    "text": "// connection settings",
-    "scope": "comment.line.double-slash",
-    "note": "comment at root indent"
-  },
-  {
-    "fixture": "comments.tjson",
-    "line": 7,
-    "text": "    // indented comment inside an object",
-    "scope": "comment.line.double-slash",
-    "note": "comment indented to match its object"
-  },
-  {
-    "fixture": "tables.tjson",
-    "line": 2,
-    "text": "name",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "table header cell is a key"
-  },
-  {
-    "fixture": "tables.tjson",
-    "line": 3,
-    "text": "30",
-    "scope": "constant.numeric",
-    "note": "unspaced numeric table cell"
-  },
-  {
-    "fixture": "tables.tjson",
-    "line": 3,
-    "text": "Alice",
-    "scope": "string.unquoted.bare",
-    "note": "space-prefixed table cell is a bare string"
-  },
-  {
-    "fixture": "tables.tjson",
-    "line": 3,
-    "text": "true",
-    "scope": "constant.language.boolean",
-    "note": "boolean table cell"
-  },
-  {
-    "fixture": "tables.tjson",
-    "line": 3,
-    "text": "null",
-    "scope": "constant.language.null",
-    "note": "null table cell"
-  },
-  {
-    "fixture": "folds.tjson",
-    "line": 2,
-    "text": "/ ",
-    "scope": "punctuation.definition.fold-marker",
-    "note": "fold continuation marker"
-  },
-  {
-    "fixture": "indent-glyphs.tjson",
-    "line": 10,
-    "text": "/<",
-    "scope": "keyword.control.indent-adjustment",
-    "note": "opening indent glyph at end of a key line"
-  },
-  {
-    "fixture": "indent-glyphs.tjson",
-    "line": 13,
-    "text": "/>",
-    "scope": "keyword.control.indent-adjustment",
-    "note": "standalone closing indent glyph"
-  },
-  {
-    "fixture": "markers.tjson",
-    "line": 1,
-    "text": "{ ",
-    "scope": "keyword.operator.object-marker",
-    "note": "explicit object marker from --force-markers"
-  },
-  {
-    "fixture": "markers.tjson",
-    "line": 2,
-    "text": "[ ",
-    "scope": "keyword.operator.array-marker",
-    "note": "explicit array marker preceding a table"
-  },
-  {
-    "fixture": "root-string.tjson",
-    "line": 1,
-    "text": "just a string",
-    "scope": "string.unquoted.bare",
-    "note": "root-level bare string"
-  },
-  {
-    "fixture": "root-empty.tjson",
-    "line": 1,
-    "text": "{",
-    "scope": "punctuation.definition.dictionary.begin",
-    "note": "root-level empty object"
-  },
-  {
-    "fixture": "bare-strings.tjson",
-    "line": 1,
-    "text": "a value that mentions // mid-string",
-    "scope": "string.unquoted.bare",
-    "note": "// inside a bare string value does not split it"
-  },
-  {
-    "fixture": "bare-strings.tjson",
-    "line": 2,
-    "text": "ends with slash /",
-    "scope": "string.unquoted.bare",
-    "note": "a bare string may end with a slash"
-  },
-  {
-    "fixture": "bare-strings.tjson",
-    "line": 3,
-    "text": "http://example.com/path",
-    "scope": "string.unquoted.bare",
-    "note": "a URL is an ordinary bare string"
-  },
-  {
-    "fixture": "bare-strings.tjson",
-    "line": 3,
-    "text": "has ` tick",
-    "scope": "string.unquoted.bare",
-    "note": "a backtick mid-value does not split a bare string"
-  },
-  {
-    "fixture": "bare-strings.tjson",
-    "line": 1,
-    "text": " ",
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "one-sided opening quote on an inline bare string value"
-  },
-  {
-    "fixture": "tables.tjson",
-    "line": 3,
-    "text": " ",
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "one-sided opening quote on a table string cell"
-  },
-  {
-    "fixture": "root-string.tjson",
-    "line": 1,
-    "text": " ",
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "one-sided opening quote on a standalone bare string line"
-  },
-  {
-    "fixture": "folds.tjson",
-    "line": 2,
-    "text": " ",
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "a folded bare string repeats its opening quote after the fold marker"
-  },
-  {
-    "fixture": "bare-strings.tjson",
-    "line": 1,
-    "text": "    ",
-    "scope": "punctuation.separator.inline",
-    "note": "the gap between inline entries is one separator token, not a string terminator"
-  },
-  {
-    "fixture": "kv-pack.tjson",
-    "line": 1,
-    "text": "        ",
-    "scope": "punctuation.separator.inline",
-    "note": "widest inline gap (-k 4) is still a single separator token"
-  },
-  {
-    "fixture": "kv-pack.tjson",
-    "line": 1,
-    "text": " ",
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "' two' is a string because of the one-sided quote"
-  },
-  {
-    "fixture": "kv-pack.tjson",
-    "line": 1,
-    "text": "true",
-    "scope": "constant.language.boolean",
-    "note": "'c:true' has no quote space, so it stays a boolean"
-  },
-  {
-    "fixture": "kv-pack.tjson",
-    "line": 1,
-    "text": "null",
-    "scope": "constant.language.null",
-    "note": "'d:null' has no quote space, so it stays null"
-  },
-  {
-    "fixture": "root-array-mixed.tjson",
-    "line": 1,
-    "text": "str",
-    "scope": "string.unquoted.bare",
-    "note": "string element in a root-level mixed array"
-  },
-  {
-    "fixture": "root-array-mixed.tjson",
-    "line": 2,
-    "text": "1",
-    "scope": "constant.numeric",
-    "note": "scalar element of a root mixed array, on its own line"
-  },
-  {
-    "fixture": "root-array-mixed.tjson",
-    "line": 3,
-    "text": "str2",
-    "scope": "string.unquoted.bare",
-    "note": "second string element of a root mixed array, on its own line"
-  },
-  {
-    "fixture": "root-array-mixed.tjson",
-    "line": 4,
-    "text": "true",
-    "scope": "constant.language.boolean",
-    "note": "trailing scalar element, on its own line"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 6,
-    "text": "rust",
-    "scope": "string.unquoted.bare",
-    "note": "first element of a Type 3 double-space packed array"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 6,
-    "text": "wasm",
-    "scope": "string.unquoted.bare",
-    "note": "second element of a Type 3 array -- everything after the first used to fall out of the array entirely"
-  },
-  {
-    "fixture": "inline-arrays.tjson",
-    "line": 6,
-    "text": "json",
-    "scope": "string.unquoted.bare",
-    "note": "last element of a Type 3 array"
-  },
-  {
-    "fixture": "root-array-strings.tjson",
-    "line": 1,
-    "text": "b",
-    "scope": "string.unquoted.bare",
-    "note": "second element of a Type 3 array at line level, with no key to anchor to"
-  },
-  {
-    "fixture": "root-array-strings.tjson",
-    "line": 1,
-    "text": "c",
-    "scope": "string.unquoted.bare",
-    "note": "last element of a Type 3 array at line level"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 1,
-    "text": "wasm",
-    "scope": "string.unquoted.bare",
-    "note": "middle element of a Type 3 packed string array"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 2,
-    "text": "a, b",
-    "scope": "string.unquoted.bare",
-    "note": "a comma inside a Type 3 element is content, not a separator -- this is the case Type 3 exists for"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 2,
-    "text": "d, e",
-    "scope": "string.unquoted.bare",
-    "note": "last Type 3 element, also comma-bearing, so the run does not end at the first comma"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 2,
-    "text": "c",
-    "scope": "string.unquoted.bare",
-    "note": "comma-free element between two comma-bearing ones"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 5,
-    "text": "plain",
-    "scope": "string.unquoted.bare",
-    "note": "bare string in a run-split array, keeping its one-sided opening quote"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 4,
-    "text": "has ",
-    "scope": "string.quoted.double",
-    "note": "a quoted array element on its own line -- the whole line used to carry no scope at all"
-  },
-  {
-    "fixture": "array-packed-strings.tjson",
-    "line": 4,
-    "text": "\\\"",
-    "scope": "constant.character.escape",
-    "note": "escape inside a quoted element on its own line"
-  },
-  {
-    "fixture": "folded-keys.tjson",
-    "line": 1,
-    "text": "a key so long that it has to",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "first line of a key that folds before its colon -- used to carry no scope at all"
-  },
-  {
-    "fixture": "folded-keys.tjson",
-    "line": 2,
-    "text": "fold before the colon",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "middle fold of a folded key is still key text"
-  },
-  {
-    "fixture": "folded-keys.tjson",
-    "line": 3,
-    "text": "arrives",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "last fold of the key, on the line where the colon finally lands"
-  },
-  {
-    "fixture": "folded-keys.tjson",
-    "line": 3,
-    "text": ":",
-    "scope": "punctuation.separator.key-value",
-    "note": "the colon of a folded key, several lines after the key began"
-  },
-  {
-    "fixture": "folded-keys.tjson",
-    "line": 4,
-    "text": "short value",
-    "scope": "string.unquoted.fold-continuation",
-    "note": "the value's own fold, which is a different construct from the key's"
-  },
-  {
-    "fixture": "folded-keys.tjson",
-    "line": 8,
-    "text": "short",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "an ordinary unfolded key after folded ones, to prove the rule closed"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 1,
-    "text": "[",
-    "scope": "punctuation.section.embedded",
-    "note": "MINIMAL JSON opens an embedded JSON fragment"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 1,
-    "text": "-2.5",
-    "scope": "constant.numeric",
-    "note": "a negative decimal inside MINIMAL JSON is a number, not flat text"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 1,
-    "text": "1e3",
-    "scope": "constant.numeric",
-    "note": "exponent form too"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 1,
-    "text": "true",
-    "scope": "constant.language.boolean",
-    "note": "JSON literals keep their meaning inside the fragment"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 1,
-    "text": "null",
-    "scope": "constant.language.null",
-    "note": "JSON literals keep their meaning inside the fragment"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 1,
-    "text": ",",
-    "scope": "punctuation.separator.embedded",
-    "note": "a comma between array elements is punctuation here, unlike in a bare string"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 2,
-    "text": "[",
-    "occurrence": 2,
-    "scope": "punctuation.section.embedded",
-    "note": "a nested container gets the same bracket scope as the outermost one"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 2,
-    "text": "a",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "a key inside a nested object is still a key"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 3,
-    "text": "a",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "a string a colon follows is a key"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 3,
-    "text": "two",
-    "scope": "string.quoted.double",
-    "note": "a string no colon follows is a value -- this is what the key lookahead buys"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 3,
-    "text": ":",
-    "occurrence": 2,
-    "scope": "punctuation.separator.key-value",
-    "note": "the colon inside the fragment separates key from value, as it does in TJSON"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 4,
-    "text": "10:30:00",
-    "scope": "string.quoted.double",
-    "note": "colons INSIDE a string do not make it a key"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 4,
-    "text": "[not]",
-    "scope": "string.quoted.double",
-    "note": "brackets inside a string are content, not structure"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 4,
-    "text": "\\\"",
-    "scope": "constant.character.escape",
-    "note": "escapes are scoped inside the fragment's strings"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 4,
-    "text": "\\u00e9",
-    "scope": "constant.character.escape",
-    "note": "the \\u form too"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 5,
-    "text": "list",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "key of an entry whose value is an empty container"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 5,
-    "text": "[",
-    "scope": "punctuation.section.embedded",
-    "note": "an empty container INSIDE the fragment is JSON like everything else there, not the TJSON empty-array construct"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 7,
-    "text": "after",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "a pair packed after MINIMAL JSON is still a pair -- the fragment ends at its closing bracket, not at end of line"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 8,
-    "text": "[1,2]",
-    "scope": "string.unquoted.bare",
-    "note": "gap 1 is a bare string that merely looks like JSON; only gap 0 is MINIMAL JSON"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 9,
-    "text": "a [b] c",
-    "scope": "string.unquoted.bare",
-    "note": "brackets inside a bare string are content"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 11,
-    "text": "    ",
-    "scope": "punctuation.whitespace.indent",
-    "note": "a fragment on its own line keeps its indent scope"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 11,
-    "text": "[",
-    "scope": "punctuation.section.embedded",
-    "note": "MINIMAL JSON as an array element on its own line"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 12,
-    "text": "a",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "a key in a fragment on its own line"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 15,
-    "text": "[",
-    "scope": "punctuation.section.embedded",
-    "note": "MINIMAL JSON in a table cell, sitting directly against the pipe"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 15,
-    "text": "1",
-    "scope": "constant.numeric",
-    "note": "the cell's interior is scoped like any other fragment"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 16,
-    "text": "a, b",
-    "scope": "string.quoted.double",
-    "note": "a comma inside a cell fragment's string is content, not a separator"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 17,
-    "text": "[1,2]",
-    "scope": "string.unquoted.bare",
-    "note": "the leading space makes this the bare string \"[1,2]\" -- the same rule that applies after a colon"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 18,
-    "text": "k",
-    "scope": "entity.other.attribute-name.quoted",
-    "note": "a key inside an object cell"
-  },
-  {
-    "fixture": "minimal-json.tjson",
-    "line": 18,
-    "text": "[",
-    "scope": "punctuation.section.embedded",
-    "note": "a container nested INSIDE a fragment is JSON like the rest of it; the empty-container scopes belong to a '[]' that is the whole value"
-  },
-  {
-    "fixture": "bare-strings-marked.tjson",
-    "line": 1,
-    "text": "_",
-    "occurrence": 1,
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "`_` is the bare string's opening quote, scoped exactly as the space it replaces"
-  },
-  {
-    "fixture": "bare-strings-marked.tjson",
-    "line": 1,
-    "text": "a value that mentions // mid-string",
-    "scope": "string.unquoted.bare",
-    "note": "and the content after it is content, marker or no marker"
-  },
-  {
-    "fixture": "bare-strings-marked.tjson",
-    "line": 1,
-    "text": "_",
-    "occurrence": 2,
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "an inline-packed pair's value takes the marker too"
-  },
-  {
-    "fixture": "bare-strings-marked.tjson",
-    "line": 2,
-    "text": " ",
-    "occurrence": 1,
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "space and marker may be mixed within one document -- the spec requires no consistency"
-  },
-  {
-    "fixture": "array-packed-strings-marked.tjson",
-    "line": 1,
-    "text": "_",
-    "occurrence": 1,
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "first element of a Type 3 packed array, opened with the marker"
-  },
-  {
-    "fixture": "array-packed-strings-marked.tjson",
-    "line": 1,
-    "text": "rust",
-    "scope": "string.unquoted.bare",
-    "note": "the element's content"
-  },
-  {
-    "fixture": "array-packed-strings-marked.tjson",
-    "line": 1,
-    "text": "_",
-    "occurrence": 2,
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "a later element in the same packed array"
-  },
-  {
-    "fixture": "array-packed-strings-marked.tjson",
-    "line": 2,
-    "text": "a, b",
-    "scope": "string.unquoted.bare",
-    "note": "a marked Type 3 element may still hold a comma, which is content here"
-  },
-  {
-    "fixture": "array-packed-strings-marked.tjson",
-    "line": 5,
-    "text": "_",
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "an element alone on its line, opened with the marker"
-  },
-  {
-    "fixture": "tables-marked.tjson",
-    "line": 3,
-    "text": "_",
-    "occurrence": 1,
-    "scope": "punctuation.definition.string.begin.bare",
-    "note": "a table cell's bare string opens with the marker directly against the pipe"
-  },
-  {
-    "fixture": "tables-marked.tjson",
-    "line": 3,
-    "text": "Alice",
-    "scope": "string.unquoted.bare",
-    "note": "and its content is still a bare string"
-  },
-  {
-    "fixture": "tables-marked.tjson",
-    "line": 2,
-    "text": "name",
-    "scope": "entity.other.attribute-name.bare",
-    "note": "a header cell is a key and never takes a marker"
-  }
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 1,
+		"text": "are extra quotes \\\"\\\" necessary?",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "first quoted key on a line is a key"
+	},
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 3,
+		"text": "has:colon",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "an inline-packed quoted key is still a key, not a string value"
+	},
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 3,
+		"text": "has|pipe",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "second inline-packed quoted key -- a pipe inside a quoted key is content"
+	},
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 1,
+		"text": "are extra quotes \\\"\\\" necessary?",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a key that must stay quoted: it contains quote characters"
+	},
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 7,
+		"text": "unicode key 何でも",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "non-ASCII bare key"
+	},
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 8,
+		"text": "1Express . (any'(thing))",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "bare key with punctuation, from the textjson.com examples"
+	},
+	{
+		"fixture": "inline-packing.tjson",
+		"line": 10,
+		"text": "[",
+		"scope": "punctuation.definition.array.begin",
+		"note": "empty array as an inline value"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 1,
+		"text": "true",
+		"scope": "constant.language.boolean",
+		"note": "boolean inside an inline array is a boolean"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 1,
+		"text": "null",
+		"scope": "constant.language.null",
+		"note": "null inside an inline array is null"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 3,
+		"text": "1",
+		"scope": "constant.numeric",
+		"note": "scalar run of a mixed array, on its own line after run splitting"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 4,
+		"text": "two",
+		"scope": "string.unquoted.bare",
+		"note": "string run of a mixed array, on its own line, keeping its one-sided quote"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 7,
+		"text": "2.5",
+		"scope": "constant.numeric",
+		"note": "decimal in an inline number array"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 7,
+		"text": "-0.5",
+		"scope": "constant.numeric",
+		"note": "negative decimal, last element of an inline number array"
+	},
+	{
+		"fixture": "root-array-numbers.tjson",
+		"line": 1,
+		"text": "1",
+		"scope": "constant.numeric",
+		"note": "first element of a root-level inline number array"
+	},
+	{
+		"fixture": "root-array-numbers.tjson",
+		"line": 1,
+		"text": "2",
+		"scope": "constant.numeric",
+		"note": "later elements of a root-level inline array must also be scoped"
+	},
+	{
+		"fixture": "multiline-quoted-key.tjson",
+		"line": 1,
+		"text": "``",
+		"scope": "punctuation.definition.string.begin",
+		"note": "a quoted key can open a multiline string just like a bare key"
+	},
+	{
+		"fixture": "multiline-quoted-key.tjson",
+		"line": 2,
+		"text": "Line one",
+		"scope": "markup.raw.block",
+		"note": "body of a multiline string under a quoted key is raw text"
+	},
+	{
+		"fixture": "multiline-quoted-key.tjson",
+		"line": 6,
+		"text": "42",
+		"scope": "constant.numeric",
+		"note": "the line after the block must recover to normal parsing"
+	},
+	{
+		"fixture": "multiline-bold.tjson",
+		"line": 4,
+		"text": "// looks like a comment",
+		"scope": "markup.raw.block",
+		"note": "comment syntax inside a multiline body is raw text, not a comment"
+	},
+	{
+		"fixture": "multiline-bold.tjson",
+		"line": 5,
+		"text": "``",
+		"scope": "markup.raw.block",
+		"note": "a fence inside a pipe-margin multiline body is raw text"
+	},
+	{
+		"fixture": "multiline-transparent.tjson",
+		"line": 3,
+		"text": "// looks like a comment",
+		"scope": "markup.raw.block",
+		"note": "transparent body is verbatim; a leading // is not a comment"
+	},
+	{
+		"fixture": "multiline-transparent.tjson",
+		"line": 5,
+		"text": "/usr/bin/env",
+		"scope": "markup.raw.block",
+		"note": "transparent body is verbatim; a leading / is not a fold marker"
+	},
+	{
+		"fixture": "comments.tjson",
+		"line": 1,
+		"text": "// connection settings",
+		"scope": "comment.line.double-slash",
+		"note": "comment at root indent"
+	},
+	{
+		"fixture": "comments.tjson",
+		"line": 7,
+		"text": "    // indented comment inside an object",
+		"scope": "comment.line.double-slash",
+		"note": "comment indented to match its object"
+	},
+	{
+		"fixture": "tables.tjson",
+		"line": 2,
+		"text": "name",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "table header cell is a key"
+	},
+	{
+		"fixture": "tables.tjson",
+		"line": 3,
+		"text": "30",
+		"scope": "constant.numeric",
+		"note": "unspaced numeric table cell"
+	},
+	{
+		"fixture": "tables.tjson",
+		"line": 3,
+		"text": "Alice",
+		"scope": "string.unquoted.bare",
+		"note": "space-prefixed table cell is a bare string"
+	},
+	{
+		"fixture": "tables.tjson",
+		"line": 3,
+		"text": "true",
+		"scope": "constant.language.boolean",
+		"note": "boolean table cell"
+	},
+	{
+		"fixture": "tables.tjson",
+		"line": 3,
+		"text": "null",
+		"scope": "constant.language.null",
+		"note": "null table cell"
+	},
+	{
+		"fixture": "folds.tjson",
+		"line": 2,
+		"text": "/ ",
+		"scope": "punctuation.definition.fold-marker",
+		"note": "fold continuation marker"
+	},
+	{
+		"fixture": "indent-glyphs.tjson",
+		"line": 10,
+		"text": "/<",
+		"scope": "keyword.control.indent-adjustment",
+		"note": "opening indent glyph at end of a key line"
+	},
+	{
+		"fixture": "indent-glyphs.tjson",
+		"line": 13,
+		"text": "/>",
+		"scope": "keyword.control.indent-adjustment",
+		"note": "standalone closing indent glyph"
+	},
+	{
+		"fixture": "markers.tjson",
+		"line": 1,
+		"text": "{ ",
+		"scope": "keyword.operator.object-marker",
+		"note": "explicit object marker from --force-markers"
+	},
+	{
+		"fixture": "markers.tjson",
+		"line": 2,
+		"text": "[ ",
+		"scope": "keyword.operator.array-marker",
+		"note": "explicit array marker preceding a table"
+	},
+	{
+		"fixture": "root-string.tjson",
+		"line": 1,
+		"text": "just a string",
+		"scope": "string.unquoted.bare",
+		"note": "root-level bare string"
+	},
+	{
+		"fixture": "root-empty.tjson",
+		"line": 1,
+		"text": "{",
+		"scope": "punctuation.definition.dictionary.begin",
+		"note": "root-level empty object"
+	},
+	{
+		"fixture": "bare-strings.tjson",
+		"line": 1,
+		"text": "a value that mentions // mid-string",
+		"scope": "string.unquoted.bare",
+		"note": "// inside a bare string value does not split it"
+	},
+	{
+		"fixture": "bare-strings.tjson",
+		"line": 2,
+		"text": "ends with slash /",
+		"scope": "string.unquoted.bare",
+		"note": "a bare string may end with a slash"
+	},
+	{
+		"fixture": "bare-strings.tjson",
+		"line": 3,
+		"text": "http://example.com/path",
+		"scope": "string.unquoted.bare",
+		"note": "a URL is an ordinary bare string"
+	},
+	{
+		"fixture": "bare-strings.tjson",
+		"line": 3,
+		"text": "has ` tick",
+		"scope": "string.unquoted.bare",
+		"note": "a backtick mid-value does not split a bare string"
+	},
+	{
+		"fixture": "bare-strings.tjson",
+		"line": 1,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "one-sided opening quote on an inline bare string value"
+	},
+	{
+		"fixture": "tables.tjson",
+		"line": 3,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "one-sided opening quote on a table string cell"
+	},
+	{
+		"fixture": "root-string.tjson",
+		"line": 1,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "one-sided opening quote on a standalone bare string line"
+	},
+	{
+		"fixture": "folds.tjson",
+		"line": 2,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "a folded bare string repeats its opening quote after the fold marker"
+	},
+	{
+		"fixture": "bare-strings.tjson",
+		"line": 1,
+		"text": "    ",
+		"scope": "punctuation.separator.inline",
+		"note": "the gap between inline entries is one separator token, not a string terminator"
+	},
+	{
+		"fixture": "kv-pack.tjson",
+		"line": 1,
+		"text": "        ",
+		"scope": "punctuation.separator.inline",
+		"note": "widest inline gap (-k 4) is still a single separator token"
+	},
+	{
+		"fixture": "kv-pack.tjson",
+		"line": 1,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "' two' is a string because of the one-sided quote"
+	},
+	{
+		"fixture": "kv-pack.tjson",
+		"line": 1,
+		"text": "true",
+		"scope": "constant.language.boolean",
+		"note": "'c:true' has no quote space, so it stays a boolean"
+	},
+	{
+		"fixture": "kv-pack.tjson",
+		"line": 1,
+		"text": "null",
+		"scope": "constant.language.null",
+		"note": "'d:null' has no quote space, so it stays null"
+	},
+	{
+		"fixture": "root-array-mixed.tjson",
+		"line": 1,
+		"text": "str",
+		"scope": "string.unquoted.bare",
+		"note": "string element in a root-level mixed array"
+	},
+	{
+		"fixture": "root-array-mixed.tjson",
+		"line": 2,
+		"text": "1",
+		"scope": "constant.numeric",
+		"note": "scalar element of a root mixed array, on its own line"
+	},
+	{
+		"fixture": "root-array-mixed.tjson",
+		"line": 3,
+		"text": "str2",
+		"scope": "string.unquoted.bare",
+		"note": "second string element of a root mixed array, on its own line"
+	},
+	{
+		"fixture": "root-array-mixed.tjson",
+		"line": 4,
+		"text": "true",
+		"scope": "constant.language.boolean",
+		"note": "trailing scalar element, on its own line"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 6,
+		"text": "rust",
+		"scope": "string.unquoted.bare",
+		"note": "first element of a Type 3 double-space packed array"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 6,
+		"text": "wasm",
+		"scope": "string.unquoted.bare",
+		"note": "second element of a Type 3 array -- everything after the first used to fall out of the array entirely"
+	},
+	{
+		"fixture": "inline-arrays.tjson",
+		"line": 6,
+		"text": "json",
+		"scope": "string.unquoted.bare",
+		"note": "last element of a Type 3 array"
+	},
+	{
+		"fixture": "root-array-strings.tjson",
+		"line": 1,
+		"text": "b",
+		"scope": "string.unquoted.bare",
+		"note": "second element of a Type 3 array at line level, with no key to anchor to"
+	},
+	{
+		"fixture": "root-array-strings.tjson",
+		"line": 1,
+		"text": "c",
+		"scope": "string.unquoted.bare",
+		"note": "last element of a Type 3 array at line level"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 1,
+		"text": "wasm",
+		"scope": "string.unquoted.bare",
+		"note": "middle element of a Type 3 packed string array"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 2,
+		"text": "a, b",
+		"scope": "string.unquoted.bare",
+		"note": "a comma inside a Type 3 element is content, not a separator -- this is the case Type 3 exists for"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 2,
+		"text": "d, e",
+		"scope": "string.unquoted.bare",
+		"note": "last Type 3 element, also comma-bearing, so the run does not end at the first comma"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 2,
+		"text": "c",
+		"scope": "string.unquoted.bare",
+		"note": "comma-free element between two comma-bearing ones"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 5,
+		"text": "plain",
+		"scope": "string.unquoted.bare",
+		"note": "bare string in a run-split array, keeping its one-sided opening quote"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 4,
+		"text": "has ",
+		"scope": "string.quoted.double",
+		"note": "a quoted array element on its own line -- the whole line used to carry no scope at all"
+	},
+	{
+		"fixture": "array-packed-strings.tjson",
+		"line": 4,
+		"text": "\\\"",
+		"scope": "constant.character.escape",
+		"note": "escape inside a quoted element on its own line"
+	},
+	{
+		"fixture": "folded-keys.tjson",
+		"line": 1,
+		"text": "a key so long that it has to",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "first line of a key that folds before its colon -- used to carry no scope at all"
+	},
+	{
+		"fixture": "folded-keys.tjson",
+		"line": 2,
+		"text": "fold before the colon",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "middle fold of a folded key is still key text"
+	},
+	{
+		"fixture": "folded-keys.tjson",
+		"line": 3,
+		"text": "arrives",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "last fold of the key, on the line where the colon finally lands"
+	},
+	{
+		"fixture": "folded-keys.tjson",
+		"line": 3,
+		"text": ":",
+		"scope": "punctuation.separator.key-value",
+		"note": "the colon of a folded key, several lines after the key began"
+	},
+	{
+		"fixture": "folded-keys.tjson",
+		"line": 4,
+		"text": "short value",
+		"scope": "string.unquoted.fold-continuation",
+		"note": "the value's own fold, which is a different construct from the key's"
+	},
+	{
+		"fixture": "folded-keys.tjson",
+		"line": 8,
+		"text": "short",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "an ordinary unfolded key after folded ones, to prove the rule closed"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 1,
+		"text": "[",
+		"scope": "punctuation.section.embedded",
+		"note": "MINIMAL JSON opens an embedded JSON fragment"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 1,
+		"text": "-2.5",
+		"scope": "constant.numeric",
+		"note": "a negative decimal inside MINIMAL JSON is a number, not flat text"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 1,
+		"text": "1e3",
+		"scope": "constant.numeric",
+		"note": "exponent form too"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 1,
+		"text": "true",
+		"scope": "constant.language.boolean",
+		"note": "JSON literals keep their meaning inside the fragment"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 1,
+		"text": "null",
+		"scope": "constant.language.null",
+		"note": "JSON literals keep their meaning inside the fragment"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 1,
+		"text": ",",
+		"scope": "punctuation.separator.embedded",
+		"note": "a comma between array elements is punctuation here, unlike in a bare string"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 2,
+		"text": "[",
+		"occurrence": 2,
+		"scope": "punctuation.section.embedded",
+		"note": "a nested container gets the same bracket scope as the outermost one"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 2,
+		"text": "a",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a key inside a nested object is still a key"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 3,
+		"text": "a",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a string a colon follows is a key"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 3,
+		"text": "two",
+		"scope": "string.quoted.double",
+		"note": "a string no colon follows is a value -- this is what the key lookahead buys"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 3,
+		"text": ":",
+		"occurrence": 2,
+		"scope": "punctuation.separator.key-value",
+		"note": "the colon inside the fragment separates key from value, as it does in TJSON"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 4,
+		"text": "10:30:00",
+		"scope": "string.quoted.double",
+		"note": "colons INSIDE a string do not make it a key"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 4,
+		"text": "[not]",
+		"scope": "string.quoted.double",
+		"note": "brackets inside a string are content, not structure"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 4,
+		"text": "\\\"",
+		"scope": "constant.character.escape",
+		"note": "escapes are scoped inside the fragment's strings"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 4,
+		"text": "\\u00e9",
+		"scope": "constant.character.escape",
+		"note": "the \\u form too"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 5,
+		"text": "list",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "key of an entry whose value is an empty container"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 5,
+		"text": "[",
+		"scope": "punctuation.section.embedded",
+		"note": "an empty container INSIDE the fragment is JSON like everything else there, not the TJSON empty-array construct"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 7,
+		"text": "after",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "a pair packed after MINIMAL JSON is still a pair -- the fragment ends at its closing bracket, not at end of line"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 8,
+		"text": "a[1,2]b",
+		"scope": "string.unquoted.bare",
+		"note": "a bare string may resemble MINIMAL JSON as long as it does not begin or end with a bracket; the space after the colon still makes it a string, and the brackets are interior so nothing structural is claimed"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 9,
+		"text": "a [b] c",
+		"scope": "string.unquoted.bare",
+		"note": "brackets inside a bare string are content"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 11,
+		"text": "    ",
+		"scope": "punctuation.whitespace.indent",
+		"note": "a fragment on its own line keeps its indent scope"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 11,
+		"text": "[",
+		"scope": "punctuation.section.embedded",
+		"note": "MINIMAL JSON as an array element on its own line"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 12,
+		"text": "a",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a key in a fragment on its own line"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 15,
+		"text": "[",
+		"scope": "punctuation.section.embedded",
+		"note": "MINIMAL JSON in a table cell, sitting directly against the pipe"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 15,
+		"text": "1",
+		"scope": "constant.numeric",
+		"note": "the cell's interior is scoped like any other fragment"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 16,
+		"text": "a, b",
+		"scope": "string.quoted.double",
+		"note": "a comma inside a cell fragment's string is content, not a separator"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 17,
+		"text": "a[1,2]b",
+		"scope": "string.unquoted.bare",
+		"note": "a bare string may resemble MINIMAL JSON as long as it does not begin or end with a bracket; the space after the colon still makes it a string, and the brackets are interior so nothing structural is claimed"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 18,
+		"text": "k",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a key inside an object cell"
+	},
+	{
+		"fixture": "minimal-json.tjson",
+		"line": 18,
+		"text": "[",
+		"scope": "punctuation.section.embedded",
+		"note": "a container nested INSIDE a fragment is JSON like the rest of it; the empty-container scopes belong to a '[]' that is the whole value"
+	},
+	{
+		"fixture": "bare-strings-marked.tjson",
+		"line": 1,
+		"text": "_",
+		"occurrence": 1,
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "`_` is the bare string's opening quote, scoped exactly as the space it replaces"
+	},
+	{
+		"fixture": "bare-strings-marked.tjson",
+		"line": 1,
+		"text": "a value that mentions // mid-string",
+		"scope": "string.unquoted.bare",
+		"note": "and the content after it is content, marker or no marker"
+	},
+	{
+		"fixture": "bare-strings-marked.tjson",
+		"line": 1,
+		"text": "_",
+		"occurrence": 2,
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "an inline-packed pair's value takes the marker too"
+	},
+	{
+		"fixture": "bare-strings-marked.tjson",
+		"line": 2,
+		"text": " ",
+		"occurrence": 1,
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "space and marker may be mixed within one document -- the spec requires no consistency"
+	},
+	{
+		"fixture": "array-packed-strings-marked.tjson",
+		"line": 1,
+		"text": "_",
+		"occurrence": 1,
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "first element of a Type 3 packed array, opened with the marker"
+	},
+	{
+		"fixture": "array-packed-strings-marked.tjson",
+		"line": 1,
+		"text": "rust",
+		"scope": "string.unquoted.bare",
+		"note": "the element's content"
+	},
+	{
+		"fixture": "array-packed-strings-marked.tjson",
+		"line": 1,
+		"text": "_",
+		"occurrence": 2,
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "a later element in the same packed array"
+	},
+	{
+		"fixture": "array-packed-strings-marked.tjson",
+		"line": 2,
+		"text": "a, b",
+		"scope": "string.unquoted.bare",
+		"note": "a marked Type 3 element may still hold a comma, which is content here"
+	},
+	{
+		"fixture": "array-packed-strings-marked.tjson",
+		"line": 5,
+		"text": "_",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "an element alone on its line, opened with the marker"
+	},
+	{
+		"fixture": "tables-marked.tjson",
+		"line": 3,
+		"text": "_",
+		"occurrence": 1,
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "a table cell's bare string opens with the marker directly against the pipe"
+	},
+	{
+		"fixture": "tables-marked.tjson",
+		"line": 3,
+		"text": "Alice",
+		"scope": "string.unquoted.bare",
+		"note": "and its content is still a bare string"
+	},
+	{
+		"fixture": "tables-marked.tjson",
+		"line": 2,
+		"text": "name",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "a header cell is a key and never takes a marker"
+	},
+	{
+		"fixture": "indent-glyph-array.tjson",
+		"line": 1,
+		"text": "[ ",
+		"scope": "keyword.operator.array-marker",
+		"note": "a nesting marker is still a marker when an indent glyph follows it, not the start of some other form"
+	},
+	{
+		"fixture": "indent-glyph-array.tjson",
+		"line": 1,
+		"text": "/<",
+		"scope": "keyword.control.indent-adjustment",
+		"note": "the opening glyph on a marker line -- this whole line took no scope at all until the glyph rule allowed markers before it, while the '/>' closing it highlighted correctly"
+	},
+	{
+		"fixture": "indent-glyph-array.tjson",
+		"line": 8,
+		"text": "/>",
+		"scope": "keyword.control.indent-adjustment",
+		"note": "the closing glyph, on pure indent -- the case that always worked, kept here so the pair is asserted together"
+	}
 ]

@@ -1,5 +1,5 @@
 /* @ts-self-types="./tjson.d.ts" */
-import { jsonTextToValue, throwNamingIllFormedString, valueToJsonText } from './snippets/tjson-rs-243c38fd23ed5d84/src/js/value_transport.js';
+import { jsonTextToValue, throwNamingIllFormedString, valueToJsonText } from './snippets/tjson-rs-36f6fdeaa35e3f77/src/js/value_transport.js';
 
 
 /**
@@ -205,7 +205,7 @@ function __wbg_get_imports() {
             const ret = Array.isArray(arg0);
             return ret;
         },
-        __wbg_jsonTextToValue_e4fe19bdd27d9072: function() { return handleError(function (arg0, arg1, arg2) {
+        __wbg_jsonTextToValue_b364f420ef33dbb6: function() { return handleError(function (arg0, arg1, arg2) {
             const ret = jsonTextToValue(getStringFromWasm0(arg0, arg1), arg2 !== 0);
             return ret;
         }, arguments); },
@@ -213,10 +213,10 @@ function __wbg_get_imports() {
             const ret = new Error(getStringFromWasm0(arg0, arg1));
             return ret;
         },
-        __wbg_throwNamingIllFormedString_ba978783c5e14470: function() { return handleError(function (arg0) {
+        __wbg_throwNamingIllFormedString_7219492ed304ef27: function() { return handleError(function (arg0) {
             throwNamingIllFormedString(arg0);
         }, arguments); },
-        __wbg_valueToJsonText_6c8ef6154215e48d: function() { return handleError(function (arg0, arg1) {
+        __wbg_valueToJsonText_44bdf1189aca4ad0: function() { return handleError(function (arg0, arg1) {
             const ret = valueToJsonText(arg1);
             const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
             const len1 = WASM_VECTOR_LEN;

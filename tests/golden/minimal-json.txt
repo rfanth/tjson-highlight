@@ -133,12 +133,12 @@
      | 18-23    "after"                            meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
      | 23-24    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
      | 24-25    "1"                                meta.object.entry meta.object.entry.inline constant.numeric
-   8 |   not json: [1,2]
+   8 |   not json: a[1,2]b
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-10     "not json"                         meta.object.entry entity.other.attribute-name.bare
      | 10-11    ":"                                meta.object.entry punctuation.separator.key-value
      | 11-12    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
-     | 12-17    "[1,2]"                            meta.object.entry meta.bare-string string.unquoted.bare
+     | 12-19    "a[1,2]b"                          meta.object.entry meta.bare-string string.unquoted.bare
    9 |   bare with brackets: a [b] c
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-20     "bare with brackets"               meta.object.entry entity.other.attribute-name.bare
@@ -214,7 +214,7 @@
      | 23-25    "31"                               meta.table.row constant.numeric
      | 25-28    "   "                              meta.table.row
      | 28-29    "|"                                meta.table.row punctuation.separator.table
-  17 |     | Dave | [1,2]    |51   |
+  17 |     | Dave | a[1,2]b  |51   |
      | 0-4      "    "                             meta.table.row punctuation.whitespace.indent
      | 4-5      "|"                                meta.table.row punctuation.separator.table
      | 5-6      " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
@@ -222,8 +222,8 @@
      | 10-11    " "                                meta.table.row
      | 11-12    "|"                                meta.table.row punctuation.separator.table
      | 12-13    " "                                meta.table.row meta.bare-string punctuation.definition.string.begin.bare
-     | 13-18    "[1,2]"                            meta.table.row meta.bare-string string.unquoted.bare
-     | 18-22    "    "                             meta.table.row
+     | 13-20    "a[1,2]b"                          meta.table.row meta.bare-string string.unquoted.bare
+     | 20-22    "  "                               meta.table.row
      | 22-23    "|"                                meta.table.row punctuation.separator.table
      | 23-25    "51"                               meta.table.row constant.numeric
      | 25-28    "   "                              meta.table.row

@@ -5,7 +5,7 @@
 	"fileTypes": [
 		"tjson"
 	],
-	"comment": "Bare strings: a bare string opens with a single space and has no closing delimiter — a one-sided quote. That space is the entire type marker: 'k:true' is the boolean, 'k: true' is the string \"true\". The opener may also be written '_' ('k:_true'), which a generator emits only when asked (tjson --bare-strings marked). The two are interchangeable, occupy the same one column, and may be mixed freely within a document or even a line, so every rule that matches an opener matches [ _] and every rule that matches the first character of the CONTENT excludes '_' as well — a bare string may not begin with one, which is what keeps the marker distinguishable from the data it introduces. The content is bounded at BOTH ends, by different sets. The first character may not be a quotelike, a backtick, '/', '|', a comma, a space or '_'. The last may not be a quotelike, a backtick, '|', a comma or any whitespace -- but '/' and '_' ARE allowed there, because they are barred at the start only for looking like a fold marker, a comment or the type marker, and nothing in final position can be mistaken for those. That asymmetry is why both classes are written out in every content rule instead of one serving twice, and why a one-character bare string needs a third class satisfying both at once. Constraining only the first character, as this once did, let 'k: abc,' and 'k: abc|' render as clean strings when the parser rejects them. One place looks like an opener and is not: after a fold marker. What follows '/ ' is data resuming mid-string, so the space in '/  ccc' is the string's own internal space and an '_' there is a literal underscore — 'k: aaa bbb' folded to '/ _ccc' is \"aaa bbb_ccc\". No marker rule applies on a continuation line. It is therefore scoped as punctuation.definition.string.begin.bare, for the same reason the opening '\"' of a quoted string is scoped punctuation.definition.string.begin: it is syntax introducing content, not content. Keeping it out of string.unquoted.bare means that scope always covers exactly the data. There is deliberately no matching *.end scope. A bare string ends on two spaces or on end of line, and on nothing else. End of line is zero-width and cannot carry a scope at all; the two spaces are already the separator between inline entries or between Type 3 array elements, so they belong to the neighbour rather than to the string. A '|' ends one only where a table is padded below the minimum '  |' — that is precisely why the spec forbids a '|' inside a bare string in a table at all, since the prohibition is what lets an underpadded table parse deterministically. Outside a table 'k: bare | string' is the single string \"bare | string\" and the pipe is ordinary content. A comma never ends one. A bare string may contain commas and commonly does; it simply may not begin or end with one, and as of spec v0.5.0 may not sit in a comma-packed array at all — precisely because a content comma could not be told from a separator. A bare string with commas belongs in a Type 3 array, where two spaces separate and the commas are ordinary content. Line comments have the same one-sided shape and every grammar treats them this way.",
+	"comment": "Bare strings: a bare string opens with a single space and has no closing delimiter — a one-sided quote. That space is the entire type marker: 'k:true' is the boolean, 'k: true' is the string \"true\". The opener may also be written '_' ('k:_true'), which a generator emits only when asked (tjson --bare-strings marked). The two are interchangeable, occupy the same one column, and may be mixed freely within a document or even a line, so every rule that matches an opener matches [ _] and every rule that matches the first character of the CONTENT excludes '_' as well — a bare string may not begin with one, which is what keeps the marker distinguishable from the data it introduces. The content is bounded at BOTH ends, by different sets. The first character may not be a quotelike, a backtick, '/', '|', a comma, a space, '_', or a square or curly bracket. The last may not be a quotelike, a backtick, '|', a comma, any whitespace, or a square or curly bracket -- but '/' and '_' ARE allowed there, because they are barred at the start only for looking like a fold marker, a comment or the type marker, and nothing in final position can be mistaken for those. The brackets are the one exclusion that is identical at both ends and unsided within each end: ']abc' and 'abc[' are refused along with '[abc' and 'abc]', because pairing them up would make the rule turn on what matches what, and a bracket at an edge can connect visually with one facing toward it in an indent marker or another bare string. The lookalike sets are the spec's SQUAREBRACKETLIKE and CURLYBRACKETLIKE, written out here because no Unicode property carves them without also taking parentheses, which bare keys allow. Corner brackets are absent on purpose -- they carry Quotation_Mark and the quotelike exclusion already has them. Interior brackets stay legal: 'a[b' is a bare string, and nothing structural begins mid-value. That asymmetry is why both classes are written out in every content rule instead of one serving twice, and why a one-character bare string needs a third class satisfying both at once. Constraining only the first character, as this once did, let 'k: abc,' and 'k: abc|' render as clean strings when the parser rejects them. One place looks like an opener and is not: after a fold marker. What follows '/ ' is data resuming mid-string, so the space in '/  ccc' is the string's own internal space and an '_' there is a literal underscore — 'k: aaa bbb' folded to '/ _ccc' is \"aaa bbb_ccc\". No marker rule applies on a continuation line. It is therefore scoped as punctuation.definition.string.begin.bare, for the same reason the opening '\"' of a quoted string is scoped punctuation.definition.string.begin: it is syntax introducing content, not content. Keeping it out of string.unquoted.bare means that scope always covers exactly the data. There is deliberately no matching *.end scope. A bare string ends on two spaces or on end of line, and on nothing else. End of line is zero-width and cannot carry a scope at all; the two spaces are already the separator between inline entries or between Type 3 array elements, so they belong to the neighbour rather than to the string. A '|' ends one only where a table is padded below the minimum '  |' — that is precisely why the spec forbids a '|' inside a bare string in a table at all, since the prohibition is what lets an underpadded table parse deterministically. Outside a table 'k: bare | string' is the single string \"bare | string\" and the pipe is ordinary content. A comma never ends one. A bare string may contain commas and commonly does; it simply may not begin or end with one, and as of spec v0.5.0 may not sit in a comma-packed array at all — precisely because a content comma could not be told from a separator. A bare string with commas belongs in a Type 3 array, where two spaces separate and the commas are ordinary content. Line comments have the same one-sided shape and every grammar treats them this way.",
 	"patterns": [
 		{
 			"include": "#comments"
@@ -51,14 +51,26 @@
 			"name": "comment.line.double-slash.tjson"
 		},
 		"indent-glyphs": {
-			"comment": "Standalone /< or /> on a line — even indent + mandatory bare-string separator space + glyph",
-			"match": "^((?:  )*) (/[<>])\\s*$",
+			"comment": "A /< or /> alone on a line — even indent + any nesting markers + mandatory bare-string separator space + glyph. The markers matter: a generator shifting the frame at the very start of a document writes '[  /<', the array marker and the glyph together, and with the marker chain omitted here that line matched nothing at all — not the marker, not the glyph, the whole line unscoped, while the '/>' closing it three lines down highlighted correctly. Every other content rule in this grammar already carries '((?:  )*)((?:\\[ )*)' for exactly this reason; a glyph is one more thing that can follow a marker, and it was the one form the list left out.",
+			"match": "^((?:  )*)((?:\\[ |\\{ )*) (/[<>])\\s*$",
 			"name": "meta.indent-glyph.tjson",
 			"captures": {
 				"1": {
 					"name": "punctuation.whitespace.indent.tjson"
 				},
 				"2": {
+					"patterns": [
+						{
+							"match": "\\[ ",
+							"name": "keyword.operator.array-marker.tjson"
+						},
+						{
+							"match": "\\{ ",
+							"name": "keyword.operator.object-marker.tjson"
+						}
+					]
+				},
+				"3": {
 					"name": "keyword.control.indent-adjustment.tjson"
 				}
 			}
@@ -170,7 +182,7 @@
 				},
 				{
 					"comment": "String cell. Group 1 is the one-sided opening quote. The cell's effective right delimiter is '  |' -- at least two spaces, then the pipe -- so in a properly padded table the two spaces end the string and the pipe is simply the next token, already scoped as a table pipe in its own right. Only where padding falls below that minimum does the '|' itself end the string, which is why the spec forbids a '|' inside a bare string in a table at all.",
-					"match": "([ _])((?:[^\\p{Quotation_Mark}`/|, _][^|]*?[^\\p{Quotation_Mark}`|,\\s]|[^\\p{Quotation_Mark}`/|,\\s_]))(?=\\s*\\||\\s*$)",
+					"match": "([ _])((?:[^\\p{Quotation_Mark}`/|, _\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝][^|]*?[^\\p{Quotation_Mark}`|,\\s\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]|[^\\p{Quotation_Mark}`/|,\\s_\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]))(?=\\s*\\||\\s*$)",
 					"name": "meta.bare-string.tjson",
 					"captures": {
 						"1": {
@@ -356,7 +368,7 @@
 				},
 				{
 					"comment": "Type 3 packed array of bare strings at line level: the first element is followed by '  '. A lone bare string can never contain two consecutive spaces, so a '  ' after the first element can only be a separator, which makes this line an array with no further evidence needed. Commas inside the elements are content here.",
-					"begin": "^((?:  )*)((?:\\[ )*)([ _])((?:[^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s]|[^\\p{Quotation_Mark}`/|,\\s_]))(?=  )",
+					"begin": "^((?:  )*)((?:\\[ )*)([ _])((?:[^\\p{Quotation_Mark}`/|, _\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]|[^\\p{Quotation_Mark}`/|,\\s_\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]))(?=  )",
 					"end": "$",
 					"name": "meta.array.inline.tjson",
 					"beginCaptures": {
@@ -400,7 +412,7 @@
 				},
 				{
 					"comment": "Otherwise the line is a single bare string, commas and all",
-					"match": "^((?:  )*)((?:\\[ )*)([ _])((?:[^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s]|[^\\p{Quotation_Mark}`/|,\\s_])(?=  | *$))",
+					"match": "^((?:  )*)((?:\\[ )*)([ _])((?:[^\\p{Quotation_Mark}`/|, _\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]|[^\\p{Quotation_Mark}`/|,\\s_\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝])(?=  | *$))",
 					"name": "meta.bare-string.tjson",
 					"captures": {
 						"1": {
@@ -482,7 +494,7 @@
 				},
 				{
 					"comment": "Inline array, gap 3, Type 3 packed bare strings: k:   a   b, and the single-element k:   a. Gap 3 means the first element is a bare string, and a bare string can only be Type 3 packed, so this is the only form the gap admits -- there is no Type 2 counterpart to tell it apart from. A Type 3 element may contain commas, so the element ends only at '  ' or end of line -- that is what makes 'k:   a, b   c' the two elements 'a, b' and 'c' rather than three.",
-					"begin": "(?<=:)(  )([ _])((?:[^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s]|[^\\p{Quotation_Mark}`/|,\\s_])(?=  | *$))",
+					"begin": "(?<=:)(  )([ _])((?:[^\\p{Quotation_Mark}`/|, _\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]|[^\\p{Quotation_Mark}`/|,\\s_\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝])(?=  | *$))",
 					"end": "$",
 					"name": "meta.array.inline.tjson",
 					"beginCaptures": {
@@ -526,7 +538,7 @@
 				},
 				{
 					"comment": "Bare string value, gap 1: k: true. Group 1 is the one-sided opening quote; commas inside are content.",
-					"match": "(?<=:)([ _])((?:[^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s]|[^\\p{Quotation_Mark}`/|,\\s_])(?=  | *$))",
+					"match": "(?<=:)([ _])((?:[^\\p{Quotation_Mark}`/|, _\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]|[^\\p{Quotation_Mark}`/|,\\s_\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝])(?=  | *$))",
 					"name": "meta.bare-string.tjson",
 					"captures": {
 						"1": {
@@ -840,7 +852,7 @@
 				},
 				{
 					"comment": "Type 3 bare element — two spaces of separator, then the element's own one-sided opening quote. Commas are ordinary content here.",
-					"match": "(  )([ _])((?:[^\\p{Quotation_Mark}`/|, _](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s]|[^\\p{Quotation_Mark}`/|,\\s_])(?=  | *$))",
+					"match": "(  )([ _])((?:[^\\p{Quotation_Mark}`/|, _\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝](?:(?!  )[^\\n])*?[^\\p{Quotation_Mark}`|,\\s\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]|[^\\p{Quotation_Mark}`/|,\\s_\\[\\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝])(?=  | *$))",
 					"name": "meta.bare-string.tjson",
 					"captures": {
 						"1": {

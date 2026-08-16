@@ -1,47 +1,87 @@
 [
-  {
-    "line": "  k: abc,",
-    "text": "abc,",
-    "note": "a bare string cannot end with a comma"
-  },
-  {
-    "line": "  k: ,abc",
-    "text": ",abc",
-    "note": "a bare string cannot begin with a comma"
-  },
-  {
-    "line": "  k: abc|",
-    "text": "abc|",
-    "note": "a bare string cannot end with a pipe"
-  },
-  {
-    "line": "  k: abc\"",
-    "text": "abc\"",
-    "note": "a bare string cannot end with a quotelike character"
-  },
-  {
-    "line": "  k: abc'",
-    "text": "abc'",
-    "note": "an apostrophe is quotelike, so it cannot end one either"
-  },
-  {
-    "line": "  k: abc`",
-    "text": "abc`",
-    "note": "a backtick is quotelike, and would also read as a multiline opener"
-  },
-  {
-    "line": "  | ,abc  |",
-    "text": ",abc",
-    "note": "a table cell holds a bare string and the same first-character rule applies in it"
-  },
-  {
-    "line": "  | abc,  |",
-    "text": "abc,",
-    "note": "and the same last-character rule applies in it"
-  },
-  {
-    "line": "  tags:   a,  b",
-    "text": "a,",
-    "note": "no bare element may sit in a comma-packed array as of spec v0.5.0"
-  }
+	{
+		"line": "  k: abc,",
+		"text": "abc,",
+		"note": "a bare string cannot end with a comma"
+	},
+	{
+		"line": "  k: ,abc",
+		"text": ",abc",
+		"note": "a bare string cannot begin with a comma"
+	},
+	{
+		"line": "  k: abc|",
+		"text": "abc|",
+		"note": "a bare string cannot end with a pipe"
+	},
+	{
+		"line": "  k: abc\"",
+		"text": "abc\"",
+		"note": "a bare string cannot end with a quotelike character"
+	},
+	{
+		"line": "  k: abc'",
+		"text": "abc'",
+		"note": "an apostrophe is quotelike, so it cannot end one either"
+	},
+	{
+		"line": "  k: abc`",
+		"text": "abc`",
+		"note": "a backtick is quotelike, and would also read as a multiline opener"
+	},
+	{
+		"line": "  | ,abc  |",
+		"text": ",abc",
+		"note": "a table cell holds a bare string and the same first-character rule applies in it"
+	},
+	{
+		"line": "  | abc,  |",
+		"text": "abc,",
+		"note": "and the same last-character rule applies in it"
+	},
+	{
+		"line": "  tags:   a,  b",
+		"text": "a,",
+		"note": "no bare element may sit in a comma-packed array as of spec v0.5.0"
+	},
+	{
+		"line": "  k: [abc",
+		"text": "[abc",
+		"note": "a bare string cannot begin with a square bracket -- '[ ' opens an array level and MINIMAL JSON opens with '['"
+	},
+	{
+		"line": "  k: abc]",
+		"text": "abc]",
+		"note": "a bare string cannot end with a square bracket -- it reads as an array or MINIMAL JSON closing"
+	},
+	{
+		"line": "  k: ]abc",
+		"text": "]abc",
+		"note": "the rule is not sided: a closing square bracket is barred at the start too"
+	},
+	{
+		"line": "  k: abc[",
+		"text": "abc[",
+		"note": "the rule is not sided: an opening square bracket is barred at the end too"
+	},
+	{
+		"line": "  k: {abc",
+		"text": "{abc",
+		"note": "a bare string cannot begin with a curly bracket -- '{ ' opens an object level"
+	},
+	{
+		"line": "  k: abc}",
+		"text": "abc}",
+		"note": "a bare string cannot end with a curly bracket"
+	},
+	{
+		"line": "  k: 【abc",
+		"text": "【abc",
+		"note": "a squarebracketlike character counts, not only the ASCII one"
+	},
+	{
+		"line": "  k: abc｝",
+		"text": "abc｝",
+		"note": "a curlybracketlike character counts at the end too"
+	}
 ]
