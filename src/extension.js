@@ -8,6 +8,8 @@
 
 const vscode = require("vscode");
 const preview = require("./preview");
+const { createPacer } = require("./debounce");
+const { createActivity } = require("./activity");
 
 // vendor/ is the published @rfanth/tjson WebAssembly build, pulled by
 // scripts/pull-wasm.mjs. It is the same artifact anyone can `npm i`, which is
@@ -64,6 +66,14 @@ function activate(context) {
   const diagnostics = vscode.languages.createDiagnosticCollection("tjson");
   context.subscriptions.push(diagnostics);
 
+  // Paces the checks below by what checking has been costing. The preview
+  // keeps its own, because rendering a document costs more than checking it.
+  const checks = createPacer();
+
+  // Shared with the preview: one cue for the window, not one per feature.
+  const activity = createActivity();
+  activity.register(context);
+
   // Report on text, named by the uri it belongs to, rather than on a document.
   //
   // A preview is not a file the editor is watching: its content comes from this
@@ -100,8 +110,19 @@ function activate(context) {
       return;
     }
 
+    // toJson rather than parse, though the result is thrown away either way
+    // and both fault on the same syntax. parse builds a JavaScript value, and
+    // building one means putting every number through an f64 -- so it refuses
+    // integers past Number.MAX_SAFE_INTEGER and anything that would overflow
+    // to Infinity. Those are valid TJSON. Asking for a value we do not want
+    // was turning a limit of JavaScript's number type into an error about the
+    // writer's document. toJson stays in text the whole way, so the only
+    // thing it can object to is the thing being checked for.
+    // Measured through the pacer so the next check is spaced by what this one
+    // cost. The throw is the result on the error path, so the timing has to
+    // survive it -- measure records in a finally for that reason.
     try {
-      tjson.parse(text);
+      checks.measure(uri.toString(), () => tjson.toJson(text));
       diagnostics.delete(uri);
     } catch (error) {
       const diagnostic = toDiagnostic(text.split(/\r?\n/), error);
@@ -111,7 +132,7 @@ function activate(context) {
 
   // The preview renders through this extension, so it reports its own result
   // rather than being watched for one.
-  preview.register(context, parser, report);
+  preview.register(context, parser, report, activity);
 
   // Returns the report's promise: a caller that wants to know the document has
   // been checked has to have something to wait on.
@@ -136,16 +157,25 @@ function activate(context) {
   // One timer per document, because a single shared one lets any document
   // cancel a check pending on another -- editing a file would call off the
   // check on whatever was edited a moment earlier, and that check never runs.
+  //
+  // How long that timer runs is the pacer's business, not a constant here: see
+  // debounce.js for why the interval has to follow the cost of the work.
   const pending = new Map();
   const checkSoon = (document) => {
     const key = document.uri.toString();
+    const delay = checks.delayFor(key);
+    activity.waiting(key, delay, checks.costFor(key) ?? 0);
     clearTimeout(pending.get(key));
     pending.set(
       key,
       setTimeout(() => {
         pending.delete(key);
-        check(document);
-      }, 500)
+        // Settled when the check resolves rather than when the timer fires:
+        // the wait and the work are one span as far as anyone watching is
+        // concerned, and on the documents that reach the cue the work is the
+        // longer half of it.
+        check(document).finally(() => activity.settled(key));
+      }, delay)
     );
   };
 
@@ -153,6 +183,8 @@ function activate(context) {
     const key = document.uri.toString();
     clearTimeout(pending.get(key));
     pending.delete(key);
+    checks.forget(key);
+    activity.settled(key);
     diagnostics.delete(document.uri);
   };
 

@@ -151,8 +151,27 @@ function settingsTests() {
     }
 }
 
+const loadTjson = () => import('../vendor/index.js');
+
+// Every library function this extension calls, and whether the vendored
+// package actually has it.
+//
+// @rfanth/tjson 0.10.0 declared toJsonPretty in its types and did not export
+// it: the package's zero-setup entry re-exported a hardcoded list of names
+// that predated the function. A typecheck passed and the call threw. Types
+// are a claim about a package; this is the check that the claim is true of
+// the copy in vendor/, which is the only copy that ships.
+async function vendoredApiTests() {
+    const tjson = await loadTjson();
+    const used = ['parse', 'toJson', 'toJsonPretty', 'fromJson', 'version'];
+    const absent = used.filter((name) => typeof tjson[name] !== 'function');
+    check('vendor/ exports every library function the extension calls',
+        absent.length === 0,
+        `missing: ${absent.join(', ')} -- present: ${Object.keys(tjson).join(', ')}`);
+}
+
 async function conversionTests() {
-    const tjson = await import('../vendor/index.js');
+    const tjson = await loadTjson();
 
     const json = '{"name":"Bob","tags":["rust","wasm"],"n":3}';
     const asTjson = MODES.toTjson.convert(tjson, json, {});
@@ -179,6 +198,108 @@ async function conversionTests() {
         typeof MODES.reformat.convert(tjson, asTjson, {}) === 'string');
 }
 
+// Strip every byte the indenter is allowed to add. What is left has to be the
+// input, exactly.
+//
+// This is the check that matters, and it is deliberately stronger than parsing
+// both sides and comparing the values: an f64 round trip produces JSON that
+// still parses, and still compares equal to itself, while holding a different
+// number than the document did. Byte identity is the only comparison that
+// notices.
+function stripAddedWhitespace(text) {
+    let out = '';
+    let inString = false;
+    let escaped = false;
+
+    for (const ch of text) {
+        if (inString) {
+            out += ch;
+            if (escaped) {
+                escaped = false;
+            } else if (ch === '\\') {
+                escaped = true;
+            } else if (ch === '"') {
+                inString = false;
+            }
+            continue;
+        }
+        if (ch === '"') {
+            inString = true;
+            out += ch;
+            continue;
+        }
+        if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
+            continue;
+        }
+        out += ch;
+    }
+    return out;
+}
+
+async function prettyJsonTests() {
+    const tjson = await loadTjson();
+
+    // Through the mode the pane actually uses, not the library call directly:
+    // what is being checked is that the JSON preview shows the document, and
+    // the mode is the part that decides which library call answers that.
+    const shown = (json) => MODES.toJson.convert(tjson, tjson.fromJson(json));
+
+    check('the JSON preview is indented rather than minified',
+        shown('{"a":1,"b":[2,3]}').includes('\n  "a": 1'),
+        shown('{"a":1,"b":[2,3]}'));
+
+    // Numbers no f64 can hold. A preview that rounds these is showing a
+    // document the writer does not have, which is worse than showing none:
+    // TJSON carries them exactly, so the pane beside it must too.
+    //
+    // Checked against the minified form of the same TJSON rather than against
+    // the JSON that was fed in. Rendering TJSON may respell an exponent --
+    // `1e400` becomes `1e+400`, the `+` being optional in JSON's grammar and
+    // the value identical -- and that is fromJson's business, not the JSON
+    // preview's. Comparing to the original input would test both conversions
+    // at once and fail the wrong one.
+    const exact = {
+        'an integer past Number.MAX_SAFE_INTEGER': '{"n":123456789012345678901234567890}',
+        'a number that would overflow to Infinity': '{"n":1e400}',
+        'a decimal finer than a double resolves': '{"n":0.1000000000000000000000000001}',
+    };
+    for (const [label, json] of Object.entries(exact)) {
+        const tj = tjson.fromJson(json);
+        const got = stripAddedWhitespace(MODES.toJson.convert(tjson, tj));
+        check(`${label} reaches the pane exactly`, got === tjson.toJson(tj),
+            `${tjson.toJson(tj)}  ->  ${got}`);
+    }
+
+    // Against the source digits directly, for the case where no respelling is
+    // possible. This is the one an f64 would visibly destroy, and it does not
+    // depend on toJson being right either.
+    check('a 30-digit integer keeps every digit on the way to the pane',
+        stripAddedWhitespace(shown('{"n":123456789012345678901234567890}'))
+            === '{"n":123456789012345678901234567890}',
+        stripAddedWhitespace(shown('{"n":123456789012345678901234567890}')));
+
+    // Indentation must be the only difference from the minified form. Compared
+    // by bytes rather than by parsing both sides, because an f64 round trip
+    // produces JSON that still parses and still compares equal to itself while
+    // holding a different number than the document did.
+    const corpus = [
+        '{"a":"he said \\"hi\\""}',
+        '{"a":"ends with \\\\"}',
+        '{"a":"{[,:]}"}',
+        '{"a":{},"b":[],"c":[{}]}',
+        '{"k":"héllo 日本 🎉"}',
+        '{"a":true,"b":false,"c":null}',
+        '[[[[[1]]]]]',
+    ];
+    const damaged = corpus
+        .map((json) => [json, tjson.fromJson(json)])
+        .filter(([json, tj]) => stripAddedWhitespace(MODES.toJson.convert(tjson, tj)) !== tjson.toJson(tj))
+        .map(([json]) => json);
+    check('indenting changes nothing but whitespace outside strings',
+        damaged.length === 0,
+        damaged.join('\n      '));
+}
+
 function uriTests() {
     const source = Uri.parse('file:///tmp/data.json');
     for (const mode of Object.keys(MODES)) {
@@ -196,10 +317,12 @@ function uriTests() {
 
 async function main() {
     settingsTests();
+    await vendoredApiTests();
     await conversionTests();
+    await prettyJsonTests();
     uriTests();
 
-    const total = 18;
+    const total = 25;
     console.log(`convert: ${total - failures.length}/${total} case(s) pass`);
     for (const failure of failures) {
         console.log('');

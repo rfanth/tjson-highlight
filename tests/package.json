@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "Grammar tests for the TJSON TextMate grammar",
   "scripts": {
-    "test": "node run.js && node extension.js && node scopes.js && node convert.js",
+    "test": "node run.js && node extension.js && node scopes.js && node convert.js && node debounce.js",
     "update": "node run.js --update",
     "regen": "./regen.sh",
     "test:grammar": "node run.js",

@@ -3,7 +3,7 @@
   "displayName": "TJSON",
   "description": "TJSON (Text JSON): syntax highlighting, error checking, and JSON conversion",
   "icon": "build/icon.png",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "R.F. Anthracite <rfa@rfanth.com>",
   "publisher": "rfanth",
   "license": "BSD-3-Clause",

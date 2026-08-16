@@ -32,7 +32,15 @@ const vscodeStub = {
     },
     window: {
         showErrorMessage: (message) => state.errorMessages.push(message),
+        // The slow-work cue. Recorded rather than ignored so a test can assert
+        // it is not left spinning; see the status bar cases below.
+        createStatusBarItem: () => (state.statusBar = {
+            text: '', tooltip: '', name: '', visible: false,
+            show() { this.visible = true; }, hide() { this.visible = false; },
+            dispose() {},
+        }),
     },
+    StatusBarAlignment: { Left: 1, Right: 2 },
     workspace: {
         onDidOpenTextDocument: (fn) => ((state.handlers.open = fn), { dispose: () => {} }),
         onDidSaveTextDocument: () => ({ dispose: () => {} }),

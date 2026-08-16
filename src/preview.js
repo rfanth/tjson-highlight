@@ -14,6 +14,7 @@
 
 const vscode = require("vscode");
 const { renderOptions } = require("./render-options");
+const { createPacer } = require("./debounce");
 
 const SCHEME = "tjson-preview";
 
@@ -28,7 +29,13 @@ const MODES = {
   toJson: {
     title: "JSON",
     extension: ".json",
-    convert: (tjson, text) => tjson.toJson(text),
+    // toJsonPretty rather than toJson: minified JSON is correct output and
+    // unreadable reading. Indenting it here in JavaScript was possible but
+    // wrong -- the renderer holds every number as exact text, and any
+    // JS-side reformat has to work to avoid putting them through an f64.
+    // Asking the renderer for the indentation it already knows how to
+    // produce removes the problem rather than handling it.
+    convert: (tjson, text) => tjson.toJsonPretty(text),
   },
   reformat: {
     title: "reformatted",
@@ -72,8 +79,14 @@ async function sourceText(uri) {
   return (await vscode.workspace.openTextDocument(uri)).getText();
 }
 
-function register(context, parser, report) {
+function register(context, parser, report, activity) {
   const changed = new vscode.EventEmitter();
+
+  // Paces refreshes by what rendering has been costing. Separate from the
+  // diagnostics' pacer: a reformat is a round trip through JSON and back, so
+  // it costs about twice what checking the same document does, and one pooled
+  // record would pace each of them by the other's work.
+  const renders = createPacer();
 
   // What the pane is showing decides what may be said about it. Rendered TJSON
   // is checked, because a squiggle there means the renderer emitted something
@@ -107,26 +120,31 @@ function register(context, parser, report) {
       try {
         tjson = await parser();
       } catch (error) {
+        activity.settled(`preview:${origin.source}`);
         return await note(
           uri,
           `// TJSON preview: the parser in vendor/ could not be loaded.\n// ${error}\n`
         );
       }
 
+      // In a finally rather than beside each return: a pane that failed to
+      // render is still a pane that has stopped working on it, and a cue left
+      // spinning after an error is a worse lie than no cue at all.
       try {
         const text = await sourceText(origin.source);
-        return await rendered(
-          uri,
-          origin.mode,
+        // Measured against the source, not this pane: the timer paced by it
+        // is the one watching the source for changes.
+        const converted = renders.measure(origin.source.toString(), () =>
           MODES[origin.mode].convert(tjson, text, renderOptions(context))
         );
+        return await rendered(uri, origin.mode, converted);
       } catch (error) {
         // Shown in the pane rather than only as a toast: the pane is where the
         // reader is looking, and an empty one with a notification that has
         // already faded explains nothing. Commented so it reads as a note about
         // the preview rather than as content.
         const detail = String(error && error.message ? error.message : error);
-        return note(
+        return await note(
           uri,
           [
             "// TJSON preview: the source could not be converted.",
@@ -134,6 +152,8 @@ function register(context, parser, report) {
             "",
           ].join("\n")
         );
+      } finally {
+        activity.settled(`preview:${origin.source}`);
       }
     },
   };
@@ -160,6 +180,8 @@ function register(context, parser, report) {
       if (open.length === 0) {
         return;
       }
+      const delay = renders.delayFor(source);
+      activity.waiting(`preview:${source}`, delay, renders.costFor(source) ?? 0);
       clearTimeout(pending.get(source));
       pending.set(
         source,
@@ -168,7 +190,7 @@ function register(context, parser, report) {
           for (const document of open) {
             changed.fire(document.uri);
           }
-        }, 500)
+        }, delay)
       );
     })
   );
