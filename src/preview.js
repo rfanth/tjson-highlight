@@ -72,38 +72,68 @@ async function sourceText(uri) {
   return (await vscode.workspace.openTextDocument(uri)).getText();
 }
 
-function register(context, parser) {
+function register(context, parser, report) {
   const changed = new vscode.EventEmitter();
+
+  // What the pane is showing decides what may be said about it. Rendered TJSON
+  // is checked, because a squiggle there means the renderer emitted something
+  // the parser will not take -- the round-trip test this preview exists to be.
+  // A note is not TJSON and gets nothing, since parsing a line of `//` prose
+  // only ever reports that it is not a document, which is true and useless.
+  //
+  // Reported before the text is handed back, rather than alongside it: the
+  // editor shows what this returns, so anything still owed at that moment is
+  // owed against a pane the reader is already looking at. Waiting costs a
+  // parse that was going to happen regardless, and buys the guarantee that no
+  // squiggle ever outlives the line it was about.
+  const note = async (uri, text) => {
+    await report(uri, null);
+    return text;
+  };
+  const rendered = async (uri, mode, text) => {
+    await report(uri, MODES[mode].extension === ".tjson" ? text : null);
+    return text;
+  };
 
   const provider = {
     onDidChange: changed.event,
     async provideTextDocumentContent(uri) {
       const origin = previewOrigin(uri);
       if (!origin) {
-        return "// TJSON preview: this preview has lost track of its source.\n";
+        return await note(uri, "// TJSON preview: this preview has lost track of its source.\n");
       }
 
       let tjson;
       try {
         tjson = await parser();
       } catch (error) {
-        return `// TJSON preview: the parser in vendor/ could not be loaded.\n// ${error}\n`;
+        return await note(
+          uri,
+          `// TJSON preview: the parser in vendor/ could not be loaded.\n// ${error}\n`
+        );
       }
 
       try {
         const text = await sourceText(origin.source);
-        return MODES[origin.mode].convert(tjson, text, renderOptions(context));
+        return await rendered(
+          uri,
+          origin.mode,
+          MODES[origin.mode].convert(tjson, text, renderOptions(context))
+        );
       } catch (error) {
         // Shown in the pane rather than only as a toast: the pane is where the
         // reader is looking, and an empty one with a notification that has
         // already faded explains nothing. Commented so it reads as a note about
         // the preview rather than as content.
         const detail = String(error && error.message ? error.message : error);
-        return [
-          "// TJSON preview: the source could not be converted.",
-          ...detail.split("\n").map((line) => `// ${line}`),
-          "",
-        ].join("\n");
+        return note(
+          uri,
+          [
+            "// TJSON preview: the source could not be converted.",
+            ...detail.split("\n").map((line) => `// ${line}`),
+            "",
+          ].join("\n")
+        );
       }
     },
   };
@@ -115,7 +145,11 @@ function register(context, parser) {
   // Refresh open previews as their source is edited. Debounced for the same
   // reason the diagnostics are: a document mid-keystroke is usually not valid,
   // and re-rendering it on every character is work nobody sees.
-  let pending = null;
+  //
+  // One timer per source. A single shared one means editing one file cancels a
+  // refresh already owed to a preview of a different file, and that preview
+  // then shows an older render than the one it was asked for.
+  const pending = new Map();
   context.subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event) => {
       const source = event.document.uri.toString();
@@ -126,12 +160,16 @@ function register(context, parser) {
       if (open.length === 0) {
         return;
       }
-      clearTimeout(pending);
-      pending = setTimeout(() => {
-        for (const document of open) {
-          changed.fire(document.uri);
-        }
-      }, 500);
+      clearTimeout(pending.get(source));
+      pending.set(
+        source,
+        setTimeout(() => {
+          pending.delete(source);
+          for (const document of open) {
+            changed.fire(document.uri);
+          }
+        }, 500)
+      );
     })
   );
 
