@@ -6,24 +6,15 @@ Syntax highlighting, error checking, and JSON ↔ TJSON conversion for `.tjson` 
 
 Learn more about TJSON at [textjson.com](https://textjson.com).
 
-## Install - VSCode, VSCodium
+The highlighter has full coverage for everything in TJSON within the TextMate grammar
+file.
 
-This has full coverage for everything in TJSON within the TextMate grammar file.
+## Install - VSCode, VSCodium, Cursor, etc.
 
-Copy this folder to your extensions directory:
+Click on Extensions, search for TJSON (`@id:rfanth.tjson-highlight`), click on
+TJSON, and press the install button.
 
-**VSCodium:**
-```
-~/.vscode-oss/extensions/tjson-highlight/
-```
-
-**VS Code:**
-```
-~/.vscode/extensions/tjson-highlight/
-```
-
-Then reload the window: `Ctrl+Shift+P` → `Developer: Reload Window`.
-Disabling and reenabling this extension also seems to have a similar effect if you don't want to reload everything.
+## How to use
 
 ### Converting between JSON and TJSON
 
@@ -372,5 +363,54 @@ The mapping lives in [docs/scope-classes.json](docs/scope-classes.json) rather
 than in prose so it can be checked: `tests/scopes.js` asserts that every scope
 the grammar emits resolves to a class and that no rule in it is dead. Copy it
 as-is.
+
+## Manual installation
+
+### From a GitHub release
+
+CI attaches a `.vsix` to each [GitHub release](https://github.com/rfanth/tjson-highlight/releases/latest).
+It is byte for byte identical to the one the extensions bar serves. The file is
+named `tjson-highlight-<version>.vsix`.
+
+Download it, then from the directory you saved it in:
+
+**VS Code:**
+```
+code --install-extension tjson-highlight-<version>.vsix
+```
+
+**VSCodium:**
+```
+codium --install-extension tjson-highlight-<version>.vsix
+```
+
+**Cursor:**
+```
+cursor --install-extension tjson-highlight-<version>.vsix
+```
+
+Replace `<version>` with the version in the filename, for example `0.2.1`.
+
+### Locally from this folder
+
+Copy this folder to your extensions directory:
+
+**VSCodium:**
+```
+~/.vscode-oss/extensions/tjson-highlight/
+```
+
+**VS Code:**
+```
+~/.vscode/extensions/tjson-highlight/
+```
+
+**Cursor:**
+```
+~/.cursor/extensions/tjson-highlight/
+```
+
+Then reload the window: `Ctrl+Shift+P` → `Developer: Reload Window`.
+Disabling and reenabling this extension also seems to have a similar effect if you don't want to reload everything.
 
 ---

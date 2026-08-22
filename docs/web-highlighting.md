@@ -212,13 +212,14 @@ document.querySelectorAll('pre.tjson').forEach((el) => watcher.observe(el));
 ```
 
 Put the plain TJSON in the `<pre>` to begin with. It is readable before the
-engine arrives and stays readable if it never does — and a reader with
+engine arrives, and stays readable even if it never does, so that a reader with
 JavaScript off sees the document rather than nothing.
 
 Whichever path you take: put the result in a `<pre>`. TJSON is
 whitespace-significant in a way JSON is not — the single space in `k: true` is
-what makes it the string `"true"` rather than the boolean — so any element that
-collapses whitespace will change what the document appears to say.
+what makes it the string `"true"` rather than the boolean true or the boolean
+true in a single element array. Any element that collapses whitespace will
+often change what the document appears to say.
 
 ## The classes
 
@@ -248,7 +249,10 @@ Three of these are worth keeping distinct rather than folding together:
 
 - **`tjson-bare` separate from `tjson-string`.** A bare string and a quoted
   string are different syntax for the same value, and the difference is one
-  space. Colouring them alike hides the only cue that `k: 12` is text.
+  space at the beginning. Colouring them alike hides a useful secondary cue that
+  `  k: is "12" a number` is a bare string containing double quotes.  Double
+  quotes at the ends of bare strings are forbidden for being too confusing, but
+  intermediate ones are not, making this a useful additional reading cue.
 - **`tjson-marker` separate from `tjson-punctuation`.** Markers, fold markers
   and indent glyphs are the format talking about *shape*; brackets and separators
   are structure inside data. One family reads as annotation, the other as
@@ -264,7 +268,7 @@ document is wrong rather than only colouring it. The `/web` subpath is the build
 for this: the wasm is inlined, so there is no second asset to serve and no
 initialisation call.
 
-It is a separate 199K gzipped, on top of the colouring, and it earns that only
+It is a separate 199K gzipped, on top of the colouring, and it is needed only
 on a page where the reader is *writing* TJSON. A page that merely displays some
 has nothing to validate — the author already knows it parses. Load it the same
 way as the engine above, from inside the function that first needs it:
