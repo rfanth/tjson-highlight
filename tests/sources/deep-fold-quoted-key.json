@@ -1,0 +1,46 @@
+[
+  [
+    [
+      [
+        [
+          [
+            {
+              "a key that is long enough to have to fold before its colon": "short value",
+              "elements": [
+                " a long quoted element that has to fold here ",
+                " another long quoted element that folds "
+              ],
+              "list": [
+                {
+                  "a key that is long enough to have to fold before its colon": "v",
+                  "nested": [
+                    " a folded element inside the proved object ",
+                    " another folded element in there "
+                  ],
+                  "note": "alpha\nbravo",
+                  "another long quoted key that also folds": "w"
+                }
+              ],
+              "x": 1,
+              "proof that this column holds keys": 1,
+              "one more key long enough that it folds before its colon": "z",
+              "deep": {
+                "inner": {
+                  "proof": 1,
+                  "a nested key long enough that it folds too": "v"
+                }
+              },
+              "across": {
+                "plain": 1,
+                "nested": [
+                  " a folded element inside the nested block "
+                ],
+                "a key that folds after the nested block": "v"
+              }
+            }
+          ]
+        ]
+      ]
+    ]
+  ]
+]

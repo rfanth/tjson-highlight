@@ -30,7 +30,11 @@
 //      construct. Each entry is checked twice, and the first check is of the
 //      test's own premise: the bundled parser must actually reject the line, so
 //      an entry that becomes legal in a later release fails loudly instead of
-//      quietly asserting nothing.
+//      quietly asserting nothing. An entry may span more than one line, for
+//      the cases where the illegality is a relationship between lines rather
+//      than a property of one -- a fold marker is legal in itself and illegal
+//      in the wrong column, and the column it belongs in is set by the line
+//      above it.
 
 const fs = require('fs');
 const path = require('path');
@@ -191,36 +195,70 @@ async function checkRejections() {
             continue;
         }
 
-        // The grammar must not hand it a bare-string scope.
+        // What the grammar must say about it. Most entries assert an absence --
+        // the text must not come out looking like a valid bare string -- which
+        // is the failure mode this corpus was built for. Two other shapes are
+        // needed and neither fits that default:
+        //
+        //   scope     the text MUST carry this scope. The `invalid.*` scopes
+        //             live only on broken input, so a fixture can never reach
+        //             them and this is the only place that can assert they are
+        //             emitted at all.
+        //   notScope  the text must NOT carry this scope, where the thing at
+        //             risk is not a bare string -- an illegal bare KEY coming
+        //             out as `entity.other.attribute-name.bare`, say.
         const dump = await tokenizeText(check.line + '\n');
-        const offenders = [];
+        const wanted = check.scope;
+        const forbidden = check.notScope || (wanted ? null : 'string.unquoted.bare');
 
+        const matches = [];
         for (const tokens of parseDump(dump).values()) {
             for (const token of tokens) {
-                if (
-                    token.text === check.text &&
+                if (token.text === check.text) {
                     // The dump drops the '.tjson' suffix, as expectations.json does.
-                    token.scopes.split(' ').includes('string.unquoted.bare')
-                ) {
-                    offenders.push(token);
+                    matches.push({ ...token, list: token.scopes.split(' ') });
                 }
             }
         }
 
-        if (offenders.length > 0) {
-            console.log('');
-            console.log(`REJECTION  ${JSON.stringify(check.line)}`);
-            console.log(`      ${check.note}`);
-            console.log(
-                `      but ${JSON.stringify(check.text)} is scoped "${offenders[0].scopes}"`
-            );
-            failures += 1;
+        if (wanted) {
+            const hit = matches.find((token) => token.list.includes(wanted));
+
+            if (!hit) {
+                console.log('');
+                console.log(`REJECTION  ${JSON.stringify(check.line)}`);
+                console.log(`      ${check.note}`);
+                console.log(`      want ${JSON.stringify(check.text)} -> ${wanted}`);
+                console.log(
+                    matches.length === 0
+                        ? `      but no token has that text`
+                        : `      but it is scoped "${matches[0].scopes}"`
+                );
+                failures += 1;
+                continue;
+            }
+        }
+
+        if (forbidden) {
+            const offender = matches.find((token) => token.list.includes(forbidden));
+
+            if (offender) {
+                console.log('');
+                console.log(`REJECTION  ${JSON.stringify(check.line)}`);
+                console.log(`      ${check.note}`);
+                console.log(
+                    `      but ${JSON.stringify(check.text)} is scoped "${offender.scopes}"`
+                );
+                failures += 1;
+            }
         }
     }
 
+    const asserted = cases.filter((check) => check.scope).length;
     console.log('');
     console.log(
-        `rejections: ${cases.length - failures}/${cases.length} illegal line(s) refused a bare-string scope`
+        `rejections: ${cases.length - failures}/${cases.length} illegal line(s) scoped as they should be` +
+        ` (${asserted} assert a scope, ${cases.length - asserted} assert an absence)`
     );
     return failures;
 }

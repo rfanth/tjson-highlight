@@ -9,11 +9,11 @@
      | 51-52    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
      | 52-53    "_"                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
      | 53-58    "a | b"                            meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
-   2 |   trailing slash: ends with slash /
+   2 |   trailing slash:_ends with slash /
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-16     "trailing slash"                   meta.object.entry entity.other.attribute-name.bare
      | 16-17    ":"                                meta.object.entry punctuation.separator.key-value
-     | 17-18    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 17-18    "_"                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
      | 18-35    "ends with slash /"                meta.object.entry meta.bare-string string.unquoted.bare
    3 |   url:_http://example.com/path    tick:_has ` tick    comma sep:_one, two, three
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent

@@ -83,5 +83,117 @@
 		"line": "  k: abc｝",
 		"text": "abc｝",
 		"note": "a curlybracketlike character counts at the end too"
+	},
+	{
+		"line": "  key: value\n/ 8",
+		"text": "8",
+		"note": "a fold marker left of the value it would continue is not a continuation at all -- the parser names the column it belongs in"
+	},
+	{
+		"line": "  key: value\n   / 8",
+		"text": "8",
+		"note": "a fold marker on an odd column cannot be in any value's column"
+	},
+	{
+		"line": "  averylongkeyname\n/ rest: v",
+		"text": "v",
+		"note": "same rule for a folded key: the marker has to be in the key's own column"
+	},
+	{
+		"line": "  key: value\n    / 8",
+		"text": "8",
+		"note": "a fold marker two columns too far right continues nothing either -- the column is the value's own, not merely an even one"
+	},
+	{
+		"line": "  [  a folded value\n      / more",
+		"text": "more",
+		"note": "same test behind a nesting marker, where the value's column is the indent plus two for the marker"
+	},
+	{
+		"line": "  team:\n    |name  |age  |\n      | Alice  |30   |",
+		"text": "      ",
+		"note": "a table row must start at the column the table's first row set; the offending indent is named as the fault rather than being read as content"
+	},
+	{
+		"line": "  a:\n    b:\n      c: /<\n  x: v\n         />",
+		"text": "        ",
+		"note": "a closing indent glyph sits at the indent of the line that opened the frame; at any other column it closes nothing, and its indent is named as the fault rather than read as content"
+	},
+	{
+		"line": "  doc: ``\n| line one\n  | line two\n   ``",
+		"text": "  ",
+		"note": "every line of one multiline shares the margin column its first line set; a line whose '|' is elsewhere is not a margin line at all"
+	},
+	{
+		"line": "  k: ``\n  | first\n    | second\n   ``",
+		"text": "| ",
+		"scope": "invalid.illegal.multiline-margin-column",
+		"note": "a bold multiline margin that moves: the pipe that is out of line is the fault, and it is named"
+	},
+	{
+		"line": "  t:\n    |a|b|\n     |1|2|\n    |3|4|",
+		"text": "|",
+		"scope": "invalid.illegal.table-row-column",
+		"note": "a table row whose cell edges do not line up with the header's: the row's own pipe carries the fault"
+	},
+	{
+		"line": "  k: /<\n  [ [ [ a:1\n     />",
+		"text": "/>",
+		"scope": "invalid.illegal.indent-glyph-column",
+		"note": "a closing indent glyph away from the column its frame opened at"
+	},
+	{
+		"line": "  bad key :1",
+		"text": "bad key ",
+		"notScope": "entity.other.attribute-name.bare",
+		"note": "a bare key may not end with a space (rule 4)"
+	},
+	{
+		"line": "  bad  key:1",
+		"text": "bad  key",
+		"notScope": "entity.other.attribute-name.bare",
+		"note": "a bare key may not contain two consecutive spaces (rule 5)"
+	},
+	{
+		"line": "  ends with comma,:1",
+		"text": "ends with comma,",
+		"notScope": "entity.other.attribute-name.bare",
+		"note": "a bare key may not end with a comma (rule 4, commalike)"
+	},
+	{
+		"line": "  ends with apostrophe':1",
+		"text": "ends with apostrophe'",
+		"notScope": "entity.other.attribute-name.bare",
+		"note": "a bare key may not end with an apostrophe (rule 4, quotelike) -- one inside is fine"
+	},
+	{
+		"line": "  k:[], []",
+		"text": ",",
+		"notScope": "punctuation.separator.array",
+		"note": "packing needs an array open, and gap 0 after a colon is a single empty array -- this is not a packed array at all"
+	},
+	{
+		"line": "{ outer:\n  [ [ { k: a value long enough tha\n      / t it has to fold somewhe\n        / re",
+		"text": "/ ",
+		"notScope": "meta.bare-string",
+		"note": "a fold marker two columns LEFT of the value it would continue, behind a three-cell chain. Both columns are even, which is exactly what the overflow width slot could not tell apart until the chain got four fixed slots"
+	},
+	{
+		"line": "{ outer:\n  [ [ { k: a value long enough tha\n          / t it has to fold somewhe\n        / re",
+		"text": "/ ",
+		"notScope": "meta.bare-string",
+		"note": "and two columns right of it, the same test in the other direction"
+	},
+	{
+		"line": "  badːkey:1",
+		"text": "badːkey",
+		"notScope": "entity.other.attribute-name.bare",
+		"note": "a bare key may not contain a colonlike character (rule 6). U+02D0 MODIFIER LETTER TRIANGULAR COLON is the only one of the twenty that is a letter, so it is the only one the whitelist would otherwise have let through"
+	},
+	{
+		"line": "  badᅟkey:1",
+		"text": "badᅟkey",
+		"notScope": "entity.other.attribute-name.bare",
+		"note": "a bare key may not contain a default-ignorable character (rule 7). U+115F HANGUL CHOSEONG FILLER is a letter, so \\p{L} admitted it and it is invisible, which is the whole reason the rule exists"
 	}
 ]

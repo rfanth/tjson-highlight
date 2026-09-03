@@ -1,0 +1,12 @@
+{
+  "number": 1234567890123456789012345678901234567890,
+  "looksnumeric": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx8",
+  "bare": "a long bare string value that has to fold more than once to fit",
+  "quoted": " a quoted value 8 long enough to fold more than once as well ",
+  "multiline": "first body line that is long enough that it has to fold to fit\nsecond line\n",
+  "list": [
+    1234567890123456789012345678901234567890,
+    7
+  ],
+  "trailing": 7
+}

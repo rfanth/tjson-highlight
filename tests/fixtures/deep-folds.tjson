@@ -1,0 +1,6 @@
+[ [ [ [ [ [ { longtext: This is a very long 
+              / value that will certainly ne
+              / ed to be folded because it e
+              / xceeds the wrap width by a g
+              / ood margin indeed yes
+              trailing:7

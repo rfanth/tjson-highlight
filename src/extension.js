@@ -32,6 +32,33 @@ function parser() {
 // "line 4, column 23: the rest of the message"
 const LOCATION = /^(?:.*?: )?line (\d+), column (\d+): ([\s\S]*)$/;
 
+// The parser counts a column in Unicode scalar values; a vscode.Range counts
+// UTF-16 code units. The two agree for everything in the Basic Multilingual
+// Plane and diverge by one for every character outside it -- one extra
+// JavaScript string index per emoji standing between the start of the line and
+// the fault. Handed over unconverted, the squiggle landed one column further
+// right for each one: silently, and only on the lines where it mattered, which
+// is the worst way for a position to be wrong.
+//
+// Iterating a string yields whole scalar values, and `.length` on each is how
+// many code units it occupies -- 1, or 2 for a surrogate pair. Running off the
+// end returns the line's full length, which is the clamp the caller would
+// otherwise have to apply itself.
+function toUtf16Offset(text, scalarColumn) {
+  let units = 0;
+  let scalars = 0;
+
+  for (const character of text) {
+    if (scalars >= scalarColumn) {
+      break;
+    }
+    units += character.length;
+    scalars += 1;
+  }
+
+  return units;
+}
+
 /** Turn a thrown parse error into a diagnostic, or null if it carries no position. */
 function toDiagnostic(lines, error) {
   const message = String((error && error.message) || error);
@@ -53,7 +80,7 @@ function toDiagnostic(lines, error) {
   // character: the column is where parsing stopped, and what went wrong is
   // usually the run that starts there. A one-character squiggle on a space --
   // which is a real fault in this format -- would be invisible.
-  const start = Math.min(column, text.length);
+  const start = toUtf16Offset(text, column);
   const end = Math.max(text.length, start + 1);
   const range = new vscode.Range(lineNumber, start, lineNumber, end);
 

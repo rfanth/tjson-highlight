@@ -52,10 +52,17 @@ const textmate = load('vscode-textmate');
 const { classes, unstyled } = JSON.parse(readFileSync(MAPPING, 'utf8'));
 const isScope = (scope, prefix) => scope === prefix || scope.startsWith(`${prefix}.`);
 
-function classFor(scopes) {
+// An unstyled scope is an answer, not a gap: it says this text is deliberately
+// not coloured, so the walk stops there rather than reaching past it for an
+// enclosing region's colour. That distinction is only visible in one place, and
+// it is the reason the rule is written this way -- the indent in front of a
+// fold marker sits inside the string the fold continues, so walking outward
+// found string.quoted.double and painted whitespace that is not the string's
+// data. Stopping paints nothing, which is what indent is.
+export function classFor(scopes) {
     for (let i = scopes.length - 1; i >= 0; i -= 1) {
         if (unstyled.prefixes.some((prefix) => isScope(scopes[i], prefix))) {
-            continue;
+            return null;
         }
         for (const [prefix, cls] of classes) {
             if (isScope(scopes[i], prefix)) {
@@ -82,6 +89,13 @@ const STYLE = `<style>
 .tjson-escape      { color: #f5c2e7; }
 .tjson-multiline   { color: #f9e2af; }
 .tjson-comment     { color: #9399b2; font-style: italic; }
+/* The one class the grammar uses to say a thing is wrong. It lands on the
+   character that is in the wrong place -- a margin pipe, a table row's pipe,
+   a closing indent glyph -- and not on the whitespace in front of it, so a
+   foreground colour is enough and matches what every editor theme does with
+   an invalid scope. The italic is what those themes add, and it survives a
+   reader who cannot distinguish the colour. */
+.tjson-invalid     { color: #f38ba8; font-style: italic; }
 </style>`;
 
 export async function renderHtml(source) {

@@ -139,15 +139,89 @@ function settingsTests() {
     // Every setting must be one the renderer actually has, or it silently does
     // nothing. The generator derives them from the library's own types, so this
     // catches the generator drifting rather than a typo.
-    const optionNames = new Set(
-        require('fs').readFileSync(path.join(__dirname, '..', 'vendor', 'tjson.d.ts'), 'utf8')
-            .split('export interface StringifyOptions')[1].split(/^}/m)[0]
-            .matchAll(/^\s+(\w+)\??:/gm)
-    );
+    const block = require('fs')
+        .readFileSync(path.join(__dirname, '..', 'vendor', 'tjson.d.ts'), 'utf8')
+        .split('export interface StringifyOptions')[1]
+        .split(/^}/m)[0];
+
+    const optionNames = new Set(block.matchAll(/^\s+(\w+)\??:/gm));
     const known = new Set([...optionNames].map((m) => m[1]));
     for (const key of Object.keys(declared)) {
         const name = key.replace('tjson.render.', '');
         check(`the setting ${key} names a real render option`, known.has(name));
+    }
+
+    // An option the library calls experimental has to say so where someone will
+    // read it, which is the settings UI and nowhere else. The generator lifts
+    // the `@experimental` JSDoc tag into a warning and a `tags` entry; this is
+    // what notices if it stops, since the block in package.json is regenerated
+    // on every vendor pull and a description that quietly reverted would look
+    // exactly like one that was never written.
+    const experimental = new Set(
+        [...block.matchAll(/\/\*\*([\s\S]*?)\*\/\s*(\w+)\??:/g)]
+            .filter(([, doc]) => doc.includes('@experimental'))
+            .map(([, , name]) => name)
+    );
+    check(
+        'the library still marks some options experimental',
+        experimental.size > 0,
+        'none found in vendor/tjson.d.ts -- has the tag been renamed?'
+    );
+
+    // Kept here rather than imported from the generator, so that this is a
+    // second statement of the same fact and not a restatement of whatever the
+    // generator happens to hold. The generator throws if a name here stops
+    // being experimental; this catches the two lists disagreeing.
+    const LOSSY = new Set(['tableFold']);
+    for (const name of LOSSY) {
+        check(
+            `the lossy option ${name} is still an experimental option`,
+            experimental.has(name),
+            `not marked @experimental in vendor/tjson.d.ts`
+        );
+    }
+
+    for (const name of experimental) {
+        const setting = declared[`tjson.render.${name}`];
+        check(`the experimental option ${name} is declared as a setting`, setting !== undefined);
+        if (!setting) continue;
+
+        check(
+            `the experimental option ${name} is tagged experimental`,
+            Array.isArray(setting.tags) && setting.tags.includes('experimental'),
+            `tags: ${JSON.stringify(setting.tags)}`
+        );
+        // "Other than the default" says nothing unless the default is on the
+        // page. It cannot be read off the setting itself -- that one is `null`,
+        // meaning unset -- so it has to come from the library's own doc.
+        check(
+            `the experimental option ${name} names its default`,
+            /The default is `[^`]+`\./.test(setting.markdownDescription),
+            `no stated default in vendor/tjson.d.ts for ${name}: ${setting.markdownDescription}`
+        );
+
+        // The round-trip warning is the strong one and belongs only on the
+        // options that cannot round trip, or it stops being read. Both halves
+        // matter: absent where it is needed is a missing warning, present
+        // everywhere else is what makes the needed one invisible.
+        const lossy = LOSSY.has(name);
+        check(
+            lossy
+                ? `the lossy option ${name} warns that it may not round trip`
+                : `the experimental option ${name} does not cry wolf about round-tripping`,
+            /round trip/i.test(setting.markdownDescription) === lossy,
+            setting.markdownDescription
+        );
+    }
+
+    // The tag itself is not prose. Rendered verbatim it reads as a stray
+    // annotation, and an unmarked option is better served by the warning above.
+    for (const [key, setting] of Object.entries(declared)) {
+        check(
+            `the description of ${key} does not leak the raw @experimental tag`,
+            !setting.markdownDescription.includes('@experimental'),
+            setting.markdownDescription
+        );
     }
 }
 

@@ -1,0 +1,8 @@
+  a key so long that it
+  /  has to fold before
+  /  the colon arrives:
+  /  short value
+  another quite long key
+  /  needing a fold:42
+  short: ordinary entry
+  /  for contrast

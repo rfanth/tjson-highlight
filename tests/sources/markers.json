@@ -28,5 +28,19 @@
       "active": false,
       "pet": "fish"
     }
+  ],
+  "deep chain": [
+    [
+      [
+        [
+          [
+            {
+              "proof": 1,
+              "note": "v"
+            }
+          ]
+        ]
+      ]
+    ]
   ]
 }

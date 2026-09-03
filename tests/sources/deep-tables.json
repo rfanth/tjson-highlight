@@ -1,0 +1,44 @@
+[
+  [
+    [
+      [
+        [
+          [
+            {
+              "team": [
+                {
+                  "name": "Alice",
+                  "age": 30,
+                  "role": "admin",
+                  "active": true,
+                  "pet": null
+                },
+                {
+                  "name": "Bob",
+                  "age": 25,
+                  "role": "user",
+                  "active": false,
+                  "pet": "dog"
+                },
+                {
+                  "name": "Carol",
+                  "age": 35,
+                  "role": "user",
+                  "active": true,
+                  "pet": "cat"
+                },
+                {
+                  "name": "Dave",
+                  "age": 41,
+                  "role": "ops",
+                  "active": false,
+                  "pet": "fish"
+                }
+              ]
+            }
+          ]
+        ]
+      ]
+    ]
+  ]
+]

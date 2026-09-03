@@ -113,11 +113,19 @@ const VALID = [
     ['a multiline string as an array element', '  list:\n     ```\nhello\nthere\n     ```\n'],
 ];
 
-// Genuinely broken input, with where the report must land. A parser that
-// accepted everything would pass the block above and fail this one.
+// Genuinely broken input, with where the report must land -- and what the
+// squiggle must cover, which is the half that used to go unchecked. The parser
+// counts a column in Unicode scalar values and a vscode.Range counts UTF-16
+// code units, so the emoji case below is the one that tells them apart: its
+// fault is at scalar column 7 and UTF-16 offset 8, and handing the parser's
+// number straight to the Range underlined ": abc," instead of " abc,".
+//
+// A parser that accepted everything would pass the block above and fail this
+// one.
 const INVALID = [
-    ['a line that is not an entry', '  k: aaa\n  bad\n', 1],
-    ['a bare string opening with the marker character', '  k: _x\n', 0],
+    ['a line that is not an entry', '  k: aaa\n  bad\n', 1, 2, 'bad'],
+    ['a bare string opening with the marker character', '  k: _x\n', 0, 4, ' _x'],
+    ['a fault behind a character outside the BMP', '  "\u{1F600}k": abc,\n', 0, 8, ' abc,'],
 ];
 
 async function main() {
@@ -142,7 +150,7 @@ async function main() {
         }
     }
 
-    for (const [label, text, line] of INVALID) {
+    for (const [label, text, line, character, underlined] of INVALID) {
         state.diagnostics.clear();
         const document = makeDocument(text);
         await check(document);
@@ -155,6 +163,29 @@ async function main() {
             failures.push(
                 `${label}: reported on line ${reported[0].range.startLine}, expected ${line}`
             );
+        }
+        if (reported[0].range.startCharacter !== character) {
+            failures.push(
+                `${label}: reported at character ${reported[0].range.startCharacter}, ` +
+                `expected ${character}`
+            );
+        }
+        // The character offset is only meaningful against the text it indexes,
+        // so the run it actually covers is asserted rather than the number
+        // alone -- an off-by-one in the conversion shows up here as the wrong
+        // words even where the number looks plausible.
+        {
+            const faulted = text.split('\n')[line] ?? '';
+            const covered = faulted.slice(
+                reported[0].range.startCharacter,
+                reported[0].range.endCharacter
+            );
+            if (covered !== underlined) {
+                failures.push(
+                    `${label}: underlined ${JSON.stringify(covered)}, ` +
+                    `expected ${JSON.stringify(underlined)}`
+                );
+            }
         }
         // toDiagnostic strips the "line N, column M: " prefix; if it ever stops
         // matching, the whole raw string ends up in the squiggle.

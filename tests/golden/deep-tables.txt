@@ -1,0 +1,112 @@
+   1 | [ [ [ [ [ [ { team:
+     | 0-2      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 2-4      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 4-6      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 6-8      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 8-10     "[ "                               meta.object.entry keyword.operator.array-marker
+     | 10-12    "[ "                               meta.object.entry keyword.operator.array-marker
+     | 12-14    "{ "                               meta.object.entry keyword.operator.object-marker
+     | 14-18    "team"                             meta.object.entry entity.other.attribute-name.bare
+     | 18-19    ":"                                meta.object.entry punctuation.separator.key-value
+   2 |                 |name    |age  |role    |active  |pet    |
+     | 0-16     "                "                 meta.table punctuation.whitespace.indent
+     | 16-17    "|"                                meta.table punctuation.separator.table
+     | 17-21    "name"                             meta.table entity.other.attribute-name.bare
+     | 21-25    "    "                             meta.table
+     | 25-26    "|"                                meta.table punctuation.separator.table
+     | 26-29    "age"                              meta.table entity.other.attribute-name.bare
+     | 29-31    "  "                               meta.table
+     | 31-32    "|"                                meta.table punctuation.separator.table
+     | 32-36    "role"                             meta.table entity.other.attribute-name.bare
+     | 36-40    "    "                             meta.table
+     | 40-41    "|"                                meta.table punctuation.separator.table
+     | 41-47    "active"                           meta.table entity.other.attribute-name.bare
+     | 47-49    "  "                               meta.table
+     | 49-50    "|"                                meta.table punctuation.separator.table
+     | 50-53    "pet"                              meta.table entity.other.attribute-name.bare
+     | 53-57    "    "                             meta.table
+     | 57-58    "|"                                meta.table punctuation.separator.table
+   3 |                 | Alice  |30   | admin  |true    |null   |
+     | 0-16     "                "                 meta.table punctuation.whitespace.indent
+     | 16-17    "|"                                meta.table punctuation.separator.table
+     | 17-18    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 18-23    "Alice"                            meta.table meta.bare-string string.unquoted.bare
+     | 23-25    "  "                               meta.table
+     | 25-26    "|"                                meta.table punctuation.separator.table
+     | 26-28    "30"                               meta.table constant.numeric
+     | 28-31    "   "                              meta.table
+     | 31-32    "|"                                meta.table punctuation.separator.table
+     | 32-33    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 33-38    "admin"                            meta.table meta.bare-string string.unquoted.bare
+     | 38-40    "  "                               meta.table
+     | 40-41    "|"                                meta.table punctuation.separator.table
+     | 41-45    "true"                             meta.table constant.language.boolean
+     | 45-49    "    "                             meta.table
+     | 49-50    "|"                                meta.table punctuation.separator.table
+     | 50-54    "null"                             meta.table constant.language.null
+     | 54-57    "   "                              meta.table
+     | 57-58    "|"                                meta.table punctuation.separator.table
+   4 |                 | Bob    |25   | user   |false   | dog   |
+     | 0-16     "                "                 meta.table punctuation.whitespace.indent
+     | 16-17    "|"                                meta.table punctuation.separator.table
+     | 17-18    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 18-21    "Bob"                              meta.table meta.bare-string string.unquoted.bare
+     | 21-25    "    "                             meta.table
+     | 25-26    "|"                                meta.table punctuation.separator.table
+     | 26-28    "25"                               meta.table constant.numeric
+     | 28-31    "   "                              meta.table
+     | 31-32    "|"                                meta.table punctuation.separator.table
+     | 32-33    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 33-37    "user"                             meta.table meta.bare-string string.unquoted.bare
+     | 37-40    "   "                              meta.table
+     | 40-41    "|"                                meta.table punctuation.separator.table
+     | 41-46    "false"                            meta.table constant.language.boolean
+     | 46-49    "   "                              meta.table
+     | 49-50    "|"                                meta.table punctuation.separator.table
+     | 50-51    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 51-54    "dog"                              meta.table meta.bare-string string.unquoted.bare
+     | 54-57    "   "                              meta.table
+     | 57-58    "|"                                meta.table punctuation.separator.table
+   5 |                 | Carol  |35   | user   |true    | cat   |
+     | 0-16     "                "                 meta.table punctuation.whitespace.indent
+     | 16-17    "|"                                meta.table punctuation.separator.table
+     | 17-18    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 18-23    "Carol"                            meta.table meta.bare-string string.unquoted.bare
+     | 23-25    "  "                               meta.table
+     | 25-26    "|"                                meta.table punctuation.separator.table
+     | 26-28    "35"                               meta.table constant.numeric
+     | 28-31    "   "                              meta.table
+     | 31-32    "|"                                meta.table punctuation.separator.table
+     | 32-33    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 33-37    "user"                             meta.table meta.bare-string string.unquoted.bare
+     | 37-40    "   "                              meta.table
+     | 40-41    "|"                                meta.table punctuation.separator.table
+     | 41-45    "true"                             meta.table constant.language.boolean
+     | 45-49    "    "                             meta.table
+     | 49-50    "|"                                meta.table punctuation.separator.table
+     | 50-51    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 51-54    "cat"                              meta.table meta.bare-string string.unquoted.bare
+     | 54-57    "   "                              meta.table
+     | 57-58    "|"                                meta.table punctuation.separator.table
+   6 |                 | Dave   |41   | ops    |false   | fish  |
+     | 0-16     "                "                 meta.table punctuation.whitespace.indent
+     | 16-17    "|"                                meta.table punctuation.separator.table
+     | 17-18    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 18-22    "Dave"                             meta.table meta.bare-string string.unquoted.bare
+     | 22-25    "   "                              meta.table
+     | 25-26    "|"                                meta.table punctuation.separator.table
+     | 26-28    "41"                               meta.table constant.numeric
+     | 28-31    "   "                              meta.table
+     | 31-32    "|"                                meta.table punctuation.separator.table
+     | 32-33    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 33-36    "ops"                              meta.table meta.bare-string string.unquoted.bare
+     | 36-40    "    "                             meta.table
+     | 40-41    "|"                                meta.table punctuation.separator.table
+     | 41-46    "false"                            meta.table constant.language.boolean
+     | 46-49    "   "                              meta.table
+     | 49-50    "|"                                meta.table punctuation.separator.table
+     | 50-51    " "                                meta.table meta.bare-string punctuation.definition.string.begin.bare
+     | 51-55    "fish"                             meta.table meta.bare-string string.unquoted.bare
+     | 55-57    "  "                               meta.table
+     | 57-58    "|"                                meta.table punctuation.separator.table
+   7 | 

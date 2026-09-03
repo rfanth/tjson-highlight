@@ -5,13 +5,20 @@
      | 35-36    "\""                               meta.object.entry punctuation.definition.string.end
      | 36-37    ":"                                meta.object.entry punctuation.separator.key-value
      | 37-41    "null"                             meta.object.entry constant.language.null
-     | 41-58    "    why? because:"                meta.object.entry
-     | 58-59    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
-     | 59-62    "yes"                              meta.object.entry meta.bare-string string.unquoted.bare
-     | 62-72    "    a+b=c:"                       meta.object.entry
-     | 72-73    "1"                                meta.object.entry constant.numeric
+     | 41-45    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 45-57    "why? because"                     meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 57-58    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 58-59    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 59-62    "yes"                              meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+     | 62-66    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 66-71    "a+b=c"                            meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 71-72    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 72-73    "1"                                meta.object.entry meta.object.entry.inline constant.numeric
    2 |   at@sign:2
-     | 0-12     "  at@sign:2"                      -
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-9      "at@sign"                          meta.object.entry entity.other.attribute-name.bare
+     | 9-10     ":"                                meta.object.entry punctuation.separator.key-value
+     | 10-11    "2"                                meta.object.entry constant.numeric
    3 |   "has:colon":20    "has|pipe":21    hash#tag:3    star*:4    semi;colon:5
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-3      "\""                               meta.object.entry punctuation.definition.string.begin
@@ -25,16 +32,34 @@
      | 29-30    "\""                               meta.object.entry meta.object.entry.inline punctuation.definition.string.end
      | 30-31    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
      | 31-33    "21"                               meta.object.entry meta.object.entry.inline constant.numeric
-     | 33-46    "    hash#tag:"                    meta.object.entry
-     | 46-47    "3"                                meta.object.entry constant.numeric
-     | 47-57    "    star*:"                       meta.object.entry
-     | 57-58    "4"                                meta.object.entry constant.numeric
-     | 58-73    "    semi;colon:"                  meta.object.entry
-     | 73-74    "5"                                meta.object.entry constant.numeric
+     | 33-37    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 37-45    "hash#tag"                         meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 45-46    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 46-47    "3"                                meta.object.entry meta.object.entry.inline constant.numeric
+     | 47-51    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 51-56    "star*"                            meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 56-57    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 57-58    "4"                                meta.object.entry meta.object.entry.inline constant.numeric
+     | 58-62    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 62-72    "semi;colon"                       meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 72-73    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 73-74    "5"                                meta.object.entry meta.object.entry.inline constant.numeric
    4 |   less<than:6
-     | 0-14     "  less<than:6"                    -
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-11     "less<than"                        meta.object.entry entity.other.attribute-name.bare
+     | 11-12    ":"                                meta.object.entry punctuation.separator.key-value
+     | 12-13    "6"                                meta.object.entry constant.numeric
    5 |   tilde~:7    comment-looking value:"//not a comment"
-     | 0-54     "  tilde~:7    comment-looking value:\"//not a comment\"" -
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "tilde~"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     "7"                                meta.object.entry constant.numeric
+     | 10-14    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 14-35    "comment-looking value"            meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 35-36    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 36-37    "\""                               meta.object.entry meta.object.entry.inline punctuation.definition.string.begin
+     | 37-52    "//not a comment"                  meta.object.entry meta.object.entry.inline string.quoted.double
+     | 52-53    "\""                               meta.object.entry meta.object.entry.inline punctuation.definition.string.end
    6 |   slashy:"/ still not a fold"
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-8      "slashy"                           meta.object.entry entity.other.attribute-name.bare

@@ -1,0 +1,49 @@
+   1 | { deep:
+     | 0-2      "{ "                               meta.object.entry keyword.operator.object-marker
+     | 2-6      "deep"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+   2 |   [ [ { note: `\r\n
+     | 0-2      "  "                               meta.multiline punctuation.whitespace.indent
+     | 2-4      "[ "                               meta.multiline keyword.operator.array-marker
+     | 4-6      "[ "                               meta.multiline keyword.operator.array-marker
+     | 6-8      "{ "                               meta.multiline keyword.operator.object-marker
+     | 8-12     "note"                             meta.multiline entity.other.attribute-name.bare
+     | 12-13    ":"                                meta.multiline punctuation.separator.key-value
+     | 13-14    " "                                meta.multiline punctuation.definition.string.begin
+     | 14-15    "`"                                meta.multiline punctuation.definition.string.begin
+     | 15-19    "\\r\\n"                           meta.multiline constant.character.escape.eol-indicator
+   3 |           alpha
+     | 0-10     "          "                       meta.multiline punctuation.whitespace.indent
+     | 10-15    "alpha"                            meta.multiline markup.raw.block
+   4 |           bravo
+     | 0-10     "          "                       meta.multiline punctuation.whitespace.indent
+     | 10-15    "bravo"                            meta.multiline markup.raw.block
+   5 |          `\r\n
+     | 0-8      "        "                         meta.multiline
+     | 8-9      " "                                meta.multiline punctuation.definition.string.end
+     | 9-10     "`"                                meta.multiline punctuation.definition.string.end
+     | 10-14    "\\r\\n"                           meta.multiline constant.character.escape.eol-indicator
+   6 |   plain:
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "plain"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+   7 |   [ [ { note: `
+     | 0-2      "  "                               meta.multiline punctuation.whitespace.indent
+     | 2-4      "[ "                               meta.multiline keyword.operator.array-marker
+     | 4-6      "[ "                               meta.multiline keyword.operator.array-marker
+     | 6-8      "{ "                               meta.multiline keyword.operator.object-marker
+     | 8-12     "note"                             meta.multiline entity.other.attribute-name.bare
+     | 12-13    ":"                                meta.multiline punctuation.separator.key-value
+     | 13-14    " "                                meta.multiline punctuation.definition.string.begin
+     | 14-15    "`"                                meta.multiline punctuation.definition.string.begin
+   8 |           one
+     | 0-10     "          "                       meta.multiline punctuation.whitespace.indent
+     | 10-13    "one"                              meta.multiline markup.raw.block
+   9 |           two
+     | 0-10     "          "                       meta.multiline punctuation.whitespace.indent
+     | 10-13    "two"                              meta.multiline markup.raw.block
+  10 |          `
+     | 0-8      "        "                         meta.multiline
+     | 8-9      " "                                meta.multiline punctuation.definition.string.end
+     | 9-10     "`"                                meta.multiline punctuation.definition.string.end
+  11 | 

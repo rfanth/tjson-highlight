@@ -1,0 +1,12 @@
+# Long character classes in tjson.tmLanguage.json, and how many patterns
+# use each. Two spellings that differ slightly, sitting next to each other,
+# mean one copy of a shared class was edited and the others were not.
+#
+# 6 distinct class(es) of 25+ characters.
+
+  8  [\p{L}\p{N}_()/.!%&;@$#*=?^~<>+-&&[^\p{DI}\x{2D0}]]
+  9  [\p{L}\p{N}_()/'.!%&, ;@$#*=?^~<>+-&&[^\p{DI}\x{2D0}]]
+ 11  [\p{L}\p{N}&&[^\p{DI}\x{2D0}]]
+  9  [^\p{Quotation_Mark}`/|, _\[\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]
+  9  [^\p{Quotation_Mark}`/|,\s_\[\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]
+  9  [^\p{Quotation_Mark}`|,\s\[\]{}❲❳⟦⟧⦋⦌【】〚〛［］❴❵｛｝]

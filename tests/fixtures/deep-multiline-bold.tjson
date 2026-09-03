@@ -1,0 +1,9 @@
+[ [ [ [ [ [ { doc: ``
+| Line one
+| Line two
+| // looks like a comment
+| ``
+| and a fence
+| 
+               ``
+              n:1

@@ -1,0 +1,6 @@
+  scalars:[ 1, 2
+  bare:[  one, two
+  quoted:[ "a", "b"
+  empties:[ [], []
+  packed empties:  [], {}
+  ordinary:  1, 2

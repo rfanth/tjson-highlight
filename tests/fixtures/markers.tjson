@@ -4,3 +4,5 @@
     | Bob    |25   | user   |false   | dog   |
     | Carol  |35   | user   |true    | cat   |
     | Dave   |41   | ops    |false   | fish  |
+  deep chain:
+  [ [ [ [ [ { proof:1    note: v

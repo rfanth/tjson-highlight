@@ -1,35 +1,39 @@
    1 | [  /<
-     | 0-2      "[ "                               meta.indent-glyph keyword.operator.array-marker
-     | 2-3      " "                                meta.indent-glyph
-     | 3-5      "/<"                               meta.indent-glyph keyword.control.indent-adjustment
+     | 0-2      "[ "                               meta.indent-glyph.frame keyword.operator.array-marker
+     | 2-3      " "                                meta.indent-glyph.frame
+     | 3-5      "/<"                               meta.indent-glyph.frame keyword.control.indent-adjustment
    2 | [ [ [ [ [ [  deep value here
-     | 0-12     "[ [ [ [ [ [ "                     meta.bare-string keyword.operator.array-marker
-     | 12-13    " "                                meta.bare-string punctuation.definition.string.begin.bare
-     | 13-28    "deep value here"                  meta.bare-string string.unquoted.bare
+     | 0-2      "[ "                               meta.indent-glyph.frame meta.bare-string keyword.operator.array-marker
+     | 2-4      "[ "                               meta.indent-glyph.frame meta.bare-string keyword.operator.array-marker
+     | 4-6      "[ "                               meta.indent-glyph.frame meta.bare-string keyword.operator.array-marker
+     | 6-8      "[ "                               meta.indent-glyph.frame meta.bare-string keyword.operator.array-marker
+     | 8-10     "[ "                               meta.indent-glyph.frame meta.bare-string keyword.operator.array-marker
+     | 10-12    "[ "                               meta.indent-glyph.frame meta.bare-string keyword.operator.array-marker
+     | 12-13    " "                                meta.indent-glyph.frame meta.bare-string punctuation.definition.string.begin.bare
+     | 13-28    "deep value here"                  meta.indent-glyph.frame meta.bare-string string.unquoted.bare
    3 |            f
-     | 0-10     "          "                       meta.bare-string punctuation.whitespace.indent
-     | 10-11    " "                                meta.bare-string punctuation.definition.string.begin.bare
-     | 11-12    "f"                                meta.bare-string string.unquoted.bare
+     | 0-10     "          "                       meta.indent-glyph.frame meta.bare-string punctuation.whitespace.indent
+     | 10-11    " "                                meta.indent-glyph.frame meta.bare-string punctuation.definition.string.begin.bare
+     | 11-12    "f"                                meta.indent-glyph.frame meta.bare-string string.unquoted.bare
    4 |          e
-     | 0-8      "        "                         meta.bare-string punctuation.whitespace.indent
-     | 8-9      " "                                meta.bare-string punctuation.definition.string.begin.bare
-     | 9-10     "e"                                meta.bare-string string.unquoted.bare
+     | 0-8      "        "                         meta.indent-glyph.frame meta.bare-string punctuation.whitespace.indent
+     | 8-9      " "                                meta.indent-glyph.frame meta.bare-string punctuation.definition.string.begin.bare
+     | 9-10     "e"                                meta.indent-glyph.frame meta.bare-string string.unquoted.bare
    5 |        d
-     | 0-6      "      "                           meta.bare-string punctuation.whitespace.indent
-     | 6-7      " "                                meta.bare-string punctuation.definition.string.begin.bare
-     | 7-8      "d"                                meta.bare-string string.unquoted.bare
+     | 0-6      "      "                           meta.indent-glyph.frame meta.bare-string punctuation.whitespace.indent
+     | 6-7      " "                                meta.indent-glyph.frame meta.bare-string punctuation.definition.string.begin.bare
+     | 7-8      "d"                                meta.indent-glyph.frame meta.bare-string string.unquoted.bare
    6 |      c
-     | 0-4      "    "                             meta.bare-string punctuation.whitespace.indent
-     | 4-5      " "                                meta.bare-string punctuation.definition.string.begin.bare
-     | 5-6      "c"                                meta.bare-string string.unquoted.bare
+     | 0-4      "    "                             meta.indent-glyph.frame meta.bare-string punctuation.whitespace.indent
+     | 4-5      " "                                meta.indent-glyph.frame meta.bare-string punctuation.definition.string.begin.bare
+     | 5-6      "c"                                meta.indent-glyph.frame meta.bare-string string.unquoted.bare
    7 |    b
-     | 0-2      "  "                               meta.bare-string punctuation.whitespace.indent
-     | 2-3      " "                                meta.bare-string punctuation.definition.string.begin.bare
-     | 3-4      "b"                                meta.bare-string string.unquoted.bare
+     | 0-2      "  "                               meta.indent-glyph.frame meta.bare-string punctuation.whitespace.indent
+     | 2-3      " "                                meta.indent-glyph.frame meta.bare-string punctuation.definition.string.begin.bare
+     | 3-4      "b"                                meta.indent-glyph.frame meta.bare-string string.unquoted.bare
    8 |    />
-     | 0-2      "  "                               meta.indent-glyph punctuation.whitespace.indent
-     | 2-3      " "                                meta.indent-glyph
-     | 3-5      "/>"                               meta.indent-glyph keyword.control.indent-adjustment
+     | 0-3      "   "                              meta.indent-glyph.frame
+     | 3-5      "/>"                               meta.indent-glyph.frame keyword.control.indent-adjustment
    9 |    a
      | 0-2      "  "                               meta.bare-string punctuation.whitespace.indent
      | 2-3      " "                                meta.bare-string punctuation.definition.string.begin.bare

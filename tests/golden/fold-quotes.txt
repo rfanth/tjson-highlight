@@ -6,17 +6,17 @@
      | 7-15     "Line one"                         meta.object.entry string.quoted.double
      | 15-17    "\\n"                              meta.object.entry string.quoted.double constant.character.escape
    2 |   / // looks like a comment\n
-     | 0-2      "  "                               meta.object.entry string.quoted.double
+     | 0-2      "  "                               meta.object.entry string.quoted.double punctuation.whitespace.indent
      | 2-4      "/ "                               meta.object.entry string.quoted.double punctuation.definition.fold-marker
      | 4-27     "// looks like a comment"          meta.object.entry string.quoted.double
      | 27-29    "\\n"                              meta.object.entry string.quoted.double constant.character.escape
    3 |   / ``\n
-     | 0-2      "  "                               meta.object.entry string.quoted.double
+     | 0-2      "  "                               meta.object.entry string.quoted.double punctuation.whitespace.indent
      | 2-4      "/ "                               meta.object.entry string.quoted.double punctuation.definition.fold-marker
      | 4-6      "``"                               meta.object.entry string.quoted.double
      | 6-8      "\\n"                              meta.object.entry string.quoted.double constant.character.escape
    4 |   / fence inside\n"
-     | 0-2      "  "                               meta.object.entry string.quoted.double
+     | 0-2      "  "                               meta.object.entry string.quoted.double punctuation.whitespace.indent
      | 2-4      "/ "                               meta.object.entry string.quoted.double punctuation.definition.fold-marker
      | 4-16     "fence inside"                     meta.object.entry string.quoted.double
      | 16-18    "\\n"                              meta.object.entry string.quoted.double constant.character.escape

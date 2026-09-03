@@ -303,9 +303,9 @@
 	{
 		"fixture": "folds.tjson",
 		"line": 2,
-		"text": " ",
-		"scope": "punctuation.definition.string.begin.bare",
-		"note": "a folded bare string repeats its opening quote after the fold marker"
+		"text": " because it exceeds the wrap width by a good margin indeed yes",
+		"scope": "string.unquoted.bare",
+		"note": "a bare string continues over a fold as the same string, leading space and all -- that space is the data between the two words the fold split, not a reopened opening quote"
 	},
 	{
 		"fixture": "bare-strings.tjson",
@@ -464,14 +464,14 @@
 	{
 		"fixture": "folded-keys.tjson",
 		"line": 2,
-		"text": "fold before the colon",
+		"text": " fold before the colon",
 		"scope": "entity.other.attribute-name.bare",
 		"note": "middle fold of a folded key is still key text"
 	},
 	{
 		"fixture": "folded-keys.tjson",
 		"line": 3,
-		"text": "arrives",
+		"text": " arrives",
 		"scope": "entity.other.attribute-name.bare",
 		"note": "last fold of the key, on the line where the colon finally lands"
 	},
@@ -484,14 +484,14 @@
 	},
 	{
 		"fixture": "folded-keys.tjson",
-		"line": 4,
+		"line": 3,
 		"text": "short value",
-		"scope": "string.unquoted.fold-continuation",
-		"note": "the value's own fold, which is a different construct from the key's"
+		"scope": "string.unquoted.bare",
+		"note": "the value of a folded key, sharing the continuation line its colon landed on -- a bare string like any other, not a construct with its own scope. The shape where the value opens on a continuation line of its own is fold-opening-value.tjson"
 	},
 	{
 		"fixture": "folded-keys.tjson",
-		"line": 8,
+		"line": 6,
 		"text": "short",
 		"scope": "entity.other.attribute-name.bare",
 		"note": "an ordinary unfolded key after folded ones, to prove the rule closed"
@@ -727,10 +727,10 @@
 	{
 		"fixture": "bare-strings-marked.tjson",
 		"line": 2,
-		"text": " ",
+		"text": "_",
 		"occurrence": 1,
 		"scope": "punctuation.definition.string.begin.bare",
-		"note": "space and marker may be mixed within one document -- the spec requires no consistency"
+		"note": "a marked opener on its own line, not packed -- and the marker is the whole opening quote, with no space beside it. This entry used to assert the opposite, that a plain space and a marker may be mixed in one document, which the specification permits; the generator now marks every opener in this mode, so no fixture holds a mixed document any more and nothing covers that case"
 	},
 	{
 		"fixture": "array-packed-strings-marked.tjson",
@@ -811,5 +811,483 @@
 		"text": "/>",
 		"scope": "keyword.control.indent-adjustment",
 		"note": "the closing glyph, on pure indent -- the case that always worked, kept here so the pair is asserted together"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 2,
+		"text": "2345678901234567890",
+		"scope": "constant.numeric",
+		"note": "a folded number continues as a number"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 5,
+		"text": "8",
+		"scope": "string.unquoted.bare",
+		"note": "'/ 8' continuing a bare string is that string's last character -- the shape is identical to a folded number's continuation and only the value above it says which"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 5,
+		"text": "/ ",
+		"scope": "punctuation.definition.fold-marker",
+		"note": "the marker is a marker in every context"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 8,
+		"text": "han once to fit",
+		"scope": "string.unquoted.bare",
+		"note": "second continuation of a bare string, to prove the rule does not give up after one"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 10,
+		"text": "ng enough to fold more tha",
+		"scope": "string.quoted.double",
+		"note": "a folded quoted string continues as a quoted string"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 14,
+		"text": " enough that it has to fold ",
+		"scope": "markup.raw.block",
+		"note": "a folded multiline body line is still raw text"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 23,
+		"text": "trailing",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "an ordinary entry after the folds, to prove every fold released the line it ended on"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 21,
+		"text": "78901234567890",
+		"scope": "constant.numeric",
+		"note": "an array element on its own line folds too, and the continuation under it is the same number -- the packed forms cannot fold, so a continuation here only ever belongs to the lone element above it"
+	},
+	{
+		"fixture": "fold-types.tjson",
+		"line": 22,
+		"text": "7",
+		"scope": "constant.numeric",
+		"note": "the element after the folded one, to prove the fold released the line"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 3,
+		"text": ":",
+		"scope": "punctuation.separator.key-value",
+		"note": "the colon of a folded quoted key, on the continuation line where the closing quote finally landed -- it and the whole value after it used to carry no scope at all"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 3,
+		"text": "short value",
+		"scope": "string.unquoted.bare",
+		"note": "the value of a folded quoted key is read by the ordinary value rules"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 3,
+		"text": "colon",
+		"scope": "string.quoted.double",
+		"note": "the key text of a folded quoted key stays a string: a folded quoted key and a folded quoted string value are the same shape, the colon that separates them arrives lines later, and a grammar cannot go back and rescope what it already emitted -- lines 5-8 of this fixture are the value case, spelled identically"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 6,
+		"text": "at has to fold here ",
+		"scope": "string.quoted.double",
+		"note": "a folded quoted array element, the shape the key above cannot be told from"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 25,
+		"text": "x",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "an ordinary quoted key after the folds, to prove the rule closed"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 10,
+		"text": "{ ",
+		"scope": "keyword.operator.object-marker",
+		"note": "the marker that settles the key below it: it opens an object, and an object starts with a key"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 10,
+		"text": "a key that is long enou",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "same folded shape as line 1, but here a '{ ' precedes it, so this one is a key with certainty and is coloured as one"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 12,
+		"text": "ore its colon",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "the marker's certainty carries across the folds, not just onto the first line of the key"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 23,
+		"text": "another long quoted key",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "the sibling of the key above, in the same object at the same column. The '{ ' that settled its sibling is on a line the grammar has long left behind, and it resolves anyway: the marker opened a region that remembers what this column holds, and the region outlived the nested array between them"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 2,
+		"text": "  ",
+		"occurrence": 1,
+		"scope": "punctuation.whitespace.indent",
+		"note": "the indent in front of a fold marker is indent, not string data -- the string the fold continues is still open across this line, so without naming these columns they inherited its scope and a renderer painted them as content"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 11,
+		"text": "      ",
+		"occurrence": 1,
+		"scope": "punctuation.whitespace.indent",
+		"note": "same for a folded quoted key, where what would otherwise be inherited is the key scope"
+	},
+	{
+		"fixture": "multiline-nested-bold.tjson",
+		"line": 5,
+		"text": "``",
+		"scope": "punctuation.definition.string.end",
+		"note": "the closing glyph is found under four indent cells -- two array markers and an object marker"
+	},
+	{
+		"fixture": "multiline-nested-bold.tjson",
+		"line": 6,
+		"text": "plain",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "the entry after the multiline is a key, so the fence closed rather than swallowing the rest of the document"
+	},
+	{
+		"fixture": "multiline-nested-bold.tjson",
+		"line": 2,
+		"text": "\\r\\n",
+		"scope": "constant.character.escape.eol-indicator",
+		"note": "the local EOL indicator is part of the opening glyph, not unscoped text"
+	},
+	{
+		"fixture": "multiline-nested-bold.tjson",
+		"line": 5,
+		"text": "\\r\\n",
+		"scope": "constant.character.escape.eol-indicator",
+		"note": "the closing glyph carries the same indicator, which is what the end pattern back-references"
+	},
+	{
+		"fixture": "multiline-nested-bold.tjson",
+		"line": 10,
+		"text": "``",
+		"scope": "punctuation.definition.string.end",
+		"note": "a glyph with no indicator closes just as well -- the suffix is optional"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 5,
+		"text": "`",
+		"scope": "punctuation.definition.string.end",
+		"note": "the closing glyph is found under four indent cells -- two array markers and an object marker"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 6,
+		"text": "plain",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "the entry after the multiline is a key, so the fence closed rather than swallowing the rest of the document"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 2,
+		"text": "\\r\\n",
+		"scope": "constant.character.escape.eol-indicator",
+		"note": "the local EOL indicator is part of the opening glyph, not unscoped text"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 5,
+		"text": "\\r\\n",
+		"scope": "constant.character.escape.eol-indicator",
+		"note": "the closing glyph carries the same indicator, which is what the end pattern back-references"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 10,
+		"text": "`",
+		"scope": "punctuation.definition.string.end",
+		"note": "a glyph with no indicator closes just as well -- the suffix is optional"
+	},
+	{
+		"fixture": "multiline-nested-transparent.tjson",
+		"line": 5,
+		"text": "```",
+		"scope": "punctuation.definition.string.end",
+		"note": "the closing glyph is found under four indent cells -- two array markers and an object marker"
+	},
+	{
+		"fixture": "multiline-nested-transparent.tjson",
+		"line": 6,
+		"text": "plain",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "the entry after the multiline is a key, so the fence closed rather than swallowing the rest of the document"
+	},
+	{
+		"fixture": "multiline-nested-transparent.tjson",
+		"line": 2,
+		"text": "\\r\\n",
+		"scope": "constant.character.escape.eol-indicator",
+		"note": "the local EOL indicator is part of the opening glyph, not unscoped text"
+	},
+	{
+		"fixture": "multiline-nested-transparent.tjson",
+		"line": 5,
+		"text": "\\r\\n",
+		"scope": "constant.character.escape.eol-indicator",
+		"note": "the closing glyph carries the same indicator, which is what the end pattern back-references"
+	},
+	{
+		"fixture": "multiline-nested-transparent.tjson",
+		"line": 10,
+		"text": "```",
+		"scope": "punctuation.definition.string.end",
+		"note": "a glyph with no indicator closes just as well -- the suffix is optional"
+	},
+	{
+		"fixture": "fold-opening-value-bare.tjson",
+		"line": 3,
+		"text": ":",
+		"scope": "punctuation.separator.key-value",
+		"note": "the colon that ends a folded key can land on a continuation line and end it, which is what puts the value on the next line"
+	},
+	{
+		"fixture": "fold-opening-value-bare.tjson",
+		"line": 4,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "a bare string opening on a continuation line of its own: the marker's gap of one is the one-sided opening quote, exactly as it would be after a colon. This branch lives at its own wrap width: no single width gives both it and the scalar branch from this source in the release we ship"
+	},
+	{
+		"fixture": "fold-opening-value-bare.tjson",
+		"line": 4,
+		"text": "short value",
+		"scope": "string.unquoted.bare",
+		"note": "and its content is a bare string like any other, not a construct with a scope of its own. This branch lives at its own wrap width: no single width gives both it and the scalar branch from this source in the release we ship"
+	},
+	{
+		"fixture": "fold-opening-value.tjson",
+		"line": 5,
+		"text": "42",
+		"scope": "constant.numeric",
+		"note": "the other branch: a gap of zero after the fold marker is a scalar, not a bare string, and the two are told apart by that single space"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 3,
+		"text": "          ",
+		"scope": "punctuation.whitespace.indent",
+		"note": "the minimal form's body sits at the opening line's n+2, and those columns are structure -- they used to be swept into the string with the data"
+	},
+	{
+		"fixture": "multiline-nested-minimal.tjson",
+		"line": 3,
+		"text": "alpha",
+		"scope": "markup.raw.block",
+		"note": "and the data begins where the indent stops, not at column zero"
+	},
+	{
+		"fixture": "marker-gap.tjson",
+		"line": 1,
+		"text": "[ ",
+		"scope": "keyword.operator.array-marker",
+		"note": "the two columns that open an inline array after a colon are a cell, and a cell may be '[ ' -- it is the marker that opens the array, not a gap that happens to contain a bracket"
+	},
+	{
+		"fixture": "marker-gap.tjson",
+		"line": 2,
+		"text": "one, two",
+		"scope": "string.unquoted.bare",
+		"note": "'[ ' then one more space is the bare string's own opening quote, so the whole of 'one, two' is one element and the comma is content -- a comma-packed array admits no bare element at all, which is what makes this unambiguous"
+	},
+	{
+		"fixture": "marker-gap.tjson",
+		"line": 4,
+		"text": ",",
+		"scope": "punctuation.separator.array",
+		"note": "empty containers may be packed behind a marker cell like any other element"
+	},
+	{
+		"fixture": "marker-gap.tjson",
+		"line": 5,
+		"text": ",",
+		"scope": "punctuation.separator.array",
+		"note": "and behind a plain two-space gap, which is the separator that carried no scope at all before"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 15,
+		"text": "/ ",
+		"scope": "punctuation.definition.fold-marker",
+		"note": "a fold continuation inside the nested array, which the memory region must not claim"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 16,
+		"text": "t ",
+		"scope": "string.quoted.double",
+		"note": "an element of the array nested inside the proved object: a STRING, not a key. This is the assertion that makes container memory correct rather than merely confident -- the earlier attempt held the object's region open across a nested array and painted its elements as keys. A block sub-region shadows the memory for exactly the lines that belong to the nested container"
+	},
+	{
+		"fixture": "multiline-nested-bold.tjson",
+		"line": 2,
+		"text": "[ ",
+		"scope": "keyword.operator.array-marker",
+		"note": "one token per marker, not one per chain: a marker is one cell of the indent, and `[ [ { ` is four cells the reader counts rather than one span six columns wide. A chain with nothing after it yet was already scoped this way, so the two spellings agree now"
+	},
+	{
+		"fixture": "bare-strings-mixed.tjson",
+		"line": 1,
+		"text": "_",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "a marked opener and a plain one on the same line: the specification requires no consistency within a document or even within a line"
+	},
+	{
+		"fixture": "bare-strings-mixed.tjson",
+		"line": 1,
+		"text": " ",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "and the plain space beside it is the same opening quote, with the same scope"
+	},
+	{
+		"fixture": "bare-strings-mixed.tjson",
+		"line": 4,
+		"text": "_",
+		"scope": "punctuation.definition.string.begin.bare",
+		"note": "again on an inline-packed line, where the marked pair comes first"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 20,
+		"text": "| ",
+		"scope": "punctuation.definition.string.multiline-margin",
+		"note": "a bold multiline inside the remembered object, its margin floated to column zero -- far outside the object's own column. The memory region has to survive this: while it used `while`, this line failed the column test, popped the region, and took the multiline down with it, so the body read as a table and the closing fence read as an opening one. `end` is checked only when its own rule is innermost, so an open multiline masks it and the region lives"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 22,
+		"text": "``",
+		"scope": "punctuation.definition.string.end",
+		"note": "and the fence closes, rather than being read as a second opening fence"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 23,
+		"text": "another long quoted key",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "and the memory is still there afterwards: the sibling key resolves on the far side of a multiline as well as a nested array"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 26,
+		"text": "proof that this column hold",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a folded quoted key in an object with no marker anywhere, resolved because the plain key on the line above proved what this column holds. This is the common shape, not the exotic one: a root object does not print its opening '{', so most objects carry no marker at all and the '{ ' that settles line 10 is the rarer case"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 28,
+		"text": "one more key long enough th",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "and the proof keeps holding for the entry after it, not just the first one"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 13,
+		"text": "nested",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "the key that opens the nested block is itself a key -- the shadow region that hides the memory from the block below must not swallow the line that opened it"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 34,
+		"text": "a nested key long enoug",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a folded key two objects down, proved by the plain key beside it. Nesting is not bounded here: the memory ends at the first deeper line and the deeper line opens a memory of its own, so the depth a document nests to costs nothing and the stack stays flat"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 41,
+		"text": "e the nested block ",
+		"scope": "string.quoted.double",
+		"note": "an element of the container nested inside an object with no marker anywhere: a STRING. The memory spans this block so it can resume below it, and the shadow is what keeps it from reaching in"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 42,
+		"text": "a key that folds after th",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "and the memory resumes on the far side of that block, with nothing but a plain key three lines up to prove it. Ending the region at the first deeper line would be simpler and would lose exactly this"
+	},
+	{
+		"fixture": "markers.tjson",
+		"line": 8,
+		"text": "proof",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "a key behind a chain of five markers -- one more than the fixed width slots. The column test has to match this line, which still HAS its markers, as well as the space-filled lines below it, and the two put the overflow on opposite sides of the object marker. With one ordering only, the region ended on its own opening line and the whole line came out with no scope at all"
+	},
+	{
+		"fixture": "markers.tjson",
+		"line": 8,
+		"text": "{ ",
+		"scope": "keyword.operator.object-marker",
+		"note": "and the object marker at the end of that chain is still a marker"
+	},
+	{
+		"fixture": "deep-folded-keys.tjson",
+		"line": 1,
+		"text": "a key so long that it has to f",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "a folded bare key behind a chain of six markers. Until this fixture existed #folded-keys began at the indent and stopped there, so a folded key behind ANY marker chain -- one cell was enough -- matched nothing and the whole line came out with no scope at all"
+	},
+	{
+		"fixture": "deep-folded-keys.tjson",
+		"line": 1,
+		"text": "{ ",
+		"scope": "keyword.operator.object-marker",
+		"note": "and the object marker that ends that chain is a marker, six cells in"
+	},
+	{
+		"fixture": "deep-folded-keys.tjson",
+		"line": 4,
+		"text": "another quite long key needing",
+		"scope": "entity.other.attribute-name.bare",
+		"note": "a key fragment may end in a space -- it is interior to the whole key, and only a whole key is forbidden to end in one. Applying rule 4 to the fragment refused lines the generator writes freely"
+	},
+	{
+		"fixture": "fold-quoted-key.tjson",
+		"line": 45,
+		"text": " a quoted value",
+		"scope": "string.quoted.double",
+		"note": "the VALUE after a folded quoted key, on the same continuation line as the colon that ended the key. The rule that reads the key is a quote-to-quote region sitting in the same patterns list as the value rules, so it matched the value's quotes as readily and coloured it as a key. The colon now opens a region that puts the rest of the line under the value rules alone"
+	},
+	{
+		"fixture": "tables-quoted-keys.tjson",
+		"line": 2,
+		"text": "name",
+		"scope": "entity.other.attribute-name.quoted",
+		"note": "a double-quoted key in a table header is a KEY. Every quoted header key in the format came out coloured as a string: the cell rules see every row alike and #json-strings matched first. Row one is the header by definition, so the table rule reads it in its `begin` where no other row can reach"
+	},
+	{
+		"fixture": "tables-quoted-keys.tjson",
+		"line": 3,
+		"text": "Alice",
+		"scope": "string.unquoted.bare",
+		"note": "and a cell on a row below the header is a value, not a key"
 	}
 ]

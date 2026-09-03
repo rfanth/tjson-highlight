@@ -35,25 +35,24 @@
      | 18-19    "h"                                meta.object.entry entity.other.attribute-name.bare
      | 19-20    ":"                                meta.object.entry punctuation.separator.key-value
   10 |                     i: /<
-     | 0-20     "                    "             meta.object.entry punctuation.whitespace.indent
-     | 20-21    "i"                                meta.object.entry entity.other.attribute-name.bare
-     | 21-22    ":"                                meta.object.entry punctuation.separator.key-value
-     | 22-23    " "                                meta.object.entry
-     | 23-25    "/<"                               meta.object.entry keyword.control.indent-adjustment
+     | 0-20     "                    "             meta.indent-glyph.frame punctuation.whitespace.indent
+     | 20-21    "i"                                meta.indent-glyph.frame entity.other.attribute-name.bare
+     | 21-22    ":"                                meta.indent-glyph.frame punctuation.separator.key-value
+     | 22-23    " "                                meta.indent-glyph.frame
+     | 23-25    "/<"                               meta.indent-glyph.frame keyword.control.indent-adjustment
   11 |   j:
-     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
-     | 2-3      "j"                                meta.object.entry entity.other.attribute-name.bare
-     | 3-4      ":"                                meta.object.entry punctuation.separator.key-value
+     | 0-2      "  "                               meta.indent-glyph.frame meta.object.entry punctuation.whitespace.indent
+     | 2-3      "j"                                meta.indent-glyph.frame meta.object.entry entity.other.attribute-name.bare
+     | 3-4      ":"                                meta.indent-glyph.frame meta.object.entry punctuation.separator.key-value
   12 |     k: deep value here that is long
-     | 0-4      "    "                             meta.object.entry punctuation.whitespace.indent
-     | 4-5      "k"                                meta.object.entry entity.other.attribute-name.bare
-     | 5-6      ":"                                meta.object.entry punctuation.separator.key-value
-     | 6-7      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
-     | 7-35     "deep value here that is long"     meta.object.entry meta.bare-string string.unquoted.bare
+     | 0-4      "    "                             meta.indent-glyph.frame meta.object.entry punctuation.whitespace.indent
+     | 4-5      "k"                                meta.indent-glyph.frame meta.object.entry entity.other.attribute-name.bare
+     | 5-6      ":"                                meta.indent-glyph.frame meta.object.entry punctuation.separator.key-value
+     | 6-7      " "                                meta.indent-glyph.frame meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 7-35     "deep value here that is long"     meta.indent-glyph.frame meta.object.entry meta.bare-string string.unquoted.bare
   13 |                      />
-     | 0-20     "                    "             meta.indent-glyph punctuation.whitespace.indent
-     | 20-21    " "                                meta.indent-glyph
-     | 21-23    "/>"                               meta.indent-glyph keyword.control.indent-adjustment
+     | 0-21     "                     "            meta.indent-glyph.frame
+     | 21-23    "/>"                               meta.indent-glyph.frame keyword.control.indent-adjustment
   14 |   after: sanity
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-7      "after"                            meta.object.entry entity.other.attribute-name.bare

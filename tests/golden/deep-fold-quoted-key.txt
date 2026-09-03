@@ -1,0 +1,229 @@
+   1 | [ [ [ [ [ [ { "a key that is long enough to 
+     | 0-2      "[ "                               meta.object keyword.operator.array-marker
+     | 2-4      "[ "                               meta.object keyword.operator.array-marker
+     | 4-6      "[ "                               meta.object keyword.operator.array-marker
+     | 6-8      "[ "                               meta.object keyword.operator.array-marker
+     | 8-10     "[ "                               meta.object keyword.operator.array-marker
+     | 10-12    "[ "                               meta.object keyword.operator.array-marker
+     | 12-14    "{ "                               meta.object keyword.operator.object-marker
+     | 14-15    "\""                               meta.object punctuation.definition.string.begin
+     | 15-45    "a key that is long enough to "    meta.object entity.other.attribute-name.quoted
+   2 |               / have to fold before its colo
+     | 0-14     "              "                   meta.object entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 16-45    "have to fold before its colo"     meta.object entity.other.attribute-name.quoted
+   3 |               / n": short value
+     | 0-14     "              "                   meta.object entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 16-17    "n"                                meta.object entity.other.attribute-name.quoted
+     | 17-18    "\""                               meta.object punctuation.definition.string.end
+     | 18-19    ":"                                meta.object punctuation.separator.key-value
+     | 19-20    " "                                meta.object meta.bare-string punctuation.definition.string.begin.bare
+     | 20-31    "short value"                      meta.object meta.bare-string string.unquoted.bare
+   4 |               "elements":
+     | 0-14     "              "                   meta.object meta.object.entry punctuation.whitespace.indent
+     | 14-15    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 15-23    "elements"                         meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 23-24    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 24-25    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+   5 |                 " a long quoted element that
+     | 0-16     "                "                 meta.object punctuation.whitespace.indent
+     | 16-17    "\""                               meta.object punctuation.definition.string.begin
+     | 17-45    " a long quoted element that"      meta.object string.quoted.double
+   6 |                 /  has to fold here "
+     | 0-16     "                "                 meta.object string.quoted.double punctuation.whitespace.indent
+     | 16-18    "/ "                               meta.object string.quoted.double punctuation.definition.fold-marker
+     | 18-36    " has to fold here "               meta.object string.quoted.double
+     | 36-37    "\""                               meta.object punctuation.definition.string.end
+   7 |                 " another long quoted elemen
+     | 0-16     "                "                 meta.object punctuation.whitespace.indent
+     | 16-17    "\""                               meta.object punctuation.definition.string.begin
+     | 17-45    " another long quoted elemen"      meta.object string.quoted.double
+   8 |                 / t that folds "
+     | 0-16     "                "                 meta.object string.quoted.double punctuation.whitespace.indent
+     | 16-18    "/ "                               meta.object string.quoted.double punctuation.definition.fold-marker
+     | 18-31    "t that folds "                    meta.object string.quoted.double
+     | 31-32    "\""                               meta.object punctuation.definition.string.end
+   9 |               "list":
+     | 0-14     "              "                   meta.object meta.object.entry punctuation.whitespace.indent
+     | 14-15    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 15-19    "list"                             meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 19-20    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 20-21    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+  10 |               [ { "a key that is long enough
+     | 0-14     "              "                   meta.object meta.object punctuation.whitespace.indent
+     | 14-16    "[ "                               meta.object meta.object keyword.operator.array-marker
+     | 16-18    "{ "                               meta.object meta.object keyword.operator.object-marker
+     | 18-19    "\""                               meta.object meta.object punctuation.definition.string.begin
+     | 19-45    "a key that is long enough"        meta.object meta.object entity.other.attribute-name.quoted
+  11 |                   /  to have to fold before 
+     | 0-18     "                  "               meta.object meta.object entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 18-20    "/ "                               meta.object meta.object entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 20-45    " to have to fold before "         meta.object meta.object entity.other.attribute-name.quoted
+  12 |                   / its colon": v
+     | 0-18     "                  "               meta.object meta.object entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 18-20    "/ "                               meta.object meta.object entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 20-29    "its colon"                        meta.object meta.object entity.other.attribute-name.quoted
+     | 29-30    "\""                               meta.object meta.object punctuation.definition.string.end
+     | 30-31    ":"                                meta.object meta.object punctuation.separator.key-value
+     | 31-32    " "                                meta.object meta.object meta.bare-string punctuation.definition.string.begin.bare
+     | 32-33    "v"                                meta.object meta.object meta.bare-string string.unquoted.bare
+  13 |                   "nested":
+     | 0-18     "                  "               meta.object meta.object meta.object.entry punctuation.whitespace.indent
+     | 18-19    "\""                               meta.object meta.object meta.object.entry punctuation.definition.string.begin
+     | 19-25    "nested"                           meta.object meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 25-26    "\""                               meta.object meta.object meta.object.entry punctuation.definition.string.end
+     | 26-27    ":"                                meta.object meta.object meta.object.entry punctuation.separator.key-value
+  14 |                     " a folded element insid
+     | 0-20     "                    "             meta.object meta.object punctuation.whitespace.indent
+     | 20-21    "\""                               meta.object meta.object punctuation.definition.string.begin
+     | 21-45    " a folded element insid"          meta.object meta.object string.quoted.double
+  15 |                     / e the proved object "
+     | 0-20     "                    "             meta.object meta.object string.quoted.double punctuation.whitespace.indent
+     | 20-22    "/ "                               meta.object meta.object string.quoted.double punctuation.definition.fold-marker
+     | 22-42    "e the proved object "             meta.object meta.object string.quoted.double
+     | 42-43    "\""                               meta.object meta.object punctuation.definition.string.end
+  16 |                     " another folded element
+     | 0-20     "                    "             meta.object meta.object punctuation.whitespace.indent
+     | 20-21    "\""                               meta.object meta.object punctuation.definition.string.begin
+     | 21-45    " another folded element"          meta.object meta.object string.quoted.double
+  17 |                     /  in there "
+     | 0-20     "                    "             meta.object meta.object string.quoted.double punctuation.whitespace.indent
+     | 20-22    "/ "                               meta.object meta.object string.quoted.double punctuation.definition.fold-marker
+     | 22-32    " in there "                       meta.object meta.object string.quoted.double
+     | 32-33    "\""                               meta.object meta.object punctuation.definition.string.end
+  18 |                   "note": ``
+     | 0-18     "                  "               meta.object meta.object meta.multiline punctuation.whitespace.indent
+     | 18-19    "\""                               meta.object meta.object meta.multiline punctuation.definition.string.begin
+     | 19-23    "note"                             meta.object meta.object meta.multiline entity.other.attribute-name.quoted
+     | 23-24    "\""                               meta.object meta.object meta.multiline punctuation.definition.string.end
+     | 24-25    ":"                                meta.object meta.object meta.multiline punctuation.separator.key-value
+     | 25-26    " "                                meta.object meta.object meta.multiline punctuation.definition.string.begin
+     | 26-28    "``"                               meta.object meta.object meta.multiline punctuation.definition.string.begin
+  19 | | alpha
+     | 0-2      "| "                               meta.object meta.object meta.multiline punctuation.definition.string.multiline-margin
+     | 2-7      "alpha"                            meta.object meta.object meta.multiline markup.raw.block
+  20 | | bravo
+     | 0-2      "| "                               meta.object meta.object meta.multiline punctuation.definition.string.multiline-margin
+     | 2-7      "bravo"                            meta.object meta.object meta.multiline markup.raw.block
+  21 |                    ``
+     | 0-18     "                  "               meta.object meta.object meta.multiline
+     | 18-19    " "                                meta.object meta.object meta.multiline punctuation.definition.string.end
+     | 19-21    "``"                               meta.object meta.object meta.multiline punctuation.definition.string.end
+  22 |                   "another long quoted key t
+     | 0-18     "                  "               meta.object meta.object meta.object.entry.folded-key
+     | 18-19    "\""                               meta.object meta.object meta.object.entry.folded-key punctuation.definition.string.begin
+     | 19-45    "another long quoted key t"        meta.object meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+  23 |                   / hat also folds": w
+     | 0-18     "                  "               meta.object meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 18-20    "/ "                               meta.object meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 20-34    "hat also folds"                   meta.object meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+     | 34-35    "\""                               meta.object meta.object meta.object.entry.folded-key punctuation.definition.string.end
+     | 35-36    ":"                                meta.object meta.object meta.object.entry.folded-key punctuation.separator.key-value
+     | 36-37    " "                                meta.object meta.object meta.object.entry.folded-key meta.bare-string punctuation.definition.string.begin.bare
+     | 37-38    "w"                                meta.object meta.object meta.object.entry.folded-key meta.bare-string string.unquoted.bare
+  24 |               "x":1
+     | 0-14     "              "                   meta.object meta.object.entry punctuation.whitespace.indent
+     | 14-15    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 15-16    "x"                                meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 16-17    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 17-18    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+     | 18-19    "1"                                meta.object meta.object.entry constant.numeric
+  25 |               "proof that this column holds 
+     | 0-14     "              "                   meta.object meta.object.entry.folded-key
+     | 14-15    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.begin
+     | 15-45    "proof that this column holds "    meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+  26 |               / keys":1
+     | 0-14     "              "                   meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 16-20    "keys"                             meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+     | 20-21    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.end
+     | 21-22    ":"                                meta.object meta.object.entry.folded-key punctuation.separator.key-value
+     | 22-23    "1"                                meta.object meta.object.entry.folded-key constant.numeric
+  27 |               "one more key long enough that
+     | 0-14     "              "                   meta.object meta.object.entry.folded-key
+     | 14-15    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.begin
+     | 15-45    "one more key long enough that"    meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+  28 |               /  it folds before its colon":
+     | 0-14     "              "                   meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 16-42    " it folds before its colon"       meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+     | 42-43    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.end
+     | 43-44    ":"                                meta.object meta.object.entry.folded-key punctuation.separator.key-value
+  29 |               /  z
+     | 0-14     "              "                   meta.object meta.object.entry.folded-key meta.bare-string punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object meta.object.entry.folded-key meta.bare-string punctuation.definition.fold-marker
+     | 16-17    " "                                meta.object meta.object.entry.folded-key meta.bare-string punctuation.definition.string.begin.bare
+     | 17-18    "z"                                meta.object meta.object.entry.folded-key meta.bare-string string.unquoted.bare
+  30 |               "deep":
+     | 0-14     "              "                   meta.object meta.object.entry punctuation.whitespace.indent
+     | 14-15    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 15-19    "deep"                             meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 19-20    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 20-21    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+  31 |                 "inner":
+     | 0-16     "                "                 meta.object meta.object.entry punctuation.whitespace.indent
+     | 16-17    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 17-22    "inner"                            meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 22-23    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 23-24    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+  32 |                   "proof":1
+     | 0-18     "                  "               meta.object meta.object.entry punctuation.whitespace.indent
+     | 18-19    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 19-24    "proof"                            meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 24-25    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 25-26    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+     | 26-27    "1"                                meta.object meta.object.entry constant.numeric
+  33 |                   "a nested key long enough 
+     | 0-18     "                  "               meta.object meta.object.entry.folded-key
+     | 18-19    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.begin
+     | 19-45    "a nested key long enough "        meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+  34 |                   / that it folds too": v
+     | 0-18     "                  "               meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 18-20    "/ "                               meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 20-37    "that it folds too"                meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+     | 37-38    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.end
+     | 38-39    ":"                                meta.object meta.object.entry.folded-key punctuation.separator.key-value
+     | 39-40    " "                                meta.object meta.object.entry.folded-key meta.bare-string punctuation.definition.string.begin.bare
+     | 40-41    "v"                                meta.object meta.object.entry.folded-key meta.bare-string string.unquoted.bare
+  35 |               "across":
+     | 0-14     "              "                   meta.object meta.object.entry punctuation.whitespace.indent
+     | 14-15    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 15-21    "across"                           meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 21-22    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 22-23    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+  36 |                 "plain":1
+     | 0-16     "                "                 meta.object meta.object.entry punctuation.whitespace.indent
+     | 16-17    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 17-22    "plain"                            meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 22-23    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 23-24    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+     | 24-25    "1"                                meta.object meta.object.entry constant.numeric
+  37 |                 "nested":
+     | 0-16     "                "                 meta.object meta.object.entry punctuation.whitespace.indent
+     | 16-17    "\""                               meta.object meta.object.entry punctuation.definition.string.begin
+     | 17-23    "nested"                           meta.object meta.object.entry entity.other.attribute-name.quoted
+     | 23-24    "\""                               meta.object meta.object.entry punctuation.definition.string.end
+     | 24-25    ":"                                meta.object meta.object.entry punctuation.separator.key-value
+  38 |                   " a folded element inside 
+     | 0-18     "                  "               meta.object punctuation.whitespace.indent
+     | 18-19    "\""                               meta.object punctuation.definition.string.begin
+     | 19-45    " a folded element inside "        meta.object string.quoted.double
+  39 |                   / the nested block "
+     | 0-18     "                  "               meta.object string.quoted.double punctuation.whitespace.indent
+     | 18-20    "/ "                               meta.object string.quoted.double punctuation.definition.fold-marker
+     | 20-37    "the nested block "                meta.object string.quoted.double
+     | 37-38    "\""                               meta.object punctuation.definition.string.end
+  40 |                 "a key that folds after the 
+     | 0-16     "                "                 meta.object meta.object.entry.folded-key
+     | 16-17    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.begin
+     | 17-45    "a key that folds after the "      meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+  41 |                 / nested block": v
+     | 0-16     "                "                 meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.whitespace.indent
+     | 16-18    "/ "                               meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted punctuation.definition.fold-marker
+     | 18-30    "nested block"                     meta.object meta.object.entry.folded-key entity.other.attribute-name.quoted
+     | 30-31    "\""                               meta.object meta.object.entry.folded-key punctuation.definition.string.end
+     | 31-32    ":"                                meta.object meta.object.entry.folded-key punctuation.separator.key-value
+     | 32-33    " "                                meta.object meta.object.entry.folded-key meta.bare-string punctuation.definition.string.begin.bare
+     | 33-34    "v"                                meta.object meta.object.entry.folded-key meta.bare-string string.unquoted.bare
+  42 | 

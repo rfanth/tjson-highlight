@@ -112,9 +112,12 @@ const isScope = (scope, prefix) => scope === prefix || scope.startsWith(prefix +
 
 // Walk outward from the innermost scope: it is the most specific thing the
 // grammar knows about this text. `null` means "leave it as body text".
+// An unstyled scope stops the walk rather than being skipped -- it means "this
+// text is deliberately not coloured", which is an answer, and reaching past it
+// would paint the indent inside a folded string with the string's own colour.
 function classFor(scopes) {
   for (let i = scopes.length - 1; i >= 0; i--) {
-    if (UNSTYLED.some((p) => isScope(scopes[i], p))) continue;
+    if (UNSTYLED.some((p) => isScope(scopes[i], p))) return null;
     for (const [prefix, cls] of SCOPE_CLASSES) {
       if (isScope(scopes[i], prefix)) return cls;
     }
@@ -243,9 +246,10 @@ Any palette works; this is the one textjson.com uses (Catppuccin Mocha).
 .tjson-escape      { color: #f5c2e7; }
 .tjson-multiline   { color: #f9e2af; }
 .tjson-comment     { color: #9399b2; font-style: italic; }
+.tjson-invalid     { color: #f38ba8; font-style: italic; }
 ```
 
-Three of these are worth keeping distinct rather than folding together:
+Four of these are worth keeping distinct rather than folding together:
 
 - **`tjson-bare` separate from `tjson-string`.** A bare string and a quoted
   string are different syntax for the same value, and the difference is one
@@ -260,6 +264,14 @@ Three of these are worth keeping distinct rather than folding together:
 - **`tjson-escape` separate from `tjson-marker`.** These once shared a colour,
   which painted the `\n` inside a string the same bright blue as a fold marker —
   so a string looked like it had structure in it.
+- **`tjson-invalid` at all.** The grammar names three faults a parser would
+  refuse — a multiline margin that wanders off its column, a table row whose
+  cell edges do not line up, a closing indent glyph away from the column its
+  frame opened at. Each is named on the *character* that is in the wrong place
+  rather than on the whitespace in front of it, which is what editor themes
+  expect: they style `invalid` as a foreground colour and an italic, never a
+  background, so a fault sitting on whitespace renders as nothing at all. If you
+  drop this rule the markers still render, just without the warning.
 
 ## Reporting errors too
 

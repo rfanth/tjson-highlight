@@ -3,8 +3,8 @@
      | 2-3      " "                                meta.bare-string punctuation.definition.string.begin.bare
      | 3-6      "str"                              meta.bare-string string.unquoted.bare
    2 |   1
-     | 0-2      "  "                               meta.array.inline punctuation.whitespace.indent
-     | 2-3      "1"                                meta.array.inline constant.numeric
+     | 0-2      "  "                               punctuation.whitespace.indent
+     | 2-3      "1"                                constant.numeric
    3 |    str2
      | 0-2      "  "                               meta.bare-string punctuation.whitespace.indent
      | 2-3      " "                                meta.bare-string punctuation.definition.string.begin.bare

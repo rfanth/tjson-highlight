@@ -1,0 +1,4 @@
+  note:_a marked value    other: a plain one
+  plain: leading space here
+  marked:_underscore here
+  both on one line:_marked    and: plain

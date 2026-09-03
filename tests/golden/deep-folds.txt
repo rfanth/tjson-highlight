@@ -1,0 +1,35 @@
+   1 | [ [ [ [ [ [ { longtext: This is a very long 
+     | 0-2      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 2-4      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 4-6      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 6-8      "[ "                               meta.object.entry keyword.operator.array-marker
+     | 8-10     "[ "                               meta.object.entry keyword.operator.array-marker
+     | 10-12    "[ "                               meta.object.entry keyword.operator.array-marker
+     | 12-14    "{ "                               meta.object.entry keyword.operator.object-marker
+     | 14-22    "longtext"                         meta.object.entry entity.other.attribute-name.bare
+     | 22-23    ":"                                meta.object.entry punctuation.separator.key-value
+     | 23-24    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 24-43    "This is a very long"              meta.object.entry meta.bare-string string.unquoted.bare
+     | 43-45    " "                                meta.object.entry meta.bare-string
+   2 |               / value that will certainly ne
+     | 0-14     "              "                   meta.object.entry meta.bare-string meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry meta.bare-string meta.fold.continuation punctuation.definition.fold-marker
+     | 16-44    "value that will certainly ne"     meta.object.entry meta.bare-string meta.fold.continuation string.unquoted.bare
+   3 |               / ed to be folded because it e
+     | 0-14     "              "                   meta.object.entry meta.bare-string meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry meta.bare-string meta.fold.continuation punctuation.definition.fold-marker
+     | 16-44    "ed to be folded because it e"     meta.object.entry meta.bare-string meta.fold.continuation string.unquoted.bare
+   4 |               / xceeds the wrap width by a g
+     | 0-14     "              "                   meta.object.entry meta.bare-string meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry meta.bare-string meta.fold.continuation punctuation.definition.fold-marker
+     | 16-44    "xceeds the wrap width by a g"     meta.object.entry meta.bare-string meta.fold.continuation string.unquoted.bare
+   5 |               / ood margin indeed yes
+     | 0-14     "              "                   meta.object.entry meta.bare-string meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry meta.bare-string meta.fold.continuation punctuation.definition.fold-marker
+     | 16-37    "ood margin indeed yes"            meta.object.entry meta.bare-string meta.fold.continuation string.unquoted.bare
+   6 |               trailing:7
+     | 0-14     "              "                   meta.object.entry punctuation.whitespace.indent
+     | 14-22    "trailing"                         meta.object.entry entity.other.attribute-name.bare
+     | 22-23    ":"                                meta.object.entry punctuation.separator.key-value
+     | 23-24    "7"                                meta.object.entry constant.numeric
+   7 | 

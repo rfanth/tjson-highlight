@@ -3,7 +3,7 @@
   "displayName": "TJSON",
   "description": "TJSON (Text JSON): syntax highlighting, error checking, and JSON conversion",
   "icon": "build/icon.png",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "R.F. Anthracite <rfa@rfanth.com>",
   "publisher": "rfanth",
   "license": "BSD-3-Clause",
@@ -77,7 +77,9 @@
         "editor.detectIndentation": false,
         "editor.useTabStops": false,
         "editor.trimAutoWhitespace": false,
-        "files.trimTrailingWhitespace": false
+        "files.trimTrailingWhitespace": false,
+        "editor.autoClosingBrackets": "never",
+        "editor.autoClosingQuotes": "never"
       }
     },
     "configuration": {
@@ -188,7 +190,10 @@
         },
         "tjson.render.multilineMaxLines": {
           "default": null,
-          "markdownDescription": "@experimental Maximum number of lines in a minimal (`) multiline block before falling back to a bold style multiline block (``), applies with multilineStyle: \"floating\" only. The idea is that we want to reserve a minimal style multiline for short multilines only for \"floating\". \"light\" has a similar look with no max line fallback. Default: `10`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "markdownDescription": "**⚠ Experimental.** The default is `10`. It may change or be removed in a future release.\n\nMaximum number of lines in a minimal (`) multiline block before falling back to a bold style multiline block (``), applies with multilineStyle: \"floating\" only. The idea is that we want to reserve a minimal style multiline for short multilines only for \"floating\". \"light\" has a similar look with no max line fallback. Default: `10`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "tags": [
+            "experimental"
+          ],
           "type": [
             "number",
             "null"
@@ -204,7 +209,10 @@
         },
         "tjson.render.tableFold": {
           "default": null,
-          "markdownDescription": "@experimental Allow folding long table rows across continuation lines. (Not currently implemented. It is probably best to avoid this option for now as it may change.) Default: `false`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "markdownDescription": "**⚠ UNFINISHED — do not turn this on for anything you need to keep.** The default is `false`. That default is complete and safe; this feature is not. It renders, and what it renders is unfinished: output written with any other value is not guaranteed to round trip!\n\nAllow folding long table rows across continuation lines. (Not currently implemented. It is probably best to avoid this option for now as it may change.) Default: `false`.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "tags": [
+            "experimental"
+          ],
           "type": [
             "boolean",
             "null"
@@ -372,7 +380,10 @@
         },
         "tjson.render.kvPackMultiple": {
           "default": null,
-          "markdownDescription": "@experimental Spacing multiplier between packed key-value pairs. Valid values: 1–4 (clamped); actual spaces = value × 2. Default: `2` (4 spaces). May be changed or removed in a future version.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "markdownDescription": "**⚠ Experimental.** The default is `2`. It may change or be removed in a future release.\n\nSpacing multiplier between packed key-value pairs. Valid values: 1–4 (clamped); actual spaces = value × 2. Default: `2` (4 spaces). May be changed or removed in a future version.\n\nLeave unset to use the bundled TJSON library's own default.",
+          "tags": [
+            "experimental"
+          ],
           "type": [
             "number",
             "null"

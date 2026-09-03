@@ -24,12 +24,60 @@
 	// than a closed pair. Brackets are worse: `[ ` and `{ ` at the start of a line
 	// are nesting markers with no closing counterpart, and that is the commonest
 	// reason to type one -- so auto-closing inserts a `]` that has to be deleted
-	// every time. It is only correct for `k:[]` and `k:[1,2]`, and VS Code cannot
-	// condition auto-closing on position. Quotes go too, for consistency: a quoted
-	// key or string is typed as often as not by wrapping an existing word, which
-	// surroundingPairs below handles without ever inserting anything unasked.
-	"autoClosingPairs": [],
+	// every time.
+	// It is only correct for `k:[]` (empty array) and `k:[1,2]` (minimal
+	// json, disfavored and never emitted by the generator, `k:  1, 2` would be the
+	// generated version).
+	// VS Code cannot condition auto-closing on position. Quotes go too, for
+	// consistency: a quoted key or string is typed as often as not by wrapping an
+	// existing word, which surroundingPairs below handles without ever inserting
+	// anything unasked.
 
+	// An empty list here does NOT mean "nothing auto-closes". It means "this
+	// field was not supplied", and the editor then derives the pairs from
+	// `brackets` above -- which is why `[` and `{` closed themselves while `"`
+	// did not. The bug is in the editor's validator, not in the value:
+	//
+	//   _extractValidAutoClosingPairs(...) {
+	//     const s = t.autoClosingPairs;
+	//     if (typeof s > "u") return;      // absent
+	//     let n;                           // stays undefined
+	//     for (...) { n = n || []; ... }   // an empty array pushes nothing
+	//     return n;                        // so [] comes back as undefined
+	//   }
+	//
+	// and the consumer reads
+	//   e.autoClosingPairs ? ... : e.brackets ? ...map(brackets) : []
+	//
+	// so an empty array and a missing field take the same branch. No language
+	// bundled with the editor declares an empty list, so the path is untrodden.
+	//
+	// The list therefore has to be non-empty and unable to fire. NUL is a
+	// FORBIDDEN CHARACTER in the specification -- it cannot appear in a TJSON
+	// document in any form, escaped or otherwise -- and it cannot be typed, so
+	// this pair exists only to keep the array from being read as absent.
+	//
+	// `notIn` cannot do the job instead: it discriminates on the editor's
+	// standard token types, string and comment, and a marker cell is neither.
+	"autoClosingPairs": [
+		{ "open": "\u0000", "close": "\u0000" }
+	],
+
+	// What wraps a SELECTION. It never inserts anything on its own: with nothing
+	// selected these are not consulted at all, and the closing brackets that
+	// appeared while typing came from the `brackets` fallback above, not from
+	// here. Removing entries here could not have stopped it.
+	//
+	// The editor reads `surroundingPairs || autoClosingPairs`, so leaving this
+	// out would fall back to the sentinel pair and surrounding would stop
+	// working altogether.
+	//
+	// All three earn their place. A quoted key or string is typed as often as
+	// not by wrapping a word that is already there. The brackets wrap a
+	// selection into MINIMAL JSON or an empty container, which is the one place
+	// in the format where a bracket genuinely pairs -- and wrapping is always
+	// asked for explicitly, so it cannot fire by accident the way auto-closing
+	// did.
 	"surroundingPairs": [
 		["\"", "\""],
 		["[", "]"],
@@ -53,11 +101,14 @@
 	// letting the previous line's indentation carry, which is what VS Code
 	// does when a language configures nothing.
 	//
-	// The first character is written as "not one of the things that cannot
-	// start a key" rather than as \p{L}\p{N}, because these patterns are
-	// applied without the unicode flag -- an explicit class would exclude
-	// every key beginning with a non-ASCII letter. Quoted keys open containers
-	// too, and are matched as an alternative.
+	// The first character is \p{L}\p{N}, the specification's own rule, which
+	// needs the unicode flag -- and these patterns take one, because the editor
+	// parses each of them with the same helper that reads `onEnterRules`, and it
+	// accepts either a plain string or a { pattern, flags } pair. It used to be
+	// written as "not one of the things that cannot start a key" on the belief
+	// that no flag was available, and that negation indented after `  _key:`,
+	// `  .key:` and `  -key:`, none of which is a key at all. Quoted keys open
+	// containers too, and are matched as an alternative.
 	//
 	// Indentation only ever decreases at an explicit `/>` glyph: TJSON closes
 	// containers by outdenting, with no closing token to key on.
@@ -66,8 +117,31 @@
 	// a comment sit at any indentation and says it does not affect the indent
 	// level, so the editor has no business moving one.
 	"indentationRules": {
-		"increaseIndentPattern": "^(  )*(\\[ )*(\\{ )?([^\\s:{}\\[\\]|/\"'`,][^:]*|\"(?:[^\"\\\\]|\\\\.)*\"):\\s*$",
-		"decreaseIndentPattern": "^(  )* />\\s*$",
+		"increaseIndentPattern": {
+			"pattern": "^(  )*(\\[ )*(\\{ )?([\\p{L}\\p{N}][\\p{L}\\p{N}_()/'.!%&, ;@$#*=?^~<>+-]*|\"(?:[^\"\\\\]|\\\\.)*\"):[ ]*$",
+			"flags": "u"
+		},
+		// Nothing decreases. The pattern here used to be "^(  )* />\\s*$", and it
+		// was wrong in both of the jobs a decreaseIndentPattern does.
+		//
+		// On Enter it outdents by exactly one level. Measured across the
+		// fixtures and the external corpus, the line after a closing glyph
+		// moves -38, -19, -5, -3, -3 and 0 columns. Never -2. A closing glyph
+		// restores the indent from wherever the frame OPENED, which is not on
+		// the line and cannot be derived from it.
+		//
+		// On typing it moved text under the writer's hands. The editor
+		// re-indents a line when typing makes it START matching this pattern
+		// -- `!shouldDecrease(before) && shouldDecrease(after)` -- and the
+		// pattern needs an even indent, so the first space typed in front of a
+		// glyph stuck (the line stopped matching) and the second snapped the
+		// whole line back (it matched again). "An extra space or two, then some
+		// force moves it back."
+		//
+		// The field is required, so it is a pattern that cannot match anything.
+		// A glyph at the wrong column is a parse error and the parser says so;
+		// the editor does not need to enforce it by shoving.
+		"decreaseIndentPattern": "^(?!)",
 		"unIndentedLinePattern": "^\\s*//"
 	},
 
@@ -76,10 +150,41 @@
 	// the last thing on the line. The plain `key:` case is left to
 	// `increaseIndentPattern` -- two rules covering one case is how they come
 	// to disagree.
+	// One shape `indentationRules` cannot express: a line that opens a block
+	// without ending in a colon.
+	//
+	// There used to be a second, for a key whose value is pushed to the next line
+	// by an opening indent glyph (`k: /<`), and it was measured wrong. Counting
+	// every opening glyph across the fixtures and the external corpus, the line
+	// after one moves LEFT or stays put 18 times out of 21 -- which is the whole
+	// point of the glyph, to bring a deeply nested block back to a readable
+	// column -- while the rule shifted it right. How far left is the writer's
+	// choice and no rule can derive it, so there is nothing to replace it with:
+	// carrying the previous line's indentation, which is what the editor does
+	// with no rule at all, is the least wrong answer available.
 	"onEnterRules": [
 		{
+			// A MINIMAL multiline string opened by a key. Its body sits at the
+			// opening line's n+2 and cannot move, so the next line is one level in.
+			//
+			// The key is REQUIRED, and that is not tidiness. A closing glyph is
+			// spelled exactly like an unkeyed opening one -- n spaces then the
+			// glyph -- and no rule that reads a single line can tell them apart, so
+			// an unkeyed pattern indents after the END of every minimal multiline.
+			// A closing glyph never carries a key.
+			//
+			// No marker cells either: `indentAction` shifts one level from the
+			// line's leading WHITESPACE, and a marker is two columns that are not
+			// whitespace, so a fence behind `[ [ { ` would land eight columns short.
+			// Both excluded shapes fall back to carrying the previous indentation.
+			//
+			// Only this form of fence. A BOLD multiline's margin may float to any
+			// even column down to 2, so where its body begins is the writer's
+			// choice; a TRANSPARENT one is verbatim from column zero, where any
+			// indent at all would be data. The glyph may carry an EOL indicator,
+			// and the negative lookahead keeps this off the other two forms.
 			"beforeText": {
-				"pattern": "^(  )*(\\[ )*(\\{ )?([\\p{L}\\p{N}][\\p{L}\\p{N}_()/'.!%&, ;@$#*=?^~<>+-]*|\"(?:[^\"\\\\]|\\\\.)*\"): /<\\s*$",
+				"pattern": "^(  )*(?:[\\p{L}\\p{N}][\\p{L}\\p{N}_()/'.!%&, ;@$#*=?^~<>+-]*|\"(?:[^\"\\\\]|\\\\.)*\"): `(?!`)(?:(?:\\\\r)?\\\\n)?[ ]*$",
 				"flags": "u"
 			},
 			"action": { "indentAction": "indent" }

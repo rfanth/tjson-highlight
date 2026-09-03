@@ -18,8 +18,8 @@
      | 2-7      "mixed"                            meta.object.entry entity.other.attribute-name.bare
      | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
    3 |     1
-     | 0-4      "    "                             meta.array.inline punctuation.whitespace.indent
-     | 4-5      "1"                                meta.array.inline constant.numeric
+     | 0-4      "    "                             punctuation.whitespace.indent
+     | 4-5      "1"                                constant.numeric
    4 |      two
      | 0-4      "    "                             meta.bare-string punctuation.whitespace.indent
      | 4-5      " "                                meta.bare-string punctuation.definition.string.begin.bare

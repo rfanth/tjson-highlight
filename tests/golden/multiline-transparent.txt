@@ -1,23 +1,23 @@
    1 |   doc: ```
-     | 0-2      "  "                               meta.object.entry.multiline punctuation.whitespace.indent
-     | 2-5      "doc"                              meta.object.entry.multiline entity.other.attribute-name.bare
-     | 5-6      ":"                                meta.object.entry.multiline punctuation.separator.key-value
-     | 6-7      " "                                meta.object.entry.multiline punctuation.definition.string.begin
-     | 7-10     "```"                              meta.object.entry.multiline punctuation.definition.string.begin
+     | 0-2      "  "                               meta.multiline punctuation.whitespace.indent
+     | 2-5      "doc"                              meta.multiline entity.other.attribute-name.bare
+     | 5-6      ":"                                meta.multiline punctuation.separator.key-value
+     | 6-7      " "                                meta.multiline punctuation.definition.string.begin
+     | 7-10     "```"                              meta.multiline punctuation.definition.string.begin
    2 | Line one
-     | 0-8      "Line one"                         meta.object.entry.multiline markup.raw.block
+     | 0-8      "Line one"                         meta.multiline markup.raw.block
    3 | // looks like a comment
-     | 0-23     "// looks like a comment"          meta.object.entry.multiline markup.raw.block
+     | 0-23     "// looks like a comment"          meta.multiline markup.raw.block
    4 |   indented raw
-     | 0-14     "  indented raw"                   meta.object.entry.multiline markup.raw.block
+     | 0-14     "  indented raw"                   meta.multiline markup.raw.block
    5 | /usr/bin/env
-     | 0-12     "/usr/bin/env"                     meta.object.entry.multiline markup.raw.block
+     | 0-12     "/usr/bin/env"                     meta.multiline markup.raw.block
    6 | 
-     | 0-1      ""                                 meta.object.entry.multiline
+     | 0-1      ""                                 meta.multiline
    7 |    ```
-     | 0-2      "  "                               meta.object.entry.multiline
-     | 2-3      " "                                meta.object.entry.multiline punctuation.definition.string.end
-     | 3-6      "```"                              meta.object.entry.multiline punctuation.definition.string.end
+     | 0-2      "  "                               meta.multiline
+     | 2-3      " "                                meta.multiline punctuation.definition.string.end
+     | 3-6      "```"                              meta.multiline punctuation.definition.string.end
    8 |   n:1
      | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
      | 2-3      "n"                                meta.object.entry entity.other.attribute-name.bare

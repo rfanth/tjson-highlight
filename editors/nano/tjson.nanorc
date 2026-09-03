@@ -56,14 +56,25 @@ color green "^(  )*(\[\ )*[ _][^ ].*$"
 
 ## ── Fold-continuation lines ───────────────────────────────────────────────────
 ## grammar: ^((?:  )*)(/ )(.*)$
-## Content portion → string.unquoted.fold-continuation.tjson
+## Content keeps the scope of whatever it continues; the marker itself is
+## punctuation.definition.fold-marker.tjson
 ## Color the whole line green first; "/ " is overridden to brightcyan below
 color green "^(  )*/ .*$"
 
 ## ── Keys (bare) ───────────────────────────────────────────────────────────────
 ## grammar: [\\p{L}\\p{N}][\\p{L}\\p{N}_()/'.!%&, -]*  →  entity.other.attribute-name.bare.tjson
 ## After numbers so digit-starting keys override the number color on their leading digits
-color brightblue "[[:alpha:][:digit:]][[:alnum:]_()/'\.!%&,-]*:"
+##
+## The class carries the specification's full set. It used to stop at
+## "_()/'.!%&,-" and so omitted twelve characters the format allows -- ; @ $ # *
+## = ? ^ ~ < > + -- which left "  at@sign: 1" with no colour on the key at all.
+## The tmLanguage grammar had the identical gap and was fixed; this file was
+## written from the same wrong class and was not.
+##
+## The space is deliberately NOT here, although a key may contain single spaces.
+## Nano patterns are unanchored, so a class containing a space lets a key run
+## backwards across whatever sits before it on an inline-packed line.
+color brightblue "[[:alpha:][:digit:]][[:alnum:]_()/'.!%&,;@$#*=?^~<>+-]*:"
 
 ## ── Quoted strings ────────────────────────────────────────────────────────────
 ## grammar: json-strings  →  string.quoted.double.tjson
@@ -88,7 +99,7 @@ color brightcyan "^(  )*/ "
 color brightcyan "^(  )* /[<>][[:space:]]*$"
 
 ## ── Table pipes ───────────────────────────────────────────────────────────────
-## grammar: keyword.operator.table.pipe.tjson
+## grammar: punctuation.separator.table.tjson
 ## Typed cell values: "|42" is a number, "|true" is boolean, "| 42" is a bare string.
 ## Place typed-value rules before the pipe rule so pipe reclaims "|" back to white.
 color yellow "\|-?[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?"
@@ -97,7 +108,9 @@ color magenta "\|null"
 color white "\|"
 
 ## ── Multiline strings ────────────────────────────────────────────────────────
-## grammar: punctuation.definition.string.begin/end.tjson + markup.raw.block.tjson
+## grammar: punctuation.definition.string.begin.tjson
+##          punctuation.definition.string.end.tjson
+##          markup.raw.block.tjson
 ## Triple before double before single to avoid shorter patterns swallowing longer delimiters
 color brightyellow start="```" end="```"
 color brightyellow start="``" end="``"

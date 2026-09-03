@@ -1,6 +1,11 @@
-# Text JSON (TJSON) for VS Code / VSCodium
+# Text JSON (TJSON) for VS Code / VSCodium / Web Server / Browser
 
-Syntax highlighting, error checking, and JSON ↔ TJSON conversion for `.tjson` files.
+Syntax highlighting, error checking, language support, web server and/or browser
+support, and JSON ↔ TJSON conversion for `.tjson` files.
+
+**Putting TJSON on a web page?** Start at
+**[docs/web-highlighting.md](docs/web-highlighting.md)** — the scope-to-CSS
+mapping, the palette, and where to run the tokenizer.
 
 [https://github.com/rfanth/tjson-highlight](https://github.com/rfanth/tjson-highlight)
 
@@ -9,12 +14,30 @@ Learn more about TJSON at [textjson.com](https://textjson.com).
 The highlighter has full coverage for everything in TJSON within the TextMate grammar
 file.
 
+It also has independent highlighting infrastructure usable on its own on a web server
+or client — see [docs/web-highlighting.md](docs/web-highlighting.md).
+
+This is also an IDE language support extension with UI conversion actions.
+
 ## Install - VSCode, VSCodium, Cursor, etc.
 
 Click on Extensions, search for TJSON (`@id:rfanth.tjson-highlight`), click on
 TJSON, and press the install button.
 
 ## How to use
+
+Most people will use this extension as a way to let a human view JSON data
+comfortably using the **Preview as TJSON** feature on .json files.
+
+People will simply stop reading JSON after a short while or refuse to read it
+in the first place because JSON is inherently designed for ease of parsing, not
+reading.  TJSON fixes that.  What you cannot or will not read, you cannot audit.
+
+While you can write TJSON, and it is well-supported with guaranteed round
+trip data to and from arbitrary JSON, with good error messages and IDE
+support, that is not how most people will use TJSON.  TJSON is also excellent
+at smoothly embedding JSON in an otherwise readable text document, while being
+able to round trip the data later back to JSON, though not everyone needs this.
 
 ### Converting between JSON and TJSON
 
@@ -104,10 +127,6 @@ theme is untouched everywhere else.
         "settings": { "foreground": "#6c7086" }
       },
       {
-        "scope": "string.unquoted.fold-continuation.tjson",
-        "settings": { "foreground": "#a6e3a1" }
-      },
-      {
         "scope": "string.quoted.double.tjson",
         "settings": { "foreground": "#f9e2af" }
       },
@@ -135,6 +154,14 @@ theme is untouched everywhere else.
       // ── Escape sequences ──────────────────────────────────────────────
       {
         "scope": "constant.character.escape.tjson",
+        "settings": { "foreground": "#89dceb" }
+      },
+      // The LOCAL EOL INDICATOR: the literal `\n` or `\r\n` a multiline
+      // string's opening and closing glyphs may carry, saying what the line
+      // breaks inside it stand for. It needs its own rule -- theme scopes
+      // match segment by segment, so the entry above does not reach it.
+      {
+        "scope": "constant.character.escape.eol-indicator.tjson",
         "settings": { "foreground": "#89dceb" }
       },
 
@@ -198,6 +225,27 @@ theme is untouched everywhere else.
         "settings": { "foreground": "#6c7086" }
       },
 
+      // ── Faults ────────────────────────────────────────────────────────
+      // Three things the grammar can see are wrong on its own: a multiline
+      // margin that wanders off its column, a table row whose cell edges do
+      // not line up with the header's, and a closing indent glyph away from
+      // the column its frame opened at. Each is named on the character that is
+      // in the wrong place -- the `|`, the `|`, the `/>` -- and not on the
+      // whitespace in front of it, so a plain foreground colour is enough.
+      // Most themes already style `invalid`; these only make it explicit.
+      {
+        "scope": "invalid.illegal.multiline-margin-column.tjson",
+        "settings": { "foreground": "#f38ba8", "fontStyle": "italic" }
+      },
+      {
+        "scope": "invalid.illegal.table-row-column.tjson",
+        "settings": { "foreground": "#f38ba8", "fontStyle": "italic" }
+      },
+      {
+        "scope": "invalid.illegal.indent-glyph-column.tjson",
+        "settings": { "foreground": "#f38ba8", "fontStyle": "italic" }
+      },
+
       // ── Separators ────────────────────────────────────────────────────
       // The gap between inline-packed pairs.
       {
@@ -231,6 +279,7 @@ theme is untouched everywhere else.
 > These colors are based on the [textjson.com](https://textjson.com) demo
 > palette (a dark Catppuccin Mocha-inspired scheme). Swap any hex value to
 > taste — all rules are scoped to `.tjson` so nothing else changes.
+
 
 ### Making the bare string marker more visible
 
@@ -287,6 +336,24 @@ If you control the generator, `tjson --bare-strings marked` writes that opening
 space as `_` — `active:_true` — which puts the distinction in the file itself
 for every reader, editor or not. The two openers are interchangeable, occupy
 the same column, and can be mixed freely; the grammar treats them identically.
+
+### What the editor does while you type
+
+TJSON is an indentation format with no closing tokens, so most of what an editor
+normally does for a bracketed language is wrong here. The extension turns those
+things off deliberately, and it is worth knowing which:
+
+| | |
+| --- | --- |
+| **Nothing auto-closes** | Not `[`, not `{`, not a quote or a backtick. `[ ` and `{ ` at the head of a line are indent cells with no closing counterpart, and that is much the commonest reason to type one, so an inserted `]` would have to be deleted every time. A backtick is worse: pairing it turns ` `` ` into a different multiline style rather than a closed pair. |
+| **Nothing is re-indented as you type** | The editor never moves a line you are working on. It is allowed to, through the language's indentation rules, and it used to: a closing indent glyph could not be pushed off its column because every second space typed in front of it snapped the line back. |
+| **Enter indents in exactly two places** | After a key whose colon ends the line, because that opens a container; and after a key that opens a MINIMAL `` ` `` multiline, because its body sits one level in and cannot move anywhere else. Everywhere else the new line simply keeps the indentation of the one above it. |
+| **Wrapping a selection still works** | Select some text and type a quote or a bracket to wrap it. That only ever happens when you ask for it, so unlike auto-closing it cannot fire by accident. |
+| **Tab is two spaces, and trailing whitespace is left alone** | Both are pinned for `.tjson` files. The indentation rules are written for a two-space format and are wrong at any other width, and trailing spaces can be data -- a bare string may end in one. |
+
+An indent glyph is the one place Enter deliberately does nothing clever. `/<`
+exists to bring a deeply nested block back to a readable column, so the line
+after it moves *left*.
 
 ## Install - nano
 

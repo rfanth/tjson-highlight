@@ -1,0 +1,6 @@
+[ [ [ [ [ [ { team:
+                |name    |age  |role    |active  |pet    |
+                | Alice  |30   | admin  |true    |null   |
+                | Bob    |25   | user   |false   | dog   |
+                | Carol  |35   | user   |true    | cat   |
+                | Dave   |41   | ops    |false   | fish  |

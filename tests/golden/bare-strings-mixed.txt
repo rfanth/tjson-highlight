@@ -1,0 +1,35 @@
+   1 |   note:_a marked value    other: a plain one
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-6      "note"                             meta.object.entry entity.other.attribute-name.bare
+     | 6-7      ":"                                meta.object.entry punctuation.separator.key-value
+     | 7-8      "_"                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 8-22     "a marked value"                   meta.object.entry meta.bare-string string.unquoted.bare
+     | 22-26    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 26-31    "other"                            meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 31-32    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 32-33    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 33-44    "a plain one"                      meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+   2 |   plain: leading space here
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-7      "plain"                            meta.object.entry entity.other.attribute-name.bare
+     | 7-8      ":"                                meta.object.entry punctuation.separator.key-value
+     | 8-9      " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 9-27     "leading space here"               meta.object.entry meta.bare-string string.unquoted.bare
+   3 |   marked:_underscore here
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-8      "marked"                           meta.object.entry entity.other.attribute-name.bare
+     | 8-9      ":"                                meta.object.entry punctuation.separator.key-value
+     | 9-10     "_"                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 10-25    "underscore here"                  meta.object.entry meta.bare-string string.unquoted.bare
+   4 |   both on one line:_marked    and: plain
+     | 0-2      "  "                               meta.object.entry punctuation.whitespace.indent
+     | 2-18     "both on one line"                 meta.object.entry entity.other.attribute-name.bare
+     | 18-19    ":"                                meta.object.entry punctuation.separator.key-value
+     | 19-20    "_"                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 20-26    "marked"                           meta.object.entry meta.bare-string string.unquoted.bare
+     | 26-30    "    "                             meta.object.entry meta.object.entry.inline punctuation.separator.inline
+     | 30-33    "and"                              meta.object.entry meta.object.entry.inline entity.other.attribute-name.bare
+     | 33-34    ":"                                meta.object.entry meta.object.entry.inline punctuation.separator.key-value
+     | 34-35    " "                                meta.object.entry meta.object.entry.inline meta.bare-string punctuation.definition.string.begin.bare
+     | 35-40    "plain"                            meta.object.entry meta.object.entry.inline meta.bare-string string.unquoted.bare
+   5 | 

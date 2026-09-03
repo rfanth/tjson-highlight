@@ -4,13 +4,21 @@
   "version": "0.0.1",
   "description": "Grammar tests for the TJSON TextMate grammar",
   "scripts": {
-    "test": "node run.js && node extension.js && node scopes.js && node convert.js && node debounce.js",
-    "update": "node run.js --update",
+    "test": "node run.js && node patterns.js && node mechanics.mjs && node marker-depth.mjs && node language-config.mjs && node extension.js && node scopes.js && node classfor.mjs && node snippets.mjs && node shipped-parity.mjs && node check-fixtures.mjs && node convert.js && node debounce.js",
+    "update": "node run.js --update && node patterns.js --update",
     "regen": "./regen.sh",
     "test:grammar": "node run.js",
     "test:extension": "node extension.js",
     "test:scopes": "node scopes.js",
-    "test:convert": "node convert.js"
+    "test:convert": "node convert.js",
+    "test:patterns": "node patterns.js",
+    "test:classfor": "node classfor.mjs",
+    "test:depth": "node marker-depth.mjs",
+    "test:config": "node language-config.mjs",
+    "test:mechanics": "node mechanics.mjs",
+    "test:snippets": "node snippets.mjs",
+    "test:parity": "node shipped-parity.mjs",
+    "test:fixtures": "node check-fixtures.mjs"
   },
   "dependencies": {
     "vscode-oniguruma": "^2.0.1",

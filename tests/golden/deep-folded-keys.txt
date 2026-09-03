@@ -1,0 +1,40 @@
+   1 | [ [ [ [ [ [ { a key so long that it has to f
+     | 0-2      "[ "                               meta.object.entry.folded-key keyword.operator.array-marker
+     | 2-4      "[ "                               meta.object.entry.folded-key keyword.operator.array-marker
+     | 4-6      "[ "                               meta.object.entry.folded-key keyword.operator.array-marker
+     | 6-8      "[ "                               meta.object.entry.folded-key keyword.operator.array-marker
+     | 8-10     "[ "                               meta.object.entry.folded-key keyword.operator.array-marker
+     | 10-12    "[ "                               meta.object.entry.folded-key keyword.operator.array-marker
+     | 12-14    "{ "                               meta.object.entry.folded-key keyword.operator.object-marker
+     | 14-44    "a key so long that it has to f"   meta.object.entry.folded-key entity.other.attribute-name.bare
+   2 |               / old before the colon arrive
+     | 0-14     "              "                   meta.object.entry.folded-key meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry.folded-key meta.fold.continuation punctuation.definition.fold-marker
+     | 16-43    "old before the colon arrive"      meta.object.entry.folded-key meta.fold.continuation entity.other.attribute-name.bare
+   3 |               / s: short value
+     | 0-14     "              "                   meta.object.entry.folded-key meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry.folded-key meta.fold.continuation punctuation.definition.fold-marker
+     | 16-17    "s"                                meta.object.entry.folded-key meta.fold.continuation entity.other.attribute-name.bare
+     | 17-18    ":"                                meta.object.entry.folded-key punctuation.separator.key-value
+     | 18-19    " "                                meta.object.entry.folded-key meta.bare-string punctuation.definition.string.begin.bare
+     | 19-30    "short value"                      meta.object.entry.folded-key meta.bare-string string.unquoted.bare
+   4 |               another quite long key needing
+     | 0-14     "              "                   meta.object.entry.folded-key punctuation.whitespace.indent
+     | 14-44    "another quite long key needing"   meta.object.entry.folded-key entity.other.attribute-name.bare
+   5 |               /  a fold:42
+     | 0-14     "              "                   meta.object.entry.folded-key meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry.folded-key meta.fold.continuation punctuation.definition.fold-marker
+     | 16-23    " a fold"                          meta.object.entry.folded-key meta.fold.continuation entity.other.attribute-name.bare
+     | 23-24    ":"                                meta.object.entry.folded-key punctuation.separator.key-value
+     | 24-26    "42"                               meta.object.entry.folded-key constant.numeric
+   6 |               short: ordinary entry for cont
+     | 0-14     "              "                   meta.object.entry punctuation.whitespace.indent
+     | 14-19    "short"                            meta.object.entry entity.other.attribute-name.bare
+     | 19-20    ":"                                meta.object.entry punctuation.separator.key-value
+     | 20-21    " "                                meta.object.entry meta.bare-string punctuation.definition.string.begin.bare
+     | 21-44    "ordinary entry for cont"          meta.object.entry meta.bare-string string.unquoted.bare
+   7 |               / rast
+     | 0-14     "              "                   meta.object.entry meta.bare-string meta.fold.continuation punctuation.whitespace.indent
+     | 14-16    "/ "                               meta.object.entry meta.bare-string meta.fold.continuation punctuation.definition.fold-marker
+     | 16-20    "rast"                             meta.object.entry meta.bare-string meta.fold.continuation string.unquoted.bare
+   8 | 

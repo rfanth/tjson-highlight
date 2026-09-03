@@ -1,0 +1,10 @@
+{ deep:
+  [ [ { note: ``\r\n
+| alpha
+| bravo
+         ``\r\n
+  plain:
+  [ [ { note: ``
+| one
+| two
+         ``

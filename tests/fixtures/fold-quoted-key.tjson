@@ -1,0 +1,45 @@
+  "a key that is long enough t
+  / o have to fold before its 
+  / colon": short value
+  "elements":
+    " a long quoted element th
+    / at has to fold here "
+    " another long quoted elem
+    / ent that folds "
+  "list":
+  [ { "a key that is long enou
+      / gh to have to fold bef
+      / ore its colon": v
+      "nested":
+        " a folded element ins
+        / ide the proved objec
+        / t "
+        " another folded eleme
+        / nt in there "
+      "note": ``
+| alpha
+| bravo
+       ``
+      "another long quoted key
+      /  that also folds": w
+  "x":1
+  "proof that this column hold
+  / s keys":1
+  "one more key long enough th
+  / at it folds before its col
+  / on": z
+  "deep":
+    "inner":
+      "proof":1
+      "a nested key long enoug
+      / h that it folds too":
+      /  v
+  "across":
+    "plain":1
+    "nested":
+      " a folded element insid
+      / e the nested block "
+    "a key that folds after th
+    / e nested block": v
+  "a key long enough to fold o
+  / k":" a quoted value"
